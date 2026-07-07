@@ -3,7 +3,7 @@
 > ID: STD-DOC-005
 > Version: 1.0
 > Level: **[W] Warning**
-> Related: RULE-WORKLOG-002, META-001-standard-id-system
+> Related: META-001-standard-id-system
 
 This template defines the structure for project `worklog.md` files.
 

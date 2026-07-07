@@ -3,7 +3,7 @@
 > ID: STD-DOC-006
 > Version: 1.0
 > Level: **[W] Warning**
-> Related: RULE-VERSION-013, Keep a Changelog
+> Related: Keep a Changelog
 
 This template defines the structure for project `CHANGELOG.md` files.
 
