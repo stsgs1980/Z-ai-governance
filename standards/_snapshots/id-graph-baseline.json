@@ -7,7 +7,7 @@
     "aligned_with_edges": 0,
     "hard_pass": 13,
     "hard_fail": 0,
-    "warnings": 37
+    "warnings": 38
   },
   "checks": [
     {
@@ -168,6 +168,22 @@
     },
     {
       "id": "W13",
+      "detail": "ARCH-002-implementation-order.md: references \"worklog.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ENV-001-reproducibility.md: references \"worklog.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ENV-002-zai-integration.md: references \"worklog.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "GIT-001-github.md: references \"worklog.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
       "detail": "META-001-id-registry.md: references \"bootstrap.sh\" which does not exist in standards/ tree"
     },
     {
@@ -176,15 +192,11 @@
     },
     {
       "id": "W13",
-      "detail": "META-001-id-registry.md: references \"standards/MIGRATIONS.md\" which does not exist in standards/ tree"
+      "detail": "META-001-id-registry.md: references \"standards/standards/SKILL-001-skill-format.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
-      "detail": "META-001-id-registry.md: references \"standards/standards/SKILL_ID_SYSTEM_STANDARD.md\" which does not exist in standards/ tree"
-    },
-    {
-      "id": "W13",
-      "detail": "META-001-standard-id-system.md: references \"standards/MIGRATIONS.md\" which does not exist in standards/ tree"
+      "detail": "META-001-standard-id-system.md: references \"worklog.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
@@ -192,7 +204,7 @@
     },
     {
       "id": "W13",
-      "detail": "META-001-standard-id-system.md: references \"skills/skills/INDEX.md\" which does not exist in standards/ tree"
+      "detail": "META-001-standard-id-system.md: references \"skills/INDEX.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
@@ -216,23 +228,15 @@
     },
     {
       "id": "W13",
-      "detail": "META-001-standard-id-system.md: references \"skills/skills/skill-id-system/SKILL.md\" which does not exist in standards/ tree"
+      "detail": "META-001-standard-id-system.md: references \"skills/skill-id-system/SKILL.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
-      "detail": "META-001-standard-id-system.md: references \"standards/standards/SKILL_ID_SYSTEM_STANDARD.md\" which does not exist in standards/ tree"
+      "detail": "META-001-standard-id-system.md: references \"standards/standards/SKILL-001-skill-format.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
-      "detail": "META-001-standard-id-system.md: references \"skills/MIGRATIONS.md\" which does not exist in standards/ tree"
-    },
-    {
-      "id": "W13",
-      "detail": "META-001-standard-id-system.md: references \"guard/MIGRATIONS.md\" which does not exist in standards/ tree"
-    },
-    {
-      "id": "W13",
-      "detail": "SKILL-001-skill-format.md: references \"skills/skills/skill-id-system/SKILL.md\" which does not exist in standards/ tree"
+      "detail": "SKILL-001-skill-format.md: references \"skills/skill-id-system/SKILL.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
@@ -684,7 +688,7 @@
   "aligned_with_edges": [],
   "snapshot_meta": {
     "script_version": "1.1.7",
-    "created_at": "2026-07-07T19:21:39.663Z",
+    "created_at": "2026-07-07T20:42:52.625Z",
     "purpose": "Baseline for verify-id-graph.js --compare. Do not hand-edit; regenerate with --update-snapshot."
   }
 }
