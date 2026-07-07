@@ -202,10 +202,8 @@ jobs:
 
       # -------------------------------------------------------------------
       # Anti-monolith enforcement (RULE-MONOLITH-012, PROC-LINECOUNT-004).
-      # Runs line-count-check.sh in --hard mode: fails CI if any platform
-      # source code file exceeds §4.18.1 hard cap (250 for .js/.py/.sh/.ts).
-      # Submodule files (standards/, guard/, skills/) are excluded per
-      # RULE-ARCH-017 (upstream write protection).
+      # Runs line-count-check.sh in --hard mode: fails CI if any source
+      # code file exceeds the hard cap (250 lines for .js/.py/.sh/.ts).
       # -------------------------------------------------------------------
       - name: Anti-monolith check (PROC-LINECOUNT-004, --hard)
         run: bash guard/scripts/line-count-check.sh --hard
@@ -343,7 +341,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "chore: export ID graph JSON for graph-viewer (auto-update)"
+            git commit -m "chore: export ID graph JSON for graph-viewer (auto-update) [skip ci]"
             git push
             echo "ID graph JSON committed and pushed"
           fi
