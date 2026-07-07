@@ -13,7 +13,7 @@
  *   format defined in STD-SKILL-001 v1.1. This is the skills-side
  *   analogue of verify-standards.js — same pattern, different corpus.
  *
- *   The script scans the skills/ submodule (sibling of standards/) and
+ *   The script scans the skills/ directory (sibling of standards/) and
  *   runs 11 checks per SKILL.md:
  *
  *     S01 (V11a)  SKILL.md exists in every skills/skills/{name}/ folder
@@ -72,9 +72,9 @@ const EFFECTIVE_DATE = "2026-06-22";
 // PATH RESOLUTION
 // ============================================================================
 // This script lives at standards/scripts/verify-skills.js.
-// The skills/ submodule is a sibling of standards/, found by walking up
+// The skills/ directory is a sibling of standards/, found by walking up
 // from __dirname until we find a directory containing both `standards/`
-// and `skills/` (or a `.gitmodules` file referencing them).
+// and `skills/`.
 
 function discoverPlatformRoot() {
   // Priority 1: env var

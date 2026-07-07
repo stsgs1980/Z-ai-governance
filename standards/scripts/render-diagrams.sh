@@ -35,8 +35,8 @@ set -euo pipefail
 
 # PLATFORM_DIR = the Z-ai-governance checkout (grandparent of this script's
 # standards/scripts/ location). Works for:
-#   - sandbox:        /home/z/my-project/Z-ai-governance/standards/scripts/render-diagrams.sh
-#   - CI checkout:    $GITHUB_WORKSPACE/standards/scripts/render-diagrams.sh
+#   - sandbox:     /home/z/my-project/Z-ai-platform-unified/standards/scripts/render-diagrams.sh
+#   - CI checkout: $GITHUB_WORKSPACE/standards/scripts/render-diagrams.sh
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLATFORM_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 

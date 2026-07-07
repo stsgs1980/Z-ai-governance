@@ -46,9 +46,9 @@ set -euo pipefail
 
 # PLATFORM_DIR = the Z-ai-governance checkout (parent of this script's
 # standards/ directory). Works for:
-#   - sandbox:        /home/z/my-project/Z-ai-governance/standards/scripts/graph-deps.sh
-#   - CI checkout:    $GITHUB_WORKSPACE/standards/scripts/graph-deps.sh
-#   - standalone dev: anywhere — pass --platform=<path> to override
+#   - sandbox:     /home/z/my-project/Z-ai-platform-unified/standards/scripts/graph-deps.sh
+#   - CI checkout: $GITHUB_WORKSPACE/standards/scripts/graph-deps.sh
+#   - standalone:  anywhere -- pass --platform=<path> to override
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLATFORM_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 

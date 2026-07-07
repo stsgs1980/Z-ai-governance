@@ -229,18 +229,10 @@ function buildCandidates(refPath, standardsTreeRoot, filePath, platformRoot) {
     path.join(platformRoot, refPath), // Z-ai-governance/<refpath>
     path.join(platformRoot, refPath.replace(/^Z-ai-governance\//, "")), // strip prefix
     path.join(platformRoot, refPath.replace(/^Z-ai-standards\//, "standards/")),
-    path.join(platformRoot, refPath.replace(/^Z-ai-guard\//, "../Z-ai-guard/")),
-    path.join(platformRoot, refPath.replace(/^Z-ai-skills\//, "../Z-ai-skills/")),
 
-    // v1.1.6 (O-018): correct submodule paths. Submodules are mounted
-    // INSIDE Z-ai-governance/, not as siblings. .gitmodules shows:
-    //   [submodule "skills"]  path = skills   -> Z-ai-governance/skills/
-    //   [submodule "guard"]   path = guard    -> Z-ai-governance/guard/
-    //   [submodule "standards"] path = standards -> Z-ai-governance/standards/
-    // So Z-ai-skills/<x> resolves to Z-ai-governance/skills/<x>, not ../Z-ai-skills/<x>.
-    path.join(platformRoot, "skills", refPath.replace(/^Z-ai-skills\//, "")),
-    path.join(platformRoot, "skills", "skills", refPath.replace(/^Z-ai-skills\/skills\//, "")),
-    path.join(platformRoot, "guard", refPath.replace(/^Z-ai-guard\//, "")),
+    // Flat repo resolution: old submodule prefixes now map to directories
+    path.join(platformRoot, refPath.replace(/^Z-ai-skills\//, "skills/")),
+    path.join(platformRoot, refPath.replace(/^Z-ai-guard\//, "guard/")),
 
     // Special: worklog.md -> docs/session/worklog.md
     path.join(platformRoot, "docs", "session", refPath),
@@ -248,13 +240,11 @@ function buildCandidates(refPath, standardsTreeRoot, filePath, platformRoot) {
     // Special: MIGRATIONS.md -> can be in any repo
     path.join(platformRoot, refPath.replace(/^MIGRATIONS\.md$/, "standards/MIGRATIONS.md")),
 
-    // v1.1.6 (O-018 root-cause fix): skills/ tree resolution.
+    // v1.1.6 (O-018): skills/ tree resolution.
     // Path-like refs like `commit-work/CONTRACT.md`, `session-handoff/CONTRACT.md`,
     // `gepetto/README.md`, `react-dev/README.md` should resolve to actual files
-    // in skills/skills/{name}/. Without this, every prose mention of a skills/
-    // file path required a new W13_WHITELIST entry (unbounded growth, LESSON-001
-    // anti-pattern). The root-cause fix: include skills/skills/ in candidates.
-    path.join(platformRoot, "skills", "skills", refPath),
+    // in skills/{name}/. The root-cause fix: include skills/ in candidates.
+    path.join(platformRoot, "skills", refPath),
   ];
 }
 

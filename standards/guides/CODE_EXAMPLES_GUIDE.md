@@ -1,7 +1,5 @@
-# Standard: Code Examples Guide v1.2 (EN)
+# Code Examples Guide v1.2 (EN)
 
-> ID: STD-DOC-005
-> Version: 1.2
 > Level: **[W] Warning**
 > Last Updated: 2026-06
 > Related: STD-DOC-002, STD-A11Y-001, STD-SEC-001
