@@ -664,3 +664,34 @@ fi
   - Added git alias: git push-and-check
   - Updated CI workflow shell syntax check
   - Usage: bash scripts/push-and-check.sh [--wait]
+
+## 2026-07-07 (39)
+
+- Status: Done
+- Task: Full document audit — delete standards/_graph/, fix stale submodule/standard refs, dead links
+- Details:
+  - Deleted standards/_graph/ (dead directory from submodule era, already staged)
+  - Audited ~100 .md files: dead links, stale refs to .gitmodules/standards/_graph/guard-eslint-rules/standards-eslint-rules/STD-ERR-002/STD-TEST-001, wrong submodule language
+  - Fixed 30+ stale submodule references across 25+ files
+  - Added DEPRECATED notices on ARCH-001, CI-AND-TESTING, RULE-ARCH-016, RULE-ARCH-017
+  - Deprecation-annotated RULE-ARCH-016/017 in META-001 id-registry
+  - Removed STD-TEST-001 from AGENT_RULES.md Tier 3 list
+  - Removed .gitmodules ref from CONTRIBUTING.md
+  - Fixed guard/README.md: "submodule immutability" → "architecture immutability"
+  - Fixed ARCH-002 table: ARCH-001 description "4-repo split, submodule topology" → "repo layout, flat architecture"
+  - Fixed ENV-002: "clone Z-ai-platform with submodules" → "clone Z-ai-governance"
+  - Fixed verify-id-graph-spec: "From Z-ai-platform root (4 submodules)" → "From Z-ai-governance root"
+  - Fixed sandbox-guide: removed --recurse-submodules, updated URL to Z-ai-governance, added flat-repo note to §11
+  - Fixed sandbox/INDEX: removed submodule from descriptions
+  - Fixed DOC-002-markdown-standard: "Orchestrator/meta-repos pin submodules" → "Governance repos define standards"
+  - Fixed 8 dead links (LICENSE, CONTRIBUTING.md path, placeholder url/path/to/icon.svg in skills and templates)
+  - Fixed README_TEMPLATE: dead link docs/architecture.md → "project documentation", CONTRIBUTING.md → ../../CONTRIBUTING.md
+  - Fixed A11Y-001: removed STD-TEST-001 cross-ref row, closed overlap note
+  - Fixed skills/zai-answer-before-act: STD-ERR-002 example → STD-ARCH-001
+  - Removed forbidden STD→RULE Related: edges from CHANGELOG_TEMPLATE and WORKLOG_TEMPLATE (fixed G02/G04/G07)
+  - Regenerated id-graph-baseline.json (54→24 IDs, reflects flat repo)
+  - Fixed graph/README.md: standards/_graph/ row → "Removed (was empty stub from submodule era)"
+  - Fixed guard/instructions/PROC-UPDATE-002.md: "guard submodule" → "guard/ files"
+  - Fixed standards/README.md: LICENSE dead links → MIT text / opensource.org URL
+  - All verifiers green: verify-id-graph 13/13 PASS, verify-standards 15/15 PASS, 13/13 guard check-*.sh PASS
+  - Commits: 465945a (docs audit), 10853ee (graph fixes + snapshot)
