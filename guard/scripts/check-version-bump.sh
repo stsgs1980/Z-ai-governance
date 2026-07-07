@@ -63,7 +63,7 @@ for vf in $VERSION_FILES; do
     fi
 done
 
-# Also check standards submodule version
+# Also check standards directory version
 STANDARDS_VERSION_FILE="standards/package.json"
 if [ -f "$STANDARDS_VERSION_FILE" ]; then
     if git diff --cached --name-only -- "$STANDARDS_VERSION_FILE" 2>/dev/null | grep -q .; then

@@ -152,7 +152,7 @@ When formatting code in comments and embedded documentation:
 +---------+---------+
           |
           +-----> Component C
-```text
+```
 
 ---
 
@@ -206,7 +206,7 @@ Output must contain only:
 ```javascript
 // Remove emoji and Unicode graphics
 text.replace(/[\u{1F000}-\u{1FFFF}]|[\u{2600}-\u{27BF}]|[\u{FE00}-\u{FEFF}]|[\u{1F900}-\u{1F9FF}]|[\u{2702}-\u{27B0}]/gu, '')
-```None
+```
 
 ### 8.3. Final Sanitization
 
@@ -303,7 +303,7 @@ Chat dialogue is enforced at level `[W] Warning`: violations do not block the ag
   </svg>
   <span class="icon-fallback" style="display:none">Save</span>
 </span>
-```bash
+```
 
 ```css
 .icon-fallback {
@@ -554,7 +554,7 @@ module.exports = {
     },
   },
 };
-```None
+```
 
 #### 10.1.2. Rule Architecture and Severity Mapping
 

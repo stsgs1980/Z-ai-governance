@@ -38,8 +38,8 @@ const SKIP_DIRS = new Set([
   'tool-results', 'download',
 ]);
 
-// Submodule directories that should be skipped when scanning from the
-// platform root (they are scanned separately as their own repos).
+// Top-level directories that should be skipped when scanning from the
+// platform root (they are scanned separately as their own trees).
 // Only used when rootDir == platformRoot to prevent duplicate IDs.
 const SUBMODULE_DIRS = new Set([
   'standards', 'guard', 'skills',
@@ -53,7 +53,7 @@ const SUBMODULE_DIRS = new Set([
  * and deduped via Set.
  *
  * extraSkipDirs: optional Set of directory names to skip in addition to
- * SKIP_DIRS. Used to exclude submodule dirs when scanning from platform root.
+ * SKIP_DIRS. Used to exclude top-level directories when scanning from platform root.
  */
 function listFiles(rootDir, patterns, extraSkipDirs) {
   const files = [];

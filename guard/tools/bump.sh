@@ -4,7 +4,7 @@
 # ============================================================================
 #
 # Related:    STD-META-001 §4.15, RULE-VERSION-013 (use ahg bump for version
-#             updates), RULE-ARCH-016 (submodule immutability)
+#             updates), RULE-ARCH-016 (directory immutability)
 #
 # Purpose:
 #   Single entry point for bumping versions across the Z-ai-governance. Wraps
@@ -13,9 +13,8 @@
 #
 # What gets bumped:
 #   1. Platform version: AGENT_RULES.md §9 (Version Lock)
-#   2. Guard submodule SHA in .gitmodules + parent repo pointer
-#   3. registry.json `platform_version` field
-#   4. Git tag vMAJOR.MINOR.PATCH on the platform repo
+#   2. registry.json `platform_version` field
+#   3. Git tag vMAJOR.MINOR.PATCH on the platform repo
 #
 # Trigger:
 #   bash guard/tools/bump.sh patch           # 2.6.0 -> 2.6.1

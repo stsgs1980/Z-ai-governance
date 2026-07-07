@@ -34,7 +34,7 @@ Main Agent
   +-- Task 3 (Code)  <------+  (uses Result 2)
                              |
   +-- Commit + Push  <------+
-```text
+```
 
 **When to use:** Tasks have strict dependencies; each task needs the output of the previous one.
 
@@ -77,7 +77,7 @@ Main Agent
   +-- Reduce Phase (sequential)
         +-- Main agent combines all results
         +-- Commit + push final output
-```text
+```
 
 **When to use:** A large task can be divided into independent chunks that are processed in parallel, then combined.
 
@@ -121,7 +121,7 @@ Task 2:  Depends on Task 1
 Task 3-a: Depends on Task 2
 Task 3-b: Depends on Task 2 (parallel with 3-a)
 Task 4:  Depends on Task 3-a AND Task 3-b
-```None
+```
 
 ### 3.2 Dependency Validation
 
@@ -164,7 +164,7 @@ PENDING --> IN_PROGRESS --> COMPLETED
    |              +--> FAILED
    |
    +--> CANCELLED
-```text
+```
 
 | State | Meaning | Next Action |
 |-------|---------|-------------|
@@ -275,7 +275,7 @@ Phase 3: Implementation (sequential, depends on Phase 2)
 Phase 4: Verification (sequential, depends on Phase 3)
   Task 4: Explore subagent verifies implementation
   Commit + push (if fixes needed)
-```None
+```
 
 ### 7.2 Audit and Restructuring Workflow
 
@@ -311,7 +311,7 @@ Phase 2: Refactoring (map-reduce)
 Phase 3: Integration Testing
   Task 3: Verify refactored code compiles and tests pass
   Commit + push
-```text
+```
 
 ---
 
@@ -395,7 +395,7 @@ This section documents discovered inconsistencies, missing content, and proposed
 However, no standard in the project defines what the `K-NN` notation is, who assigns the numbers, where they are tracked, or what their lifecycle is. The notation is used as if it were a well-known convention, but it has no governing document. New contributors encountering "K-01" cannot look it up anywhere.
 
 **Proposed solution:** One of:
-1. Add a §11B "Contradiction Tracking (K-NN Notation)" subsection to this standard defining: "K-NN is the project's notation for tracked cross-standard contradictions. Each K-NN identifier is assigned sequentially when a contradiction is discovered during audit. The identifier is referenced in (a) the standard's Version History entry that resolves it, (b) the standard's Known Issues section as the cross-reference, and (c) the audit workflow in §7.2. The K-NN registry is maintained in `Z-ai-standards/known-issues.md` (or this standard's appendix)."
+1. Add a §11B "Contradiction Tracking (K-NN Notation)" subsection to this standard defining: "K-NN is the project's notation for tracked cross-standard contradictions. Each K-NN identifier is assigned sequentially when a contradiction is discovered during audit. The identifier is referenced in (a) the standard's Version History entry that resolves it, (b) the standard's Known Issues section as the cross-reference, and (c) the audit workflow in §7.2. The K-NN registry is maintained in `standards/known-issues.md` (or this standard's appendix)."
 2. Replace the `K-NN` notation with the explicit `<PREFIX>-NN` notation used in this standard's §11A (e.g., ORC-001, REP-001). This unifies all known-issues tracking under one convention.
 3. Remove the `K-NN` references from §7.2 and the Version History entries of other standards, replacing them with descriptive text.
 

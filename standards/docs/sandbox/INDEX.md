@@ -112,7 +112,7 @@ legend right
   Dotted = indirect relationship
 endlegend
 @enduml
-```text
+```
 
 ---
 
@@ -137,6 +137,3 @@ Standards MUST NOT inline-copy content from this directory. Always link — this
   - The authority order changes (update §3 intro)
 - **Do run** `verify-sandbox.sh` before declaring a fullstack project ready (per `ENV-002 §5` Dev Server Protocol).
 
----
-
-Built with: Next.js 16 + TypeScript + Tailwind CSS

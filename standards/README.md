@@ -1,9 +1,7 @@
-# Z-ai-standards
+# Standards
 
 Normative standards, templates, and guides for the Z-ai ecosystem. Standards describe what is true in a domain -- they are slower-moving, more stable, and may be referenced by rules, procedures, tools, and skills in lower layers.
 
-[![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-61DAFB?style=flat-square)](https://react.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](https://opensource.org/licenses/MIT)
 
 ## Table of Contents
@@ -45,9 +43,10 @@ Normative standards, templates, and guides for the Z-ai ecosystem. Standards des
 ### Installation
 
 ```bash
-git clone https://github.com/stsgs1980/Z-ai-standards.git
-cd Z-ai-standards
-```None
+# Clone the platform repo (standards/ lives inside it)
+git clone https://github.com/stsgs1980/Z-ai-platform-unified.git
+cd Z-ai-platform-unified
+```
 
 ### Run
 
@@ -176,7 +175,7 @@ To add a new standard:
 
 Active migrations tracked in MIGRATIONS.md:
 
-- **M001**: ZAI-META-001 to STD-SKILL-001 (superseded) -- window open until Z-ai-skills v2.0.0
+- **M001**: ZAI-META-001 to STD-SKILL-001 (superseded) -- window open until migration complete
 - **M002**: RULE-001..RULE-017 to RULE-<DOMAIN>-NNN (renamed) -- window NOT YET OPEN
 - **M003**: legacy/ flat layout to standards/ flat layout with <DOMAIN>-<NNN>-<name>.md naming -- completed 2026-06-18
 - **M004**: ARCH-002-implementation-order.md (was STD-ARCH-001) to new ID STD-ARCH-002 -- completed 2026-06-18

@@ -38,7 +38,7 @@ Error
 |   |   +-- ThirdPartyAPIError
 |   +-- InternalError
 +-- SystemError (Unexpected, non-recoverable)
-```None
+```
 
 ### 1.2 Error Categories
 
@@ -141,7 +141,7 @@ export class ApplicationError extends Error {
     };
   }
 }
-```None
+```
 
 ### 2.3 Specific Error Classes
 
@@ -243,7 +243,7 @@ async function getUser(id: string) {
     return null; // Information loss!
   }
 }
-```None
+```
 
 ### 3.2 Error Wrapping
 
@@ -314,7 +314,7 @@ if (result.ok) {
 } else {
   console.error(result.error);
 }
-```text
+```
 
 ---
 
@@ -399,7 +399,7 @@ export function errorLogger(error: Error, req: Request, res: Response, next: Nex
 
   next(error);
 }
-```text
+```
 
 ---
 
@@ -493,7 +493,7 @@ export function errorHandler(error: Error, req: Request, res: Response, next: Ne
     },
   });
 }
-```text
+```
 
 ---
 
@@ -595,7 +595,7 @@ const { data, error, isError } = useQuery({
     return failureCount < 3;
   },
 });
-```None
+```
 
 ### 6.3 User-Facing Messages
 
@@ -668,7 +668,7 @@ export class ValidationError extends ApplicationError {
     super({ code: "VALIDATION_ERROR", message, statusCode: 400, recoverable: true, details });
   }
 }
-```text
+```
 
 §5.1 (Standard Response Format) shows the error response with `details` as an array of `{ field, message }` objects. The `FieldError` type is not defined anywhere in this standard — the reader has to infer its shape from the §5.1 example. A reader implementing this standard has to guess whether `FieldError` is `{ field: string; message: string }` or includes additional fields (e.g., `code`, `value`).
 
@@ -714,7 +714,7 @@ useEffect(() => {
   window.addEventListener("unhandledrejection", handler);
   return () => window.removeEventListener("unhandledrejection", handler);
 }, []);
-```text
+```
 
 Event-handler errors should be caught locally with try/catch and reported via the same logger."
 

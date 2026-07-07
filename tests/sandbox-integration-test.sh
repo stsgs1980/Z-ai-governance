@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# sandbox-integration-test.sh — Test Z-ai-governance in sandbox environment
+# sandbox-integration-test.sh — Test Z-ai-platform in sandbox environment
 #
 # Usage:
 #   bash tests/sandbox-integration-test.sh
@@ -15,7 +15,7 @@
 #
 # Environment:
 #   - Expects to run AFTER bootstrap.sh has been executed
-#   - Working directory: /home/z/my-project/Z-ai-governance
+#   - Working directory: /home/z/my-project/Z-ai-platform-unified
 #   - Does NOT clone from GitHub (uses existing installation)
 
 set -euo pipefail
@@ -119,25 +119,33 @@ test_git_repository_valid() {
 }
 
 # ============================================================================
-# Test 3: Submodules exist
+# Test 3: Core directories exist
 # ============================================================================
 
-test_submodules_exist() {
+test_core_directories_exist() {
     local errors=0
     
-    # Check standards submodule (.git is a file in submodules, not a directory)
-    if [ -e "$PLATFORM_DIR/standards/.git" ]; then
-        log_info "Standards submodule exists"
+    # Check standards/ directory
+    if [ -d "$PLATFORM_DIR/standards" ]; then
+        log_info "standards/ directory exists"
     else
-        log_fail "Standards submodule not found"
+        log_fail "standards/ directory not found"
         errors=$((errors + 1))
     fi
     
-    # Check guard submodule (.git is a file in submodules, not a directory)
-    if [ -e "$PLATFORM_DIR/guard/.git" ]; then
-        log_info "Guard submodule exists"
+    # Check guard/ directory
+    if [ -d "$PLATFORM_DIR/guard" ]; then
+        log_info "guard/ directory exists"
     else
-        log_fail "Guard submodule not found"
+        log_fail "guard/ directory not found"
+        errors=$((errors + 1))
+    fi
+    
+    # Check skills/ directory
+    if [ -d "$PLATFORM_DIR/skills" ]; then
+        log_info "skills/ directory exists"
+    else
+        log_fail "skills/ directory not found"
         errors=$((errors + 1))
     fi
     
@@ -480,31 +488,6 @@ test_git_config_correct() {
         log_fail "Platform core.fileMode = $platform_filemode (expected false)"
         errors=$((errors + 1))
     fi
-    
-    # Check core.fileMode in standards
-    if [ -d "$PLATFORM_DIR/standards/.git" ]; then
-        local standards_filemode
-        standards_filemode=$(git -C "$PLATFORM_DIR/standards" config core.fileMode 2>/dev/null || echo "not set")
-        
-        if [ "$standards_filemode" = "false" ]; then
-            log_info "Standards core.fileMode = false"
-        else
-            log_warn "Standards core.fileMode = $standards_filemode"
-        fi
-    fi
-    
-    # Check core.fileMode in guard
-    if [ -d "$PLATFORM_DIR/guard/.git" ]; then
-        local guard_filemode
-        guard_filemode=$(git -C "$PLATFORM_DIR/guard" config core.fileMode 2>/dev/null || echo "not set")
-        
-        if [ "$guard_filemode" = "false" ]; then
-            log_info "Guard core.fileMode = false"
-        else
-            log_warn "Guard core.fileMode = $guard_filemode"
-        fi
-    fi
-    
     if [ "$errors" -eq 0 ]; then
         return 0
     else
@@ -674,13 +657,14 @@ test_summary() {
     done
     
     echo ""
-    echo "Submodules:"
-    if [ -e "$PLATFORM_DIR/standards/.git" ]; then
-        echo "  - standards: $(git -C "$PLATFORM_DIR/standards" rev-parse --short HEAD 2>/dev/null || echo 'unknown')"
-    fi
-    if [ -e "$PLATFORM_DIR/guard/.git" ]; then
-        echo "  - guard: $(git -C "$PLATFORM_DIR/guard" rev-parse --short HEAD 2>/dev/null || echo 'unknown')"
-    fi
+    echo "Core directories:"
+    for dir in standards guard skills; do
+        if [ -d "$PLATFORM_DIR/$dir" ]; then
+            echo "  - $dir/: exists"
+        else
+            echo "  - $dir/: MISSING"
+        fi
+    done
     
     echo ""
     return 0
@@ -692,7 +676,7 @@ test_summary() {
 
 main() {
     echo "=========================================="
-    echo "Z-ai-governance Sandbox Integration Tests"
+    echo "Z-ai-platform Sandbox Integration Tests"
     echo "=========================================="
     echo ""
     echo "Platform directory: $PLATFORM_DIR"
@@ -702,7 +686,7 @@ main() {
     # Run tests
     run_test "Platform directory exists" test_platform_directory_exists
     run_test "Git repository is valid" test_git_repository_valid
-    run_test "Submodules exist" test_submodules_exist
+    run_test "Core directories exist" test_core_directories_exist
     run_test "Skills directory exists" test_skills_directory_exists
     run_test "zai-sandbox-rules skill exists" test_sandbox_rules_exists
     run_test "All skills have SKILL.md" test_all_skills_have_skillmd

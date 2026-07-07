@@ -89,6 +89,9 @@ function discoverPlatformRoot() {
     const gitmodules = path.join(dir, ".gitmodules");
     if (fs.existsSync(gitmodules)) {
       const content = fs.readFileSync(gitmodules, "utf8");
+      // Backward-compat detection: old submodule-era repos had .gitmodules
+      // referencing Z-ai-standards and Z-ai-skills. This path is kept for
+      // any repos still using that layout.
       if (content.includes("Z-ai-standards") && content.includes("Z-ai-skills")) {
         return dir;
       }

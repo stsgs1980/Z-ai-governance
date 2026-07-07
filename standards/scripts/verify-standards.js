@@ -57,7 +57,7 @@ const path = require("path");
 // ---------------------------------------------------------------------------
 // Paths — RELATIVE to this script's location so the corpus works:
 //   - standalone:     <standalone-checkout>/scripts/verify-standards.js
-//   - as a submodule: <host-repo>/standards/scripts/verify-standards.js
+//   - as a directory: <host-repo>/standards/scripts/verify-standards.js
 //   - in CI:          any checkout path GitHub Actions uses
 //
 // Layout (post-2026-06 migration to flat <DOMAIN>-<NNN>-<name>.md naming):

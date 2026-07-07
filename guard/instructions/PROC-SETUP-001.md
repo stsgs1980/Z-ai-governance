@@ -27,7 +27,7 @@ last-updated: 2026-06-22
 ## When this procedure fires
 
 Triggered manually by an agent or operator when initializing a new
-Z-ai-guard workspace. NOT called by `bootstrap.sh` (which is the
+guard/ workspace. NOT called by `bootstrap.sh` (which is the
 platform-side installer and supersedes the retired PROC-PLATFORM-005).
 
 Typical trigger:
@@ -71,8 +71,8 @@ post-install verification.)
 ## Open questions (resolve when implementing)
 
 - Should this procedure create symlinks from `guard/scripts/*.sh` into
-  `.git/hooks/`? Or should that be a separate `install-hooks.sh`?
-  (Platform already has `install-hooks.sh` — coordination needed.)
+  `.git/hooks/`? Or should that be a separate `bootstrap.sh`?
+  (Platform already has `bootstrap.sh` — coordination needed.)
 - Should this procedure regenerate `registry.json` automatically, or
   require explicit `--regenerate` flag?
 

@@ -266,11 +266,14 @@ function discoverPlatformRoot(opts) {
   }
 
   // Priority 3: walk up from script __dirname looking for .gitmodules
+  // (backward-compat for old submodule-era checkouts)
   let dir = __dirname;
   for (let i = 0; i < 10; i++) {
     const gitmodules = path.join(dir, ".gitmodules");
     if (fs.existsSync(gitmodules)) {
       const content = fs.readFileSync(gitmodules, "utf8");
+      // Detect old submodule-era platform roots by checking for known
+      // repo names in .gitmodules content.
       if (
         content.includes("Z-ai-standards") ||
         content.includes("Z-ai-guard") ||
@@ -310,12 +313,13 @@ function discoverPlatformRoot(opts) {
 function findRepos(platformRoot, opts) {
   const repos = {};
 
-  // Look for known repo directory names (case-insensitive)
+  // Look for known directory names (old repo names first for backward compat,
+  // then flat directory names).
   const candidates = {
     standards: ["Z-ai-standards", "standards"],
     guard: ["Z-ai-guard", "guard"],
     skills: ["Z-ai-skills", "skills"],
-    platform: ["Z-ai-governance", "platform"], // often == platformRoot
+    platform: ["Z-ai-governance", "Z-ai-platform-unified", "platform"], // often == platformRoot
   };
 
   for (const [name, candidatesList] of Object.entries(candidates)) {

@@ -4,7 +4,7 @@ title: Session Start Protocol (drift prevention)
 version: 1.0
 level: [C]
 status: ACTIVE
-source: Z-ai-guard v3.0.0 (RULE-AGENT-009)
+source: Z-ai-governance v1.3.0 (RULE-AGENT-009)
 owning-standard: STD-META-001 v2.0
 last-updated: 2026-06-17
 related:

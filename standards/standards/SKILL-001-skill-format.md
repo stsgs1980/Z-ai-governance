@@ -68,7 +68,7 @@ from external artifacts.
 │  -> Validated by verify-id-graph.js           │
 │    (only when id is present)                 │
 └──────────────────────────────────────────────┘
-```text
+```
 
 ---
 
@@ -112,7 +112,7 @@ license: MIT
 > Last Updated: <YYYY-MM>
 > Related: <comma-separated IDs> (optional)
 > Aligned_with: <comma-separated IDs> (optional)
-```None
+```
 
 ### 3.3. Field Requirements
 
@@ -170,7 +170,7 @@ A skill **MUST** have an `id` field when ANY of the following is true:
 | Referenced by ID from a rule                      | `RULE-MONOLITH-012 enforced_by: ZAI-ARCH-002`                 |
 | Referenced by ID from another skill's `Related:`  | `> Related: ZAI-ARCH-002, ZAI-QA-001`                         |
 | Listed in `MIGRATIONS.md` (deprecated/superseded) | `ZAI-MEM-001 -> ZAI-MEM-101 (renamed)`                        |
-| Published to a shared registry                    | Multi-author repos, public skill packs                        |
+| Published to shared registries                   | Multi-author teams, public skill packs                        |
 
 A skill **MAY** have an `id` field when none of the above apply, but
 it is not required. Most personal skills do not need an ID.
@@ -212,8 +212,8 @@ assigned only when a skill meets §4.2 criteria.
 The Z.ai sandbox provides system skills in `/home/z/my-project/skills/`.
 These skills do **not** receive `ZAI-` prefix IDs because:
 
-1. They are managed by the sandbox runtime, not by the Z-ai-skills repo
-2. They may change without a PR to Z-ai-skills
+1. They are managed by the sandbox runtime, not by the skills/ directory
+2. They may change without a PR to skills/
 3. Their identity is established by folder name, not by ID
 
 ### 5.1. Categories
@@ -283,7 +283,7 @@ user requests against it. Pattern:
 ```text
 description: "Use this skill when user asks for X, mentions Y, or needs Z.
 Also activate on: 'keyword1', 'keyword2', 'phrase example'."
-```None
+```
 
 ### 7.2. Trigger Field (Optional Supplement)
 
@@ -343,7 +343,7 @@ skill-name/
 │   └── helper-script.py
 └── assets/            (optional — templates, images, etc.)
     └── templates/
-```None
+```
 
 ### 8.2. Size Guidelines
 
@@ -385,7 +385,7 @@ to create new skills. The skill-creator will:
 
 ## 10. Validation
 
-### 10.1. Per-Skill Checks (in Z-ai-skills CI)
+### 10.1. Per-Skill Checks (in CI)
 
 | Check                                                          | Tool                  | Check ID | Strictness                                                                                              |
 | -------------------------------------------------------------- | --------------------- | -------- | ------------------------------------------------------------------------------------------------------- |
@@ -403,11 +403,11 @@ to create new skills. The skill-creator will:
 | `CONTRACT.md` <= 500 lines (META-001 §4.18.1, CONTRACT.md row) | `verify-skills.js`    | V12b     | **HARD** (all skills with CONTRACT.md) — added 2026-06-21 (O-017 Phase D2)                              |
 | `README.md` <= 400 lines (META-001 §4.18.1, README.md row)     | `verify-skills.js`    | V12c     | **HARD** (all skills with README.md) — added 2026-06-22 (S10c activation, gepetto+react-dev remediated) |
 
-### 10.2. Cross-Repo Checks (in Z-ai-governance CI)
+### 10.2. Cross-Directory Checks (in CI)
 
 | Check                              | Tool                 | Check ID | Strictness                                  |
 | ---------------------------------- | -------------------- | -------- | ------------------------------------------- |
-| All `ZAI-` IDs unique across repos | `verify-id-graph.js` | G01      | **SOFT** (only skills with IDs)             |
+| All `ZAI-` IDs unique across directories | `verify-id-graph.js` | G01      | **SOFT** (only skills with IDs)             |
 | All `Related:` references resolve  | `verify-id-graph.js` | G02      | **HARD** (when edges exist)                 |
 | Compatibility DAG valid            | `verify-id-graph.js` | G14      | **SOFT** (only skills with `compatibility`) |
 | No `SKILL -> PROC` edges           | `verify-id-graph.js` | G10      | **HARD** (when edges exist)                 |
@@ -437,13 +437,13 @@ issues are marked `[OPEN]`.
 > frontmatter. They are graph edges consumed only by `verify-id-graph.js`.
 
 This rule was correct when the standard was written (v1.0, 2026-06-17),
-but actual repo practice has diverged. As of 2026-06-18:
+but actual practice has diverged. As of 2026-06-18:
 
-- All 17 RULE files in `Z-ai-guard/rules/RULE-*.md` declare
+- All 17 RULE files in `guard/rules/RULE-*.md` declare
   their `related:` edges as a YAML list in frontmatter (e.g.
   `RULE-ANSWER-001` has `related: [RULE-HONEST-006, RULE-STRUCT-007]`
   in YAML, no `> Related:` blockquote line at all).
-- All 24 ZAI skills in `Z-ai-skills/skills/<name>/SKILL.md` declare their
+- All 24 ZAI skills in `skills/skills/<name>/SKILL.md` declare their
   `related:` edges as a YAML list in frontmatter. The blockquote header
   carries `> ID:`, `> Version:`, `> Last Updated:` but typically omits
   `> Related:`.
@@ -492,19 +492,18 @@ skill that references it is invoked.
 ```yaml
 id: ZAI-META-001
 version: 1.1
-```text
+```
 
-But the actual file at `Z-ai-skills/skills/skill-id-system/SKILL.md`
+But the actual file at `skills/skills/skill-id-system/SKILL.md`
 (as of 2026-06-18) is still at v1.0 — the migration window described in
 §12.4 has not started. Readers who copy the template expecting it to
 match the current file will find a version mismatch.
 
-**Proposed solution:** Either (a) bump `Z-ai-skills/skills/skill-id-system/SKILL.md`
+**Proposed solution:** Either (a) bump `skills/skills/skill-id-system/SKILL.md`
 to v1.1 to match the template (preferred — closes the migration window's
 first phase), or (b) add a note to Appendix B clarifying that the template
 shows the target state, not the current state. Option (a) requires a PR
-to Z-ai-skills; option (b) is a one-line edit here. Lean towards (a) when
-the next Z-ai-skills release is cut.
+to skills/; option (b) is a one-line edit here.
 
 ---
 
@@ -517,7 +516,7 @@ personal skills do not need an ID.
 
 ### 11.2. Process
 
-1. **Open Issue** in `Z-ai-skills` proposing the new skill with tentative ID
+1. **Open Issue** in `skills/` proposing the new skill with tentative ID
 2. Maintainer reviews; assigns final ID from Appendix A registry
 3. PR adds the skill folder with `SKILL.md` conforming to §3.2
 4. PR updates Appendix A registry in this standard
@@ -550,9 +549,9 @@ personal skills do not need an ID.
 
 | Content                        | Stays in                              | Why                                                     |
 | ------------------------------ | ------------------------------------- | ------------------------------------------------------- |
-| `skill-id-system` folder       | `Z-ai-skills/skills/skill-id-system/` | Trigger phrases need to resolve during migration window |
+| `skill-id-system` folder       | `skills/skills/skill-id-system/` | Trigger phrases need to resolve during migration window |
 | `ZAI-META-001` ID              | Registry (Appendix A)                 | Marked `SUPERSEDED`                                     |
-| `skill-creator` (ZAI-META-002) | `Z-ai-skills/skills/skill-creator/`   | Updated to read this standard                           |
+| `skill-creator` (ZAI-META-002) | `skills/skills/skill-creator/`   | Updated to read this standard                           |
 
 ### 12.3. ZAI-META-001 After Migration
 
@@ -633,7 +632,7 @@ They may declare an `Aligned_with:` edge if drift becomes a problem.
 
 **Minimum (no ID):**
 
-- [ ] Skill folder created at `Z-ai-skills/skills/<name>/`
+- [ ] Skill folder created at `skills/skills/<name>/`
 - [ ] `SKILL.md` present with YAML frontmatter + H1 + blockquote per §3.1
 - [ ] Required fields present: `name`, `description`, `version`
 - [ ] `name` matches folder name
@@ -731,12 +730,12 @@ They may declare an `Aligned_with:` edge if drift becomes a problem.
 
 ## Appendix B: ZAI-META-001 Thin Pointer Template
 
-After migration, `Z-ai-skills/skills/skill-id-system/SKILL.md` becomes:
+After migration, `skills/skills/skill-id-system/SKILL.md` becomes:
 
 ```markdown
 ---
 name: skill-id-system
-description: ID system for Z.ai skills. The authoritative specification has moved to STD-SKILL-001 in Z-ai-standards. This skill remains so trigger phrases ('skill id', 'create skill') continue to resolve during the migration window.
+description: ID system for Z.ai skills. The authoritative specification has moved to STD-SKILL-001 in `standards/standards/`. This skill remains so trigger phrases ('skill id', 'create skill') continue to resolve during the migration window.
 id: ZAI-META-001
 version: 1.1
 compatibility: both
@@ -751,16 +750,16 @@ trigger: skill id, create skill, new skill
 > Superseded_by: STD-SKILL-001
 > Last Updated: 2026-07
 
-**This skill's content has moved to STD-SKILL-001** in Z-ai-standards.
+**This skill's content has moved to STD-SKILL-001** in `standards/standards/`.
 
 For the authoritative skill format and identification specification, see:
 
-- `Z-ai-standards/standards/STD-SKILL-001-v1.0.md`
+- `standards/standards/SKILL-001-skill-format.md`
 - Or run: `cat $STANDARDS_ROOT/standards/STD-SKILL-001-v1.0.md`
 
 This file remains in place so trigger phrases continue to resolve during
-the v1.x -> v2.0.0 migration window. It will be removed in Z-ai-skills
-v2.0.0.
+the v1.x -> v2.0.0 migration window. It will be removed when the
+migration window closes.
 ```
 
 ---

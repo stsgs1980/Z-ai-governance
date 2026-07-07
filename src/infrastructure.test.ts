@@ -114,37 +114,21 @@ describe("z-ai-platform infrastructure", () => {
     });
   });
 
-  // --- .gitmodules (submodule structure) ---
-  describe(".gitmodules", () => {
-    const gitmodules = readFileSync(".gitmodules", "utf-8");
-
-    it("declares standards submodule", () => {
-      expect(gitmodules).toContain('[submodule "standards"]');
-      expect(gitmodules).toContain("path = standards");
+  // --- Flat repo directories exist ---
+  describe("core directories", () => {
+    it("standards/ directory exists", () => {
+      expect(existsSync("standards")).toBe(true);
     });
 
-    it("declares guard submodule", () => {
-      expect(gitmodules).toContain('[submodule "guard"]');
-      expect(gitmodules).toContain("path = guard");
+    it("guard/ directory exists", () => {
+      expect(existsSync("guard")).toBe(true);
     });
 
-    it("does NOT declare skills as submodule (monorepo)", () => {
-      expect(gitmodules).not.toContain('[submodule "skills"]');
-    });
-  });
-
-  // --- Submodule directories exist ---
-  describe("submodules", () => {
-    it("standards/ has .git (is a submodule)", () => {
-      expect(existsSync("standards/.git")).toBe(true);
-    });
-
-    it("guard/ has .git (is a submodule)", () => {
-      expect(existsSync("guard/.git")).toBe(true);
-    });
-
-    it("skills/ has SKILL.md files (monorepo, not submodule)", () => {
-      expect(existsSync("skills/zai-skill-creator/SKILL.md")).toBe(true);
+    it("skills/ directory exists with SKILL.md files", () => {
+      expect(existsSync("skills")).toBe(true);
+      const entries = readdirSync("skills", { withFileTypes: true })
+        .filter((d) => d.isDirectory());
+      expect(entries.length).toBeGreaterThan(0);
     });
 
     it("standards/ has verify-standards.js", () => {

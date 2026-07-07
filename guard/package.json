@@ -1,7 +1,7 @@
 {
   "name": "z-ai-guard",
   "version": "0.1.0",
-  "description": "Z.ai guard submodule — rules, registry, and verification scripts",
+  "description": "Z.ai guard — rules, registry, and verification scripts",
   "private": true,
   "type": "commonjs",
   "scripts": {

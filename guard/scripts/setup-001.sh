@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # ============================================================================
-# PROC-SETUP-001: Z-ai-guard workspace installer
+# PROC-SETUP-001: guard workspace installer
 # ============================================================================
 #
 # Related:    STD-META-001 (ID system), RULE-ENV-008 (sandbox verification)
 # Calls:      build-registry.py (to (re)generate registry.json)
 #
 # Purpose:
-#   Verify that a Z-ai-guard workspace has the expected directory structure
+#   Verify that a guard workspace has the expected directory structure
 #   and that the registry is in sync with rules/INDEX.md. Safe to re-run.
 #
 # Trigger:
@@ -22,7 +22,7 @@
 #
 # Open questions resolved by this implementation:
 #   - Q: create symlinks into .git/hooks/?
-#     A: NO. Platform-level install-hooks.sh owns .githooks/. Guard stays out.
+#     A: NO. Platform-level bootstrap.sh owns .husky/. Guard stays out.
 #   - Q: auto-regenerate registry.json?
 #     A: YES, always. build-registry.py is idempotent. --check skips the write.
 #
@@ -50,7 +50,7 @@ for arg in "$@"; do
   esac
 done
 
-echo "[setup-001] PROC-SETUP-001 v2.0 — Z-ai-guard workspace installer"
+echo "[setup-001] PROC-SETUP-001 v2.0 — guard workspace installer"
 echo "[setup-001] Guard dir: $GUARD_DIR"
 echo ""
 

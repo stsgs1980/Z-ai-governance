@@ -192,7 +192,7 @@
     },
     {
       "id": "RULE-ARCH-016",
-      "title": "AHG submodule is immutable architecture (no removal, no inlining)",
+      "title": "Governance layer is immutable architecture (no removal, no inlining)",
       "version": "1.0",
       "level": "critical",
       "status": "ACTIVE",
@@ -333,7 +333,7 @@
       "file": "(removed)",
       "source": "STD-META-001 §4.15",
       "retired_at": "2026-07-06",
-      "retired_reason": "File removed; functionality replaced by native `git submodule update --remote` + standards-version-bump in CI",
+      "retired_reason": "File removed; functionality replaced by native git pull + standards-version-bump in CI",
       "implements": null,
       "calls": [],
       "owning_standard": "STD-META-001 v2.0.4"

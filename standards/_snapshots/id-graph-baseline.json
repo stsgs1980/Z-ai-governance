@@ -2,12 +2,12 @@
   "version": "1.1.7",
   "effective_date": "2026-07-06",
   "summary": {
-    "ids_extracted": 24,
-    "related_edges": 50,
+    "ids_extracted": 23,
+    "related_edges": 48,
     "aligned_with_edges": 0,
     "hard_pass": 13,
     "hard_fail": 0,
-    "warnings": 19
+    "warnings": 37
   },
   "checks": [
     {
@@ -124,7 +124,19 @@
     },
     {
       "id": "W13",
+      "detail": "AGENT-002-orchestration.md: references \"standards/known-issues.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W12",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: no §XA Known Issues section (convention per ENV-002 v1.2 §10A)"
+    },
+    {
+      "id": "W13",
       "detail": "ARCH-001-architecture-and-repo-layout.md: references \"CONTRIBUTING.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"skills/INDEX.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
@@ -132,7 +144,27 @@
     },
     {
       "id": "W13",
-      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-governance/CONTRIBUTING.md\" which does not exist in standards/ tree"
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"RULE-ARCH-016.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"skills/skills/skill-creator/SKILL.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"skill-creator.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"bootstrap.sh\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"guard/rules/RULE-ENV-008.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"skills/skills/INDEX.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
@@ -144,15 +176,11 @@
     },
     {
       "id": "W13",
-      "detail": "META-001-id-registry.md: references \"Z-ai-standards/MIGRATIONS.md\" which does not exist in standards/ tree"
+      "detail": "META-001-id-registry.md: references \"standards/MIGRATIONS.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
-      "detail": "META-001-id-registry.md: references \"Z-ai-governance/bootstrap.sh\" which does not exist in standards/ tree"
-    },
-    {
-      "id": "W13",
-      "detail": "META-001-id-registry.md: references \"Z-ai-governance/status.sh\" which does not exist in standards/ tree"
+      "detail": "META-001-id-registry.md: references \"standards/standards/SKILL_ID_SYSTEM_STANDARD.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
@@ -164,7 +192,51 @@
     },
     {
       "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"skills/skills/INDEX.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
       "detail": "META-001-standard-id-system.md: references \"guard/rules/INDEX.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"commit-work/CONTRACT.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"session-handoff/CONTRACT.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"gepetto/README.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"react-dev/README.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"skills/skills/skill-id-system/SKILL.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"standards/standards/SKILL_ID_SYSTEM_STANDARD.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"skills/MIGRATIONS.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"guard/MIGRATIONS.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "SKILL-001-skill-format.md: references \"skills/skills/skill-id-system/SKILL.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "SKILL-001-skill-format.md: references \"standards/standards/SKILL-001-skill-format.md\" which does not exist in standards/ tree"
     }
   ],
   "ids": [
@@ -191,7 +263,7 @@
       "prefix": "STD",
       "domain": "ARCH",
       "number": "001",
-      "title": "Standard: Architecture & Repo Layout v1.1.2 (EN)",
+      "title": "Standard: Architecture & Repo Layout v1.2.0 (EN)",
       "file": "/home/z/my-project/Z-ai-platform-unified/standards/standards/ARCH-001-architecture-and-repo-layout.md",
       "repo": "standards"
     },
@@ -329,15 +401,6 @@
       "title": "Standard: Skill Format & Identification v1.1 (EN)",
       "file": "/home/z/my-project/Z-ai-platform-unified/standards/standards/SKILL-001-skill-format.md",
       "repo": "standards"
-    },
-    {
-      "id": "RULE-ENV-008",
-      "prefix": "RULE",
-      "domain": "ENV",
-      "number": "008",
-      "title": "verify-id-graph.js — Specification v1.0",
-      "file": "/home/z/my-project/Z-ai-platform-unified/standards/docs/verify-id-graph-spec-v1.0.md",
-      "repo": "platform"
     },
     {
       "id": "STD-DOC-007",
@@ -608,16 +671,6 @@
       "file": "/home/z/my-project/Z-ai-platform-unified/standards/standards/SKILL-001-skill-format.md"
     },
     {
-      "from": "RULE-ENV-008",
-      "to": "STD-ENV-001",
-      "file": "/home/z/my-project/Z-ai-platform-unified/standards/docs/verify-id-graph-spec-v1.0.md"
-    },
-    {
-      "from": "RULE-ENV-008",
-      "to": "STD-ENV-002",
-      "file": "/home/z/my-project/Z-ai-platform-unified/standards/docs/verify-id-graph-spec-v1.0.md"
-    },
-    {
       "from": "STD-DOC-004",
       "to": "STD-DOC-002",
       "file": "/home/z/my-project/Z-ai-platform-unified/standards/templates/README_TEMPLATE.md"
@@ -631,7 +684,7 @@
   "aligned_with_edges": [],
   "snapshot_meta": {
     "script_version": "1.1.7",
-    "created_at": "2026-07-07T18:41:26.372Z",
+    "created_at": "2026-07-07T19:21:39.663Z",
     "purpose": "Baseline for verify-id-graph.js --compare. Do not hand-edit; regenerate with --update-snapshot."
   }
 }

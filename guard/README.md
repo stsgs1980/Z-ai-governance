@@ -1,4 +1,4 @@
-# Z-ai-guard
+# Guard
 
 Enforcement layer for the Z-ai ecosystem: rules (what agents must do), procedures (what runs when a rule fires), and tools (the scripts rules call). All 17 RULE, 4 PROC, and 2 TOOL are ACTIVE with M003 + M004 migrations complete.
 
@@ -157,7 +157,7 @@ TOOL-VERIFY-002 (`verify-standards.js`), TOOL-VERIFY-004 (`verify-id-graph.js`),
 
 ### Phantom IDs in STD-META-001
 
-STD-META-001 lists PROC and TOOL IDs with status ACTIVE pointing at `Z-ai-guard/...` paths. Until M003/M004 land formally, those rows should read `ACTIVE (planned)` or `PENDING migration`.
+STD-META-001 lists PROC and TOOL IDs with status ACTIVE pointing at `guard/...` paths. Until M003/M004 land formally, those rows should read `ACTIVE (planned)` or `PENDING migration`.
 
 ### Dangling Related: edges in 6 rules
 
@@ -174,7 +174,7 @@ Six rules reference IDs that do not match the ID format (`<PREFIX>-<DOMAIN>-<NNN
 
 The ID-graph verifier reports 13/13 HARD PASS on the graph that survived filtering, not on the rules as written. Fixing requires landing M003/M004 with proper IDs and updating the rule Related: lists.
 
-Note: This repo is now a flat copy (Z-ai-governance). The submodule-related aspects of these issues may no longer apply.
+Note: These issues were documented during the legacy multi-repo era and may no longer apply.
 
 ## License
 

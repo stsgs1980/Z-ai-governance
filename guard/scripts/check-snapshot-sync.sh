@@ -90,12 +90,12 @@ if [ ! -f "$SNAPSHOT" ]; then
   exit 1
 fi
 
-# Pre-flight: standards submodule must be checked out
+# Pre-flight: standards directory must be present
 if [ ! -f "standards/scripts/verify-id-graph.js" ]; then
-  emit_info "standards submodule not checked out — skipping snapshot check"
+  emit_info "standards directory not checked out — skipping snapshot check"
   echo ""
   echo "=== Summary ==="
-  echo "  Status: skipped (no submodule)"
+  echo "  Status: skipped (no standards directory)"
   exit 0
 fi
 

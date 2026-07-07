@@ -64,7 +64,7 @@ npm install --save-dev eslint-plugin-markdown
 
 # Custom rule for Unicode Policy enforcement (see STD-DOC-003 section 10.1)
 # This file lives in your project at: eslint-rules/unicode-policy.js
-```text
+```
 
 **Dependency chain:**
 
@@ -153,7 +153,7 @@ export default [
     },
   },
 ];
-```None
+```
 
 ### 10.4. ESLint Configuration (Legacy — .eslintrc.js)
 
@@ -240,7 +240,7 @@ module.exports = {
     };
   },
 };
-```None
+```
 
 #### 10.5.2. Rule: `no-emoji-in-md`
 
@@ -325,7 +325,7 @@ The relationship between this standard (STD-DOC-002) and the Unicode Policy (STD
     "node lint-md.js"
   ]
 }
-```text
+```
 
 **Note:** `lint-md.js` defaults to `--level=C`, so .md violations also block the commit. To soften enforcement for a specific project, use `node lint-md.js --level=W` instead — violations will be reported as warnings but will not block the commit.
 
@@ -354,7 +354,7 @@ ESLint supports inline disable comments, but they must be used sparingly and wit
 ```markdown
 <!-- eslint-disable-next-line unicode-policy/emoji-in-md -->
 This line intentionally contains an emoji for demonstration purposes.
-```text
+```
 
 **Rules for inline disables:**
 

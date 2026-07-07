@@ -181,12 +181,12 @@ TypeScript configuration (strict mode, ES2022+, ESNext modules).
 | `worklog.md`                      | Append-only action log (STD-DOC-008)                           |
 | `bootstrap.sh`                    | Single entry point: install + update + restore                 |
 | `scripts/status.sh`               | Project health diagnostics                                     |
-| `scripts/save-work.sh`            | Save current work                                              |
+| `scripts/build-skills-registry.cjs`| Build skills registry JSON from SKILL.md frontmatter            |
+| `scripts/validate-skills.cjs`    | Validate skills registry and connections                       |
 | `package.json`                    | NPM configuration: scripts, dependencies                       |
 | `.prettierrc`                     | Prettier: LF, 100 chars, double quotes                         |
 | `.zai/config.json`                | Single source of thresholds for governance                     |
 | `.env.example`                    | Environment variable example                                   |
-| `scripts/fix-code-block-langs.py` | One-time script for fixing code block language tags            |
 
 ---
 

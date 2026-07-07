@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# RULE-ARCH-016 — AHG submodule immutable architecture
+# RULE-ARCH-016 — Guard directory immutable architecture
 # RULE-ARCH-017 — Upstream write protection (no consumer agent may push to AHG)
 #
 # Verifies: no staged files inside guard/ or standards/ (except worklog.md)
@@ -77,20 +77,13 @@ else
     emit_pass "no staged files to check"
 fi
 
-# 4. Check if .gitmodules is modified (ARCH-016)
-if git diff --cached --name-only 2>/dev/null | grep -q ".gitmodules"; then
-    emit_fail ".gitmodules is staged — removing AHG submodule is forbidden (RULE-ARCH-016)"
-else
-    emit_pass ".gitmodules not modified"
-fi
-
-# 5. Verify submodule still exists and AGENT_RULES.md is at platform root
+# 4. Verify guard directory exists and AGENT_RULES.md is at platform root
 if [ -d "guard" ] && [ -f "AGENT_RULES.md" ]; then
-    emit_pass "guard submodule present, AGENT_RULES.md found at platform root"
+    emit_pass "guard directory present, AGENT_RULES.md found at platform root"
 elif [ -d "guard" ]; then
-    echo "  [INFO] guard directory exists but AGENT_RULES.md not found (submodule may need init)"
+    echo "  [INFO] guard directory exists but AGENT_RULES.md not found (directory may need setup)"
 else
-    emit_fail "guard submodule missing (RULE-ARCH-016: AHG submodule is structural)"
+    emit_fail "guard directory missing (RULE-ARCH-016: guard directory is structural)"
 fi
 
 echo ""

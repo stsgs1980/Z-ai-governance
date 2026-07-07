@@ -36,15 +36,14 @@
  *   O(1)), this is the wrong shape.
  *
  *   Root-cause fix: expand the candidates list to include the skills/
- *   subtree (skills/skills/{name}/). This resolves path-like refs
+ *   subtree (skills/{name}/). This resolves path-like refs
  *   (e.g. `commit-work/CONTRACT.md`, `session-handoff/CONTRACT.md`,
  *   `gepetto/README.md`, `react-dev/README.md`) to their actual files
- *   in the skills/ submodule, instead of warning on them as broken.
+ *   in the skills/ directory, instead of warning on them as broken.
  *
  *   Bare filename mentions (e.g. `CONTRACT.md`, `SKILL.md`, `README.md`)
  *   remain in the whitelist — they are generic file-type names, not
- *   navigational references. The whitelist shrinks from ~30 entries
- *   to ~10 (the truly generic/historical ones).
+ *   navigational references.
  *
  *   After this fix, W13 warning count on the current corpus drops from
  *   11 to ~3 (only genuinely broken refs remain).
@@ -84,54 +83,32 @@ const W13_WHITELIST = new Set([
   "validate.sh",
   "install.sh",
   "doctor.sh",
-  "install-hooks.sh",
   "line-count-check.sh",
   "scripts/setup-git.sh",
-  // Cross-repo MIGRATIONS.md — each repo MAY have one but not required
+  // MIGRATIONS.md references (not all directories have one)
   "Z-ai-governance/MIGRATIONS.md",
-  "Z-ai-guard/MIGRATIONS.md",
-  "Z-ai-skills/MIGRATIONS.md",
-  // Skills tree paths referenced for documentation but not required to exist
-  "Z-ai-skills/skills/INDEX.md",
-  "Z-ai-skills/skills/skill-id-system/SKILL.md",
-  "Z-ai-skills/skills/skill-creator/SKILL.md",
-  "skills/INDEX.md", // skills tree index, lives in Z-ai-skills/skills/INDEX.md
   // Templates referenced for context but not yet shipped
   "agents/templates/context-handoff-template.md",
   // Pre-restructure filename still referenced in historical context
-  "Z-ai-standards/standards/SKILL_ID_SYSTEM_STANDARD.md",
-  "Z-ai-standards/known-issues.md",
-  // RULE-ARCH-016 lives in Z-ai-guard/rules/, not Z-ai-governance/
+  "SKILL_ID_SYSTEM_STANDARD.md",
+  // RULE-ARCH-016 lives in guard/rules/, not at platform root
   "Z-ai-governance/RULE-ARCH-016.md",
-  // skill-creator.md is a planning reference, not yet shipped
-  "Z-ai-governance/skill-creator.md",
   // v1.1.2 additions: planned/historical refs surfaced by ARCH-001 §5A cascade section
   "Z-ai-governance/doctor.sh", // planned diagnostics script
-  "Z-ai-guard/rules/RULE-ENV-008.md", // planned rule for bootstrap enforcement
-  "guard/rules/RULE-ENV-008.md", // same, relative form
-  "RULE-ENV-008.md", // bare form, see ARCH-001 §8 recovery procedures
+  "RULE-ENV-008.md", // planned rule, see ARCH-001 §8 recovery procedures
   // v1.1.3 additions: planned companion file referenced in DESIGN-001-profile-terminal-dashboard.md TDP-002
   "DESIGN-001-cards-reference.md", // planned split target if companion grows past 1200 lines
   // v1.1.6 additions (O-018): historical e2e test file, mentioned in CI-AND-TESTING.md §9.2.3 narrative
   "_e2e_test_v11.md",
-  // v1.1.6 additions (O-018): run-contract.sh is a real script but lives in skills/skills/commit-work/scripts/
+  // v1.1.6 additions (O-018): run-contract.sh is a real script but lives in skills/commit-work/scripts/
   // — path-like form `commit-work/scripts/run-contract.sh` resolves via candidates list,
   //   but bare `run-contract.sh` in prose cannot resolve unambiguously (which skill's script?)
   "run-contract.sh",
-  // v1.1.7 additions (2026-07-06 cleanup): Z-ai-skills repo skills referenced from
-  // standards docs. These live in a separate repo and are not part of standards/ tree.
-  "skills/skills/commit-work/CONTRACT.md",
-  "skills/skills/commit-work/scripts/run-contract.sh",
+  // Skill companion docs referenced in standards but resolved via candidates list
+  // (kept as safety net for bare-name references that don't resolve)
   "skills/docs/CATALOG.md",
   "skills/docs/CONTRACT-TEMPLATE.md",
-  "commit-work/CONTRACT.md",
-  "session-handoff/CONTRACT.md",
-  "gepetto/README.md",
-  "react-dev/README.md",
-  "skills/skills/INDEX.md", // local skills/ has INDEX.md but reference is to nested skills/skills/INDEX.md
-  "skills/skills/skill-creator/SKILL.md",
-  "skills/skills/skill-id-system/SKILL.md",
-  // Z-ai-skills reference skills (in standards/ docs as examples)
+  // Skill reference docs (in standards/ docs as examples)
   "phi-layout/references/grid-patterns.md",
   "phi-layout/references/golden-ratio-layouts.md",
   "phi-layout/references/fibonacci-scale.md",
@@ -142,8 +119,6 @@ const W13_WHITELIST = new Set([
   "react-dev/references/hooks.md",
   "mermaid-diagrams/references/advanced-features.md",
   "mermaid-diagrams/references/erd-diagrams.md",
-  // Planned scripts (Z-ai-governance install-hooks.sh)
-  "Z-ai-governance/install-hooks.sh",
 ]);
 
 // ----------------------------------------------------------------------------
@@ -201,12 +176,11 @@ const VALID_DOMAINS = new Set([
 
 // ----------------------------------------------------------------------------
 // Build the candidates list for resolving a refPath against multiple roots.
-// v1.1.6 (O-018): expanded to include skills/skills/ tree, so that
+// v1.1.6 (O-018): expanded to include skills/ tree, so that
 // `commit-work/CONTRACT.md` and similar path-like refs resolve correctly.
-// Also fixed: submodules are mounted inside Z-ai-governance/ (skills/ at
-// Z-ai-governance/skills/, guard/ at Z-ai-governance/guard/), NOT as siblings
-// at ../Z-ai-skills/ or ../Z-ai-guard/. The original candidates list used
-// ../Z-ai-skills/ which never resolved. The fix adds the correct paths.
+// Old repo prefixes (Z-ai-skills/, Z-ai-guard/, Z-ai-standards/) map to
+// flat directories (skills/, guard/, standards/) for backward-compat
+// resolution of references written during the submodule era.
 // ----------------------------------------------------------------------------
 function buildCandidates(refPath, standardsTreeRoot, filePath, platformRoot) {
   return [
@@ -259,7 +233,7 @@ function buildCandidates(refPath, standardsTreeRoot, filePath, platformRoot) {
 function phase10_healthWarnings(repos, warnFn) {
   if (!repos.standards) return;
   const standardsTreeRoot = repos.standards;
-  const platformRoot = path.dirname(standardsTreeRoot); // Z-ai-governance/
+  const platformRoot = path.dirname(standardsTreeRoot); // platform root
 
   // Collect all .md files under standards/ tree (covers standards/standards/*.md,
   // standards/docs/**/*.md, standards/templates/*.md)

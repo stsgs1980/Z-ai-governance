@@ -139,7 +139,7 @@ else
   if ! command -v node >/dev/null 2>&1; then
     log "[verify-docs] SKIP: node not in PATH"
   elif [ ! -f "$VS" ] || [ ! -f "$VG" ]; then
-    log "[verify-docs] SKIP: standards submodule not initialized"
+    log "[verify-docs] SKIP: standards directory not found"
   else
     if node "$VS" >/tmp/vd-vs.log 2>&1; then
       PASS "verify-standards.js (TOOL-VERIFY-002)"

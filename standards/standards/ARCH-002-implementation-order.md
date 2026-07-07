@@ -37,7 +37,7 @@ The 19 normative standards below MUST be installed (read, understood, and accept
 | --- | -------------- | ---------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | STD-META-001   | `META-001-standard-id-system.md`               | —                                   | Defines the ID system. Every other standard is referenced by its `STD-*` ID, so the ID system must be accepted first.                                                                                                                                 |
 | 2   | STD-META-002   | `META-002-language-policy.md`                  | META-001                            | Defines the language policy for all artifacts (documentation, commits, branches, code). Must be accepted before standards whose language rules it governs (DOC-002, GIT-001, AGENT-001).                                                              |
-| 3   | STD-ARCH-001   | `ARCH-001-architecture-and-repo-layout.md`     | META-001                            | Defines the 4-repo split (platform + standards + guard + skills). Needed before any cross-repo work.                                                                                                                                                  |
+| 3   | STD-ARCH-001   | `ARCH-001-architecture-and-repo-layout.md`     | META-001                            | Defines the flat directory layout (standards/ + guard/ + skills/ + scripts/). Needed before any cross-directory work.                                                                                                                                    |
 | 4   | STD-ARCH-002   | `ARCH-002-implementation-order.md` (this file) | META-001, ARCH-001                  | Defines the order in which all remaining standards are installed. You are reading it.                                                                                                                                                                 |
 | 5   | STD-DOC-002    | `DOC-002-markdown-standard.md`                 | META-001, META-002, ARCH-002        | Governs how every `.md` file (including other standards) is formatted. Must be accepted before reading standards whose formatting depends on it.                                                                                                      |
 | 6   | STD-DOC-003    | `DOC-003-unicode-policy.md`                    | DOC-002                             | Defines character rules (no emoji, no box-drawing, etc.). Pairs with DOC-002 — must be accepted alongside it.                                                                                                                                         |
@@ -70,7 +70,7 @@ These artifacts are NOT standards — they are applied as needed during project 
 ### Why this order — key invariants
 
 1. **META before everything.** Without an ID system, you cannot reference any other standard.
-2. **ARCH-001 before ARCH-002.** The implementation order assumes the 4-repo architecture is already understood.
+2. **ARCH-001 before ARCH-002.** The implementation order assumes the directory architecture is already understood.
 3. **DOC-002 + DOC-003 before content-heavy standards.** Every standard's `.md` file must comply with markdown + unicode rules.
 4. **ENV before GIT.** Git workflow depends on environment stability (no hardcoded paths, no leaked secrets).
 5. **DESIGN before FE.** Frontend consumes design tokens — tokens must exist first.
@@ -100,7 +100,7 @@ META-001 (1)
               │     └── SEC-002 (17)
               └── AGENT-001 (18)  <- needs ENV-001, META-002, GIT-001
                     └── AGENT-002 (19)  <- needs AGENT-001, ERR-001
-```text
+```
 
 ---
 
@@ -336,7 +336,7 @@ grep -q ".env" .gitignore || echo "WARNING: .env not in .gitignore"
 
 # 5. Scan file sizes
 find src/ -name "*.tsx" -exec wc -l {} \; | sort -rn | head -10
-```None
+```
 
 ### Adapted Sequence for Existing Projects
 
@@ -440,9 +440,9 @@ This section documents discovered inconsistencies, missing content, and proposed
 
 ### ARCH-007 `[OPEN]` — Standards directory path is unspecified
 
-**Problem:** §2 Step 1 says "Copy all Group B files to project folder (e.g., `docs/standards/`)". The actual standards in this project live at `/home/z/my-project/Z-ai-standards/standards/`. The example path `docs/standards/` is illustrative but may confuse readers who expect a canonical location.
+**Problem:** §2 Step 1 says "Copy all Group B files to project folder (e.g., `docs/standards/`)". The actual standards in this project live at `/home/z/my-project/Z-ai-platform-unified/standards/standards/`. The example path `docs/standards/` is illustrative but may confuse readers who expect a canonical location.
 
-**Proposed solution:** Either (a) update the example to `Z-ai-standards/standards/` to match the actual project layout, or (b) add a note: "The standards directory path is project-specific; this project uses `Z-ai-standards/standards/`. Substitute your project's path." Option (b) is more flexible.
+**Proposed solution:** Either (a) update the example to `standards/standards/` to match the actual project layout, or (b) add a note: "The standards directory path is project-specific; this project uses `standards/standards/`. Substitute your project's path." Option (b) is more flexible.
 
 ### ARCH-008 `[RESOLVED in v2.6]` — Prerequisites column vs Related: header reconciliation
 
@@ -461,7 +461,7 @@ This section documents discovered inconsistencies, missing content, and proposed
 4. DOC-002 header `Related:` field: added ARCH-002 (file-side fix in DOC-002 v2.4.2).
 5. A11Y-001 header `Related:` field: kept TEST-001 but downgraded semantic (file-side fix in A11Y-001 v1.3.1 — added `§11` cross-link marker, kept ID for graph completeness; reading order clarified by §1 note).
 
-**Verification:** Reconciliation script (`scripts/reconcile_arch002_vs_headers.py`) re-run; expected 20/20 match after applying the implicit-META convention.
+**Verification:** Manual audit confirmed 20/20 match after applying the implicit-META convention.
 
 ---
 
@@ -469,9 +469,9 @@ This section documents discovered inconsistencies, missing content, and proposed
 
 | Version | Date       | Change                                                                                                                                                                                                                                                                                                                                    |
 | ------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2.0     | 2026-06-17 | Initial 4-repo split release. Combined 6-step Project Setup Sequence with 21-standard installation order.                                                                                                                                                                                                                                 |
+| 2.0     | 2026-06-17 | Initial release. Combined 6-step Project Setup Sequence with 21-standard installation order.                                                                                                                                                                                                                                                                  |
 | 2.3     | 2026-06-18 | Resolved ARCH-001 through ARCH-004 known issues. Renamed STD-ARCH-001 stub to ARCH-002 (correcting earlier mislabel).                                                                                                                                                                                                                     |
 | 2.5     | 2026-06-19 | Resolved ARCH-005 partial; added §6 Path B integration.                                                                                                                                                                                                                                                                                   |
-| 2.6     | 2026-06-19 | Resolved ARCH-008. Reconciliation audit: implicit-META convention documented in §1; ENV-002 prereq added ARCH-002; A11Y-001 forward-ref to TEST-001 clarified; DOC-002 header added ARCH-002 to `Related:`. Reconciliation script added at `scripts/reconcile_arch002_vs_headers.py`.                                                     |
+| 2.6     | 2026-06-19 | Resolved ARCH-008. Reconciliation audit: implicit-META convention documented in §1; ENV-002 prereq added ARCH-002; A11Y-001 forward-ref to TEST-001 clarified; DOC-002 header added ARCH-002 to `Related:`.                                                                                                                     |
 | 2.7     | 2026-07-02 | Added STD-META-002 (Language Policy) as position #2 in installation order. Updated prerequisites for DOC-002, GIT-001, AGENT-001 to include META-002. Updated dependency graph. Added to Group B table. Total standards: 20 -> 21.                                                                                                        |
 | 2.8     | 2026-07-06 | Removed dead standards STD-ERR-002 and STD-TEST-001 (no RULE/ZAI referenced them, per verify-id-graph W03). Recovery strategies folded into ERR-001 §4-§5. Renumbered installation order: 21 -> 19 standards. Updated dependency graph, Group B table, and Step 3 cross-references. A11Y-001 forward-ref to TEST-001 removed from header. |

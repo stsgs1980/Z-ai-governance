@@ -18,7 +18,7 @@
 
 ```bash
 bash scripts/check-md.sh path/to/file.md
-```text
+```
 
 The wrapper runs three layers — static checks (bash only), ESLint (if installed), and `lint-md.js` (if present) — and exits non-zero on any violation. See §10.7 for the full stage table.
 
@@ -179,7 +179,7 @@ Use text labels instead of Unicode symbols:
 Correct:      # Heading
 Incorrect:    # Heading #
 Incorrect:    # Heading — (ref) Subtitle
-```None
+```
 
 The `—` (ref) symbol in the example above is a demonstration of the prohibited character; the `(ref)` marker indicates reference usage.
 
@@ -201,7 +201,7 @@ Incorrect:    -> Item 1
 ```text
 1. First item
 2. Second item
-```None
+```
 
 ### 5.3. Text Emphasis
 
@@ -222,7 +222,7 @@ Use the `processFile()` function for processing.
 **Code block** (with language specified):
 
 ````markdown
-```typescript
+```
 const config = {
   encoding: "utf-8",
   strict: true,
@@ -236,7 +236,7 @@ If the exact programming language or format is not supported by the renderer or 
 ````text
 Correct:      ```text
 Incorrect:    ```text
-````text
+````
 
 **Rules:**
 
@@ -299,7 +299,7 @@ Badges are graphical indicators of project metadata (version, build status, lice
 ```markdown
 [![npm version](https://img.shields.io/npm/v/zai-agent-toolkit.svg)](https://www.npmjs.com/package/zai-agent-toolkit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-```None
+```
 
 ### 7.4. Placeholders (for projects without CI)
 
@@ -339,7 +339,7 @@ If a file is unclear, the test is: "Does this repo ship a runnable application w
 ---
 
 Built with: <project technologies>
-```text
+```
 
 The specific stack is determined by the project, not the standard. Example for Next.js projects:
 
@@ -448,7 +448,7 @@ ASCII diagrams are **allowed** in documentation (README, docs/).
 +---------+---------+
           |
           +-----> Component C
-```None
+```
 
 ### 12.2. Flow Diagram Example
 
@@ -471,7 +471,7 @@ Client          Server          Database
   |                +----query----->|
   |                |<---result-----+
   |<---response----+               |
-```None
+```
 
 ### 12.4. Full Before/After Example
 
@@ -491,7 +491,7 @@ This section shows a small README snippet that violates multiple rules, then the
 
 ## Install — Quick Start
 
-```bash
+```
 npm install alpha
 ```text
 
@@ -513,7 +513,7 @@ Copyright (c) 2026 Alpha Corp. All rights reserved.
 ---
 
 Built with: Next.js 16 + TypeScript + Tailwind CSS
-````bash
+````
 
 Violations:
 
@@ -539,13 +539,13 @@ Violations:
 
 ## Install: Quick Start
 
-```bash
+```
 npm install alpha
 ```text
 
 ## Components
 
-```text
+```
 +-------------------+
 |    HTTP Client    |
 +-------------------+
@@ -580,7 +580,7 @@ What changed:
 ```bash
 npx eslint README.md --plugin markdown --max-warnings=0
 node lint-md.js README.md
-```text
+```
 
 Both exit 0. The PR is now mergeable.
 

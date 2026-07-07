@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ============================================================================
-# PROC-UPDATE-002: Z-ai-guard workspace updater
+# PROC-UPDATE-002: guard workspace updater
 # ============================================================================
 #
 # Related:    STD-META-001 (ID system), RULE-AGENT-009 (session start protocol)
 # Calls:      build-registry.py, verify-id-graph.js (TOOL-VERIFY-004)
 #
 # Purpose:
-#   Bring an existing Z-ai-guard workspace up to date after `git pull`
-#   of the guard submodule. Detects new/retired rules, regenerates
+#   Bring an existing guard workspace up to date after `git pull`
+#   of the guard directory. Detects new/retired rules, regenerates
 #   registry.json, and verifies the ID-graph remains intact.
 #
 # Trigger:
@@ -50,7 +50,7 @@ for arg in "$@"; do
   esac
 done
 
-echo "[update-002] PROC-UPDATE-002 v2.1 — Z-ai-guard workspace updater"
+echo "[update-002] PROC-UPDATE-002 v2.1 — guard workspace updater"
 echo "[update-002] Guard dir: $GUARD_DIR"
 echo ""
 
@@ -151,7 +151,7 @@ PY
 
 if [ "${MISSING_RC:-0}" -ne 0 ]; then
   echo "$MISSING"
-  echo "[update-002] FAIL: missing rule files. Run git pull on guard submodule."
+  echo "[update-002] FAIL: missing rule files. Run git pull on guard directory."
   exit 1
 fi
 echo "[update-002] OK: all ACTIVE rule files present"
@@ -161,8 +161,8 @@ echo ""
 echo "[update-002] Step 4/6: verify ID-graph integrity (TOOL-VERIFY-004)"
 VG="$PLATFORM_DIR/standards/scripts/verify-id-graph.js"
 if [ ! -f "$VG" ]; then
-  echo "[update-002] SKIP: $VG not found (standards submodule not initialized)."
-  echo "[update-002]        Run: git submodule update --init --recursive"
+  echo "[update-002] SKIP: $VG not found (standards directory not found)."
+  echo "[update-002]        Run: git pull"
 elif ! command -v node >/dev/null 2>&1; then
   echo "[update-002] SKIP: node not in PATH. CI will catch regressions."
 else

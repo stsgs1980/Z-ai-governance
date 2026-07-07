@@ -26,7 +26,7 @@ last-updated: 2026-06-22
 ## When this procedure fires
 
 Triggered manually by an agent or operator when bringing an existing
-Z-ai-guard workspace up to date after a `git pull` that updates guard/ files.
+guard/ workspace up to date after a `git pull` that updates guard/ files.
 
 Typical trigger:
 

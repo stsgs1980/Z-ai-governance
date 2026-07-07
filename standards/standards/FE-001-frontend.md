@@ -63,7 +63,7 @@ These limits are hard thresholds. Code exceeding limits must not be merged witho
 // 12 conditional columns in a data table. Extracting each column into a separate
 // component would fragment the table API. Revisit if complexity grows.
 function DataTable({ columns, data, sortConfig, filters }: DataTableProps) {
-```None
+```
 
 **Auto-flag in CI:** Any component exceeding the hard limit (200 lines) triggers an automated PR comment requesting decomposition.
 
@@ -104,7 +104,7 @@ function Dashboard() {
   const { favorites, toggleFavorite } = useFavorites()
   const [selected, setSelected] = useState(null)  // 1 local useState -- OK (limit is 2)
 }
-```text
+```
 
 ---
 
@@ -147,7 +147,7 @@ export { Card } from './Card'
 
 // AVOID in directories with 10+ components
 export * from './ui'
-```text
+```
 
 **Prohibition:** Deep imports are PROHIBITED.
 
@@ -210,7 +210,7 @@ const FlowCanvas = dynamic(() => import('@/components/features/FlowCanvas'), {
   loading: () => <CanvasSkeleton />,
   ssr: false,
 })
-```text
+```
 
 **When to use:**
 
@@ -275,7 +275,7 @@ module.exports = {
     ],
   },
 ]
-```None
+```
 
 ### 6.3. Code Review Policy
 
@@ -377,7 +377,7 @@ return NextResponse.json(
   { success: false, error: { code: 'VALIDATION_ERROR', message: 'Invalid input' } },
   { status: 400 }
 )
-```None
+```
 
 ### 10.3. Input Validation
 
@@ -435,7 +435,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     )
   }
 }
-```None
+```
 
 ### 10.6. Deduplication on Create
 
@@ -491,7 +491,7 @@ tokens/
   +-- breakpoints.ts        <- breakpoint constants from Profile P13 (STD-DESIGN-001)
   +-- tailwind.config.ts   <- theme.extend from Profile Integration Pattern (if Pattern A)
   +-- index.ts             <- barrel (re-exports token constants if needed by hooks)
-```None
+```
 
 **Layer constraint (from Section 3.3):** The `tokens/` layer imports nothing from other layers. All other layers (`ui/`, `sections/`, `features/`, `hooks/`, `providers/`) import from `tokens/`.
 

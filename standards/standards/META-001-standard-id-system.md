@@ -52,7 +52,7 @@ Every existing `ZAI-*` ID from toolkit v2.0.5 remains valid under v2.0.
 ## 1. Purpose
 
 The ID system assigns a permanent, unambiguous identifier to every normative
-artifact in the four repositories of the Z-ai ecosystem. An artifact is
+artifact in the Z-ai-governance repository. An artifact is
 normative if any of the following is true:
 
 - It declares a standard that other artifacts may reference.
@@ -67,7 +67,7 @@ The ID solves five problems:
 | ------------------------------------ | ----------------------------------------------------------------------------------- |
 | Unambiguous reference in discussions | "Violation of STD-FE-001 §2.1"                                                      |
 | Reference in AI prompts              | "Follow RULE-ENV-008 for sandbox verification"                                      |
-| Cross-repo dependency tracking       | "RULE-ENV-008 enforces STD-ENV-001, STD-ENV-002"                                    |
+| Cross-directory dependency tracking     | "RULE-ENV-008 enforces STD-ENV-001, STD-ENV-002"                                    |
 | Bidirectional alignment tracking     | "STD-FE-001 is aligned with ZAI-ARCH-002"                                           |
 | CI/CD mechanical checks              | `verify-id-graph.js` builds the ID graph, fails the build on cycle / forbidden edge |
 
@@ -77,7 +77,7 @@ The ID solves five problems:
 
 ```text
 <PREFIX>-<DOMAIN>-<NUMBER>
-```text
+```
 
 | Component  | Description                                            |
 | ---------- | ------------------------------------------------------ |
@@ -103,20 +103,20 @@ The ID solves five problems:
 
 ### 2.1 Prefix Authority
 
-| Prefix  | Layer         | Owning repo    | ID Required?                                                                    | May be assigned by           |
-| ------- | ------------- | -------------- | ------------------------------------------------------------------------------- | ---------------------------- |
-| `STD-`  | L1 Standards  | Z-ai-standards | **Yes (always)**                                                                | Maintainer of Z-ai-standards |
-| `RULE-` | L2 Rules      | Z-ai-guard     | **Yes (always)**                                                                | Maintainer of Z-ai-guard     |
-| `PROC-` | L2 Procedures | Z-ai-guard     | **Yes (always)**                                                                | Maintainer of Z-ai-guard     |
-| `TOOL-` | L2 Tools      | Z-ai-guard     | **Yes (always)**                                                                | Maintainer of Z-ai-guard     |
-| `ZAI-`  | L3 Skills     | Z-ai-skills    | **Optional** (required only when referenced externally; see STD-SKILL-001 §4.2) | Maintainer of Z-ai-skills    |
+| Prefix  | Layer         | Owning directory | ID Required?                                                                    | May be assigned by         |
+| ------- | ------------- | ---------------- | ------------------------------------------------------------------------------- | -------------------------- |
+| `STD-`  | L1 Standards  | standards/       | **Yes (always)**                                                                | Standards maintainer       |
+| `RULE-` | L2 Rules      | guard/           | **Yes (always)**                                                                | Guard maintainer            |
+| `PROC-` | L2 Procedures | guard/           | **Yes (always)**                                                                | Guard maintainer            |
+| `TOOL-` | L2 Tools      | guard/           | **Yes (always)**                                                                | Guard maintainer            |
+| `ZAI-`  | L3 Skills     | skills/          | **Optional** (required only when referenced externally; see STD-SKILL-001 §4.2) | Skills maintainer           |
 
-> **Note:** `PROC-` and `TOOL-` live in Z-ai-guard (not Z-ai-skills) because
+> **Note:** `PROC-` and `TOOL-` live in guard/ (not skills/) because
 > procedures and tools in this ecosystem are enforcement mechanisms for
 > rules, not user-callable capabilities. A procedure (`PROC-`) is "what runs
 > when Rule X fires"; a tool (`TOOL-`) is "the script that rule calls". Both
 > are inseparable from the rules that drive them. User-callable capabilities
-> live in Z-ai-skills as `ZAI-`.
+> live in skills/ as `ZAI-`.
 
 ---
 
@@ -153,7 +153,7 @@ which prefix uses it.
 
 These domains are exclusive to `ZAI-` IDs and do not appear in `STD-` /
 `RULE-` / `PROC-` / `TOOL-` registries. The complete authoritative list is
-maintained in **STD-SKILL-001** (new standard in Z-ai-standards). This
+maintained in **STD-SKILL-001** (new standard). This
 section is a summary; STD-SKILL-001 is the source of truth.
 
 > **Note.** Domains are only relevant for skills that HAVE an ID. A skill
@@ -215,10 +215,10 @@ section is a summary; STD-SKILL-001 is the source of truth.
 | Source code (`.ts`, `.tsx`, `.js`, `.py`, `.sh`) | 250        | 150       | Maintainability, reviewer load                                                                                                                                                                                                                    |
 | Tests (`.test.*`, `.spec.*`)                     | 400        | 250       | Tests are linear by nature                                                                                                                                                                                                                        |
 | Config (`.json`, `.yml`, `.toml`, `.ini`)        | exempt     | —         | Naturally flat, machine-generated                                                                                                                                                                                                                 |
-| `SKILL.md` (any repo)                            | 800        | 400       | Trigger surface + examples must load in one read                                                                                                                                                                                                  |
-| `CONTRACT.md` (any skill)                        | 500        | 300       | 5-tuple execution contract: trigger/hook/guards/standards/success + auxiliary sections (versioning, cross-refs, change history). Validated against 2 pilots: commit-work 368 lines (Phase B1), session-handoff 466 lines (Phase C1) — see §4.18.6 |
-| `README.md` (any repo)                           | 400        | 250       | Top-level entry point, scanned not read                                                                                                                                                                                                           |
-| `INDEX.md` (any repo)                            | exempt     | —         | Router, small by design                                                                                                                                                                                                                           |
+| `SKILL.md`                                       | 800        | 400       | Trigger surface + examples must load in one read                                                                                                                                                                                                  |
+| `CONTRACT.md`                                    | 500        | 300       | 5-tuple execution contract: trigger/hook/guards/standards/success + auxiliary sections (versioning, cross-refs, change history). Validated against 2 pilots: commit-work 368 lines (Phase B1), session-handoff 466 lines (Phase C1) — see §4.18.6 |
+| `README.md`                                      | 400        | 250       | Top-level entry point, scanned not read                                                                                                                                                                                                           |
+| `INDEX.md`                                       | exempt     | —         | Router, small by design                                                                                                                                                                                                                           |
 | `STD-*.md`, `META-*.md` (standards)              | 1200       | 800       | Normative docs have cross-refs and many sections                                                                                                                                                                                                  |
 | `RULE-*.md` (guard)                              | 200        | 120       | Atomic rule = one concern, one page                                                                                                                                                                                                               |
 | `PROC-*.md`, `TOOL-*.md` (guard)                 | 400        | 250       | Procedure body larger than rule by design                                                                                                                                                                                                         |
@@ -359,7 +359,7 @@ Every normative artifact MUST carry a machine-readable header. v2.0 accepts
 
 ```markdown
 <!-- ID: RULE-<DOMAIN>-<NUMBER> | ver:<version> | Level: <C|W|I> | Related: <comma-separated IDs> | Aligned_with: <comma-separated IDs> -->
-```text
+```
 
 The HTML-comment style is used inside `AGENT_RULES.md` and similar files
 where the rule text needs to render as prose without a header blockquote
@@ -550,7 +550,7 @@ pass.
 ```markdown
 This procedure implements **RULE-ENV-008** by enforcing the sandbox
 constraints declared in **STD-ENV-001** and **STD-ENV-002**.
-```None
+```
 
 ### 7.2. In Code (procedure/tool scripts)
 
@@ -565,7 +565,7 @@ constraints declared in **STD-ENV-001** and **STD-ENV-002**.
 Follow RULE-ENV-008 for sandbox verification.
 Apply STD-FE-001 limits for component size.
 Invoke ZAI-ARCH-002 for the anti-monolith decomposition.
-```None
+```
 
 ### 7.4. In Hooks
 
@@ -587,7 +587,7 @@ Invoke ZAI-ARCH-002 for the anti-monolith decomposition.
 # In ZAI-ARCH-002 (anti-monolith skill), frontmatter:
 
 > Aligned_with: STD-FE-001, STD-DESIGN-001
-```None
+```
 
 ### 7.6. Reference Syntax
 
@@ -626,8 +626,8 @@ When the system is restructured, IDs MUST be migrated, not deleted.
 
 ### 8.2. Migration Window
 
-A migrated ID remains resolvable for **one major version cycle** of the
-owning repo. During the window:
+A migrated ID remains resolvable for **one major version cycle**.
+During the window:
 
 1. The old ID is marked `[DEPRECATED]` (or `[SUPERSEDED]` for content
    migrations) in the registry, with `superseded_by: <NEW-ID>` field.
@@ -638,8 +638,7 @@ owning repo. During the window:
 
 ### 8.3. Migration Map Format
 
-Each migration MUST be recorded in a `MIGRATIONS.md` file at the root of
-the owning repo:
+Each migration MUST be recorded in a `MIGRATIONS.md` file:
 
 ```markdown
 ## [3.0.0] - 2026-07-01
@@ -652,27 +651,27 @@ the owning repo:
 - ...
 ```
 
-`verify-id-graph.js` reads `MIGRATIONS.md` from each repo to resolve
+`verify-id-graph.js` reads `MIGRATIONS.md` to resolve
 references to deprecated IDs during the migration window.
 
 ### 8.4. Specific Migration: ZAI-META-001 -> STD-SKILL-001
 
 This is the largest migration in v2.0. The content of
-`Z-ai-skills/skills/skill-id-system/SKILL.md` (ZAI-META-001) is moved
+`skills/skills/skill-id-system/SKILL.md` (ZAI-META-001) is moved
 verbatim (with format adaptation) to
-`Z-ai-standards/standards/SKILL_ID_SYSTEM_STANDARD.md` (STD-SKILL-001).
+`standards/standards/SKILL_ID_SYSTEM_STANDARD.md` (STD-SKILL-001).
 
 **After migration:**
 
 | Artifact                      | Before                                                            | After                                                                                                                     |
 | ----------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Skill ID System content       | `Z-ai-skills/skills/skill-id-system/SKILL.md` (ZAI-META-001 v1.0) | `Z-ai-standards/standards/SKILL_ID_SYSTEM_STANDARD.md` (STD-SKILL-001 v1.0)                                               |
+| Skill ID System content       | `skills/skills/skill-id-system/SKILL.md` (ZAI-META-001 v1.0) | `standards/standards/SKILL_ID_SYSTEM_STANDARD.md` (STD-SKILL-001 v1.0)                                               |
 | ZAI-META-001 file             | (full skill, ~270 lines)                                          | Thin pointer (~20 lines) — "Content moved to STD-SKILL-001; this skill remains for backward-compat trigger matching only" |
 | ZAI-META-002 (skill-creator)  | Defines its own domain list (12 domains, divergent from META-001) | Reads STD-SKILL-001; no longer defines domains; `Related: STD-SKILL-001`                                                  |
 | Cross-references in standards | "see ZAI-META-001"                                                | "see STD-SKILL-001"                                                                                                       |
 | Cross-references in skills    | "see ZAI-META-001"                                                | "see STD-SKILL-001" (ZAI-META-001 itself just redirects)                                                                  |
 
-**Migration map entry (in `Z-ai-skills/MIGRATIONS.md`):**
+**Migration map entry (in `skills/MIGRATIONS.md`):**
 
 ```markdown
 ## [1.0.0] - 2026-07-01
@@ -680,9 +679,9 @@ verbatim (with format adaptation) to
 ### Superseded
 
 - ZAI-META-001 content -> STD-SKILL-001 (skill -> standard; skill file remains as thin pointer for backward-compat trigger matching)
-```text
+```
 
-The migration window is Z-ai-skills v1.x -> v2.0.0. References to
+The migration window is v1.x -> v2.0.0. References to
 `ZAI-META-001` in standards/rules/skills produce warning W01 during v1.x,
 hard error G05 starting v2.0.0.
 
@@ -692,22 +691,22 @@ hard error G05 starting v2.0.0.
 
 ### 9.1. Who Assigns
 
-| Role                      | Authority                                                                            |
-| ------------------------- | ------------------------------------------------------------------------------------ |
-| Z-ai-standards maintainer | New `STD-` IDs, new domains (core or skill), changes to STD-META-001 / STD-SKILL-001 |
-| Z-ai-guard maintainer     | New `RULE-`, `PROC-`, `TOOL-` IDs (in existing domains)                              |
-| Z-ai-skills maintainer    | New `ZAI-` IDs (in existing domains)                                                 |
-| Any contributor           | Propose new ID via Issue/PR to the owning repo                                       |
+| Role              | Authority                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------ |
+| Standards maintainer | New `STD-` IDs, new domains (core or skill), changes to STD-META-001 / STD-SKILL-001 |
+| Guard maintainer     | New `RULE-`, `PROC-`, `TOOL-` IDs (in existing domains)                              |
+| Skills maintainer    | New `ZAI-` IDs (in existing domains)                                                 |
+| Any contributor      | Propose new ID via Issue/PR                                                          |
 
 ### 9.2. Process
 
-1. **Open Issue** in the owning repo proposing the new artifact and its
+1. **Open Issue** proposing the new artifact and its
    tentative ID.
 2. Maintainer reviews; assigns final ID from registry.
 3. PR adds the artifact with the assigned ID in its header.
 4. PR updates the registry:
    - `STD-*` IDs -> STD-META-001 §4 (this document) or STD-SKILL-001 §4 for skill-system standards
-   - `RULE-`/`PROC-`/`TOOL-` IDs -> `Z-ai-guard/registry.json`
+   - `RULE-`/`PROC-`/`TOOL-` IDs -> `guard/registry.json`
    - `ZAI-` IDs -> STD-SKILL-001 §4 (the authoritative skill registry)
 5. CI runs `verify-id-graph.js`; PR cannot merge if G01–G14 fail.
 
@@ -721,33 +720,33 @@ hard error G05 starting v2.0.0.
 
 ## 10. Validation
 
-### 10.1. Per-Repo Checks (in each repo's CI)
+### 10.1. Per-Directory Checks (in CI)
 
-| Check                                                               | Tool                                 | Layer    | Strictness |
-| ------------------------------------------------------------------- | ------------------------------------ | -------- | ---------- |
-| Header format conforms to §5 (STD/RULE/PROC/TOOL)                   | `verify-standards.js` (V05/V11)      | per-repo | **HARD**   |
-| YAML frontmatter parses (ZAI skills)                                | `verify-standards.js` (V13a)         | per-repo | **HARD**   |
-| Required fields `name`/`description`/`version` present (ZAI skills) | `verify-standards.js` (V13b)         | per-repo | **HARD**   |
-| Registry in §4 is in sync with file headers (STD/RULE/PROC/TOOL)    | `verify-standards.js` (V05 extended) | per-repo | **HARD**   |
-| Registry sync for ZAI skills (when `id` present)                    | `verify-standards.js` (V05b)         | per-repo | **SOFT**   |
-| `Related:` references resolve within the repo                       | `verify-standards.js` (V12)          | per-repo | **HARD**   |
-| YAML frontmatter and blockquote agree (for ZAI- skills with `id`)   | `verify-standards.js` (V14)          | per-repo | **SOFT**   |
-| `name` matches folder name (ZAI skills)                             | `verify-standards.js` (V11b)         | per-repo | **HARD**   |
+| Check                                                               | Tool                                 | Layer          | Strictness |
+| ------------------------------------------------------------------- | ------------------------------------ | ------------- | ---------- |
+| Header format conforms to §5 (STD/RULE/PROC/TOOL)                   | `verify-standards.js` (V05/V11)      | per-directory | **HARD**   |
+| YAML frontmatter parses (ZAI skills)                                | `verify-standards.js` (V13a)         | per-directory | **HARD**   |
+| Required fields `name`/`description`/`version` present (ZAI skills) | `verify-standards.js` (V13b)         | per-directory | **HARD**   |
+| Registry in §4 is in sync with file headers (STD/RULE/PROC/TOOL)    | `verify-standards.js` (V05 extended) | per-directory | **HARD**   |
+| Registry sync for ZAI skills (when `id` present)                    | `verify-standards.js` (V05b)         | per-directory | **SOFT**   |
+| `Related:` references resolve                                   | `verify-standards.js` (V12)          | per-directory | **HARD**   |
+| YAML frontmatter and blockquote agree (for ZAI- skills with `id`)   | `verify-standards.js` (V14)          | per-directory | **SOFT**   |
+| `name` matches folder name (ZAI skills)                             | `verify-standards.js` (V11b)         | per-directory | **HARD**   |
 
-### 10.2. Cross-Repo Checks (in Z-ai-governance CI)
+### 10.2. Cross-Directory Checks (in CI)
 
-| Check                                                          | Tool                            | Layer      | Strictness                         |
-| -------------------------------------------------------------- | ------------------------------- | ---------- | ---------------------------------- |
-| All IDs across all 4 repos are unique                          | `verify-id-graph.js` G01        | cross-repo | **SOFT** (only artifacts WITH IDs) |
-| All `Related:` references resolve across repos                 | `verify-id-graph.js` G02        | cross-repo | **HARD**                           |
-| `Related:` DAG has no cycles                                   | `verify-id-graph.js` G03/G11    | cross-repo | **HARD**                           |
-| All `Related:` edges conform to §6.1 matrix                    | `verify-id-graph.js` G04–G10    | cross-repo | **HARD**                           |
-| No deprecated ID referenced outside migration window           | `verify-id-graph.js` G05        | cross-repo | **HARD**                           |
-| Every RULE has at least one Related (no orphans)               | `verify-id-graph.js` G06 (warn) | cross-repo | SOFT                               |
-| Every STD is referenced by >=1 RULE/ZAI (no dead standards)    | `verify-id-graph.js` G13 (warn) | cross-repo | SOFT                               |
-| `Aligned_with:` symmetry: B reciprocates A's declaration       | `verify-id-graph.js` W08        | cross-repo | SOFT                               |
-| `Aligned_with:` has corresponding `Related:` edge              | `verify-id-graph.js` G15        | cross-repo | **HARD**                           |
-| Compatibility DAG valid (ZAI- skills only, when both have IDs) | `verify-id-graph.js` G14        | cross-repo | **SOFT**                           |
+| Check                                                          | Tool                            | Layer             | Strictness                         |
+| -------------------------------------------------------------- | ------------------------------- | ---------------- | ---------------------------------- |
+| All IDs are unique                                              | `verify-id-graph.js` G01        | cross-directory  | **SOFT** (only artifacts WITH IDs) |
+| All `Related:` references resolve                              | `verify-id-graph.js` G02        | cross-directory  | **HARD**                           |
+| `Related:` DAG has no cycles                                   | `verify-id-graph.js` G03/G11    | cross-directory  | **HARD**                           |
+| All `Related:` edges conform to §6.1 matrix                    | `verify-id-graph.js` G04–G10    | cross-directory  | **HARD**                           |
+| No deprecated ID referenced outside migration window           | `verify-id-graph.js` G05        | cross-directory  | **HARD**                           |
+| Every RULE has at least one Related (no orphans)               | `verify-id-graph.js` G06 (warn) | cross-directory  | SOFT                               |
+| Every STD is referenced by >=1 RULE/ZAI (no dead standards)    | `verify-id-graph.js` G13 (warn) | cross-directory  | SOFT                               |
+| `Aligned_with:` symmetry: B reciprocates A's declaration       | `verify-id-graph.js` W08        | cross-directory  | SOFT                               |
+| `Aligned_with:` has corresponding `Related:` edge              | `verify-id-graph.js` G15        | cross-directory  | **HARD**                           |
+| Compatibility DAG valid (ZAI- skills only, when both have IDs) | `verify-id-graph.js` G14        | cross-directory  | **SOFT**                           |
 
 ### 10.3. Exit Codes
 
@@ -755,7 +754,7 @@ hard error G05 starting v2.0.0.
 
 - `0` — all G01–G15 pass (warnings W01–W08 may be present)
 - `1` — at least one G-check failed
-- `2` — configuration error (missing repos, missing `MIGRATIONS.md`)
+- `2` — configuration error (missing `MIGRATIONS.md`)
 
 ---
 
@@ -768,13 +767,13 @@ hard error G05 starting v2.0.0.
 - v1.2 `Related:` field semantics unchanged (now supplemented by `Aligned_with:`).
 - `verify-standards.js` V05 continues to validate `STD-*` registry.
 
-### 11.2. AHG v2.5.0 -> Z-ai-guard v3.0.0
+### 11.2. AHG v2.5.0 -> v3.0.0
 
 - `RULE-001`..`RULE-017` (legacy flat numbering) -> `RULE-<DOMAIN>-NNN`.
-- Migration map published in `Z-ai-guard/MIGRATIONS.md`.
+- Migration map published in `guard/MIGRATIONS.md`.
 - Legacy IDs remain resolvable for one major version (v3.x); removed in v4.0.
 
-### 11.3. Toolkit v2.0.5 -> Z-ai-skills v1.0.0
+### 11.3. Toolkit v2.0.5 -> v1.0.0
 
 - All 24 `ZAI-*` IDs from toolkit v2.0.5 preserved unchanged.
 - ZAI-META-001 content migrated to STD-SKILL-001; ZAI-META-001 becomes a
@@ -906,7 +905,7 @@ The script should live in `eslint-rules/` or `scripts/` per the project's toolin
 - [ ] For ZAI- skills: `compatibility` field set; G14 compatibility DAG valid
 - [ ] If migration: old ID marked `[DEPRECATED]`/`[SUPERSEDED]` with `superseded_by`; entry in `MIGRATIONS.md`
 - [ ] `verify-id-graph.js` exits 0 with the new artifact in place
-- [ ] Owning repo's `registry.json` (or STD-META-001 §4, or STD-SKILL-001 §4) updated
+- [ ] Owning directory's `registry.json` (or STD-META-001 §4, or STD-SKILL-001 §4) updated
 
 ---
 
@@ -950,7 +949,7 @@ Promote file-size limits matrix from RULE-MONOLITH-012 (L2) to META-001 §4.18 (
 
 ### v2.0.3 (2026-06-19)
 
-RULE-MONOLITH-012 v1.2 alignment. §4.13 row: version 1.1 -> 1.2, title updated, file path fixed to post-M002 location (`Z-ai-guard/rules/RULE-MONOLITH-012.md`). v1.2 replaces blanket 250-line rule with per-category matrix + 44-file exempt list. STD-SKILL-001 §8.2/§10.1/§13 updated to match 800-line SKILL.md ceiling. No new IDs. Other §4.13 rows still reference stale `AGENT_RULES.md` path (pre-existing tech debt, deferred).
+RULE-MONOLITH-012 v1.2 alignment. §4.13 row: version 1.1 -> 1.2, title updated, file path fixed to post-M002 location (`guard/rules/RULE-MONOLITH-012.md`). v1.2 replaces blanket 250-line rule with per-category matrix + 44-file exempt list. STD-SKILL-001 §8.2/§10.1/§13 updated to match 800-line SKILL.md ceiling. No new IDs. Other §4.13 rows still reference stale `AGENT_RULES.md` path (pre-existing tech debt, deferred).
 
 ### v2.0.2 (2026-06-19)
 
@@ -962,7 +961,7 @@ Minor clarifications.
 
 ### v2.0 (2026-06-17)
 
-Initial approved release: 4-repo split, ID graph verifier, 13/13 HARD PASS, migration M001 (ZAI-META-001 -> STD-SKILL-001) window open.
+Initial approved release: ID graph verifier, 13/13 HARD PASS, migration M001 (ZAI-META-001 -> STD-SKILL-001) window open.
 
 ---
 

@@ -88,18 +88,18 @@ not invoke the skill mechanically — it instructs the agent to do so. The
 mechanical invocation (if any) would be a PROC, but PROC -> ZAI is
 forbidden, so any skill invocation is by agent decision, not by hook.
 
-### Q: Can a standard reference another standard in a different repo?
+### Q: Can a standard reference another standard?
 
-A: Yes — `STD -> STD` is allowed regardless of which repo each standard
-lives in. All four repos share the same STD-* registry.
+A: Yes — `STD -> STD` is allowed. All STD-* IDs share a single
+registry.
 
 ### Q: What happens to ZAI-META-001 after v2.0?
 
 A: Its content (the skill ID system specification) moves to STD-SKILL-001
-in Z-ai-standards. The ZAI-META-001 file remains in Z-ai-skills as a thin
-pointer (~20 lines) that says "Content moved to STD-SKILL-001; this file
-exists only so existing trigger phrases (`skill id`, `create skill`)
-continue to resolve during the migration window." After Z-ai-skills v2.0.0,
-ZAI-META-001 is removed entirely.
+in `standards/standards/`. The ZAI-META-001 file remains in `skills/skills/`
+as a thin pointer (~20 lines) that says "Content moved to STD-SKILL-001;
+this file exists only so existing trigger phrases (`skill id`, `create skill`)
+continue to resolve during the migration window." After the migration window
+closes, ZAI-META-001 is removed entirely.
 
 ---

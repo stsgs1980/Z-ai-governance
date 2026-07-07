@@ -4,7 +4,7 @@ title: worklog -- BEFORE and AFTER every action
 version: 1.0
 level: [C]
 status: ACTIVE
-source: Z-ai-guard v3.0.0 (RULE-WORKLOG-002)
+source: Z-ai-governance v1.3.0 (RULE-WORKLOG-002)
 owning-standard: STD-META-001 v2.0
 last-updated: 2026-06-17
 related:
