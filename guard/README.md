@@ -2,7 +2,7 @@
 
 Enforcement layer for the Z-ai ecosystem: rules (what agents must do), procedures (what runs when a rule fires), and tools (the scripts rules call). All 17 RULE, 4 PROC, and 2 TOOL are ACTIVE with M003 + M004 migrations complete.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 ## Table of Contents
 
@@ -85,7 +85,7 @@ Canonical source: root eslint-rules/unicode-policy.js via lint-staged (STD-DOC-0
 ## Project Structure
 
 - `rules/` - 17 RULE- rule files + INDEX.md catalog
-  - RULE-ANSWER-001 through 017 covering: answer before act, worklog, read before write, commit structure, no loops, honest reporting, work structure, sandbox verification, session start, documentation sync, integrity protection, anti-monolith, version bumping, pre-commit checklist, no Unicode graphics, submodule immutability, upstream write protection
+  - RULE-ANSWER-001 through 017 covering: answer before act, worklog, read before write, commit structure, no loops, honest reporting, work structure, sandbox verification, session start, documentation sync, integrity protection, anti-monolith, version bumping, pre-commit checklist, no Unicode graphics, architecture immutability, upstream write protection
 - `instructions/` - 4 PROC-*.md spec files (SETUP-001, UPDATE-002, COCHANGE-003, LINECOUNT-004)
 - `scripts/` - 18 shell scripts: 13 check-*.sh (integrity, commit, version, env), co-change-check.sh, worklog-check.sh, line-count-check.sh, setup-001.sh, update-002.sh; plus build-registry.py
 - `tools/` - verify-docs.sh (TOOL-VERIFY-001), bump.sh (TOOL-BUMP-005)
@@ -114,7 +114,7 @@ Per STD-META-001 s11.2 and `standards/MIGRATIONS.md`:
 | RULE-013 | RULE-VERSION-013   | Use verify-docs bump         |
 | RULE-014 | RULE-COMMIT-014    | Pre-commit checklist         |
 | RULE-015 | RULE-DOC-015       | No Unicode graphics          |
-| RULE-016 | RULE-ARCH-016      | Submodule immutability       |
+| RULE-016 | RULE-ARCH-016      | Architecture immutability       |
 | RULE-017 | RULE-ARCH-017      | Upstream write protection    |
 
 Migration window documented as "NOT YET OPEN" in `standards/MIGRATIONS.md` because legacy IDs do not exist in the current ID graph.
@@ -178,4 +178,4 @@ Note: This repo is now a flat copy (Z-ai-governance). The submodule-related aspe
 
 ## License
 
-[MIT](LICENSE)
+MIT

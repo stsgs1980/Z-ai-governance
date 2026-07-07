@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# .zai/setup.sh — Z-ai-platform governance setup (v2 — unified)
+# .zai/setup.sh — Z-ai-governance setup (v2 — unified)
 # Entry point: bash .zai/setup.sh
 # Purpose: validate .zai/config.json and report governance status
 # Integrates with: existing .husky/pre-commit (guard + standards + lint-staged)

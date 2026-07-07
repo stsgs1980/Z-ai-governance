@@ -59,7 +59,6 @@ while IFS= read -r f; do
     # Skip known binary directories
     [[ "$f" == node_modules/* ]] && continue
     [[ "$f" == .git/* ]] && continue
-    [[ "$f" == docs/_graph/* ]] && continue
     if [ -f "$f" ]; then
         SIZE=$(wc -c < "$f" 2>/dev/null || echo "0")
         if [ "$SIZE" -gt 1048576 ]; then

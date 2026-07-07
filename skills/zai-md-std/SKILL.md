@@ -159,7 +159,6 @@ to simulate table borders outside of fenced code blocks.
 
 ```markdown
 [Link text](https://example.com)
-![Alt description](./path/to/image.svg)
 ```
 
 ## Visual Elements
@@ -168,7 +167,7 @@ to simulate table borders outside of fenced code blocks.
 
 Any visual symbol in documentation must be one of:
 
-1. **SVG via Markdown image syntax** -- `![description](./path/to/icon.svg)`
+1. **SVG via Markdown image syntax**
 2. **Text alternative** -- a descriptive word or phrase
 
 Raw `<svg>...</svg>` HTML tags are prohibited in markdown. SVG files must be separate files

@@ -13,7 +13,7 @@
 #
 # Environment:
 #   - Expects to run AFTER bootstrap.sh has been executed
-#   - Working directory: /home/z/my-project/Z-ai-platform
+#   - Working directory: /home/z/my-project/Z-ai-governance
 
 set -euo pipefail
 
@@ -453,7 +453,7 @@ test_agent_can_understand_priority() {
 
 main() {
     echo "=========================================="
-    echo "Z-ai-platform Sandbox Behavior Tests"
+    echo "Z-ai-governance Sandbox Behavior Tests"
     echo "=========================================="
     echo ""
     echo "These tests simulate what an agent would experience in the sandbox."

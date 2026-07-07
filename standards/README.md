@@ -4,7 +4,7 @@ Normative standards, templates, and guides for the Z-ai ecosystem. Standards des
 
 [![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-61DAFB?style=flat-square)](https://react.dev)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](https://opensource.org/licenses/MIT)
 
 ## Table of Contents
 
@@ -189,4 +189,4 @@ Active migrations tracked in MIGRATIONS.md:
 
 ## License
 
-[MIT](LICENSE)
+MIT

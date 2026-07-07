@@ -1,4 +1,4 @@
-# Z-ai-platform Test Report
+# Z-ai-governance Test Report
 
 > **Date:** 2026-07-04 (original), 2026-07-06 (updated)
 > **Tester:** Automated test suite + manual verification
@@ -25,7 +25,7 @@ CRITICAL-001 (bootstrap.sh CRLF) and all related findings (FINDING-001 through F
 | Verifiers                  | PASS   | Bootstrap works                 |
 | Missing dependencies       | PASS   | Expected behavior               |
 | No git                     | PASS   | Expected behavior               |
-| Existing Z-ai-platform     | PASS   | Works correctly                 |
+| Existing Z-ai-governance  | PASS   | Works correctly                 |
 | Skills directory conflicts | PASS   | Works correctly                 |
 | Bootstrap output format    | PASS   | Bootstrap works                 |
 | Git config changes         | PASS   | Works correctly                 |

@@ -1,3 +1,5 @@
+> **DEPRECATED (v1.3.0):** This rule was written for the multi-repo submodule architecture. The repository is now a flat copy (Z-ai-governance) with no submodules. Upstream write protection for the governance layer is still conceptually valid (do not modify governance files in consumer projects), but submodule-specific mechanics no longer apply.
+
 ---
 id: RULE-ARCH-017
 title: Upstream write protection (no consumer agent may push to AHG)

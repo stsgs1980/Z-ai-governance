@@ -95,10 +95,9 @@ If the agent refuses to run bootstrap.sh, use this alternative sequence:
 
 ```bash
 # Agent will execute these commands:
-git clone --recurse-submodules https://github.com/stsgs1980/Z-ai-platform.git /home/z/my-project/Z-ai-platform
-cd /home/z/my-project/Z-ai-platform
+git clone https://github.com/stsgs1980/Z-ai-governance.git /home/z/my-project/Z-ai-governance
+cd /home/z/my-project/Z-ai-governance
 git config core.fileMode false
-git submodule foreach --recursive 'git config core.fileMode false'
 # Skills are already integrated — no symlink needed
 ```
 
@@ -111,7 +110,7 @@ git submodule foreach --recursive 'git config core.fileMode false'
 **For fresh sandbox sessions:**
 The agent will typically find and execute the necessary commands on its own when given a clear goal. Provide context:
 
-> "I need to set up Z-ai-platform in this sandbox. Clone https://github.com/stsgs1980/Z-ai-platform.git with submodules into /home/z/my-project/Z-ai-platform and verify the skills are accessible."
+> "I need to set up Z-ai-governance in this sandbox. Clone https://github.com/stsgs1980/Z-ai-governance.git into /home/z/my-project/Z-ai-governance and verify the skills are accessible."
 
 ---
 
@@ -129,7 +128,6 @@ The agent will typically find and execute the necessary commands on its own when
       sections/         # Page sections
       features/         # Stateful components
     lib/
-      guided-tour/      # Git submodule (GuidedTour)
       perf-data.ts
       db.ts
       utils.ts
@@ -140,7 +138,6 @@ The agent will typically find and execute the necessary commands on its own when
     dev.sh              # Dev server startup script (DO NOT EDIT)
     dev.pid             # Process PID
     dev.log             # LOGS (read from here on errors)
-  .gitmodules           # Submodule configuration
   package.json
   tsconfig.json
   tailwind.config.ts
@@ -551,6 +548,8 @@ cd /home/z/my-project && bun run lint
 ---
 
 ## 11. Git Submodule
+
+> **Note:** This section covers generic Git submodule usage for user projects. The Z-ai-governance repository itself is a flat repo with no submodules.
 
 ### Adding a Submodule
 

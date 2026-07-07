@@ -136,7 +136,7 @@ bun run dev
 
 ## Architecture
 
-Brief architecture description (1-3 sentences). See [docs/architecture.md](docs/architecture.md) for full details.
+Brief architecture description (1-3 sentences). See project documentation for full details.
 
 ## Project Structure
 
@@ -184,7 +184,7 @@ DATABASE_URL="file:./db/dev.db"
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. PRs are welcome.
+See [CONTRIBUTING.md](../../CONTRIBUTING.md) for guidelines. PRs are welcome.
 
 ## Agent Rules
 

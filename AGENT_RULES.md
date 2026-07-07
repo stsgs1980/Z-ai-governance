@@ -163,7 +163,7 @@ Verifiers:   standards/scripts/verify-standards.js (V-checks)
 
 Tier 1 (foundational, read first): STD-META-001, STD-ARCH-001, STD-DOC-002
 Tier 2 (operational): STD-GIT-001, STD-ENV-001, STD-AGENT-001, STD-ERR-001
-Tier 3 (specialized): STD-FE-001, STD-TEST-001, STD-SKILL-001, STD-DESIGN-001
+Tier 3 (specialized): STD-FE-001, STD-SKILL-001, STD-DESIGN-001
 
 Full tier order in ARCH-002 file.
 

@@ -11,7 +11,7 @@
 
 | File | Origin | Size | Purpose |
 |------|--------|------|---------|
-| `sandbox-guide.md` | `Z.ai-Sandbox-Guide.md` | 24K | Main guide: 17 sections (Quick Start, Structure, Rules, Dependencies, Preview, Cloning, 6 troubleshooting sections, Submodule, Common Errors, Checklist, Workflow, Golden Rules, Known Issues) |
+| `sandbox-guide.md` | `Z.ai-Sandbox-Guide.md` | 24K | Main guide: 17 sections (Quick Start, Structure, Rules, Dependencies, Preview, Cloning, 6 troubleshooting sections, Git Submodule, Common Errors, Checklist, Workflow, Golden Rules, Known Issues) |
 | `sandbox-hooks-cookbook.md` | `Z.ai-Sandbox-Guide-Hooks.md` | 25K -> INDEX | INDEX file for 4 split sub-files (`hooks-basic.md`, `hooks-ai.md`, `hooks-routes.md`, `hooks-patterns.md`). Custom AI hooks (useChat, useImageGeneration, useAutoSave, useDebounce) + API routes for chat/image/search via `z-ai-web-dev-sdk`. |
 | `hooks-basic.md` | (split from cookbook 2026-06-21) | — | Intro + Basic React Hooks (useState/useEffect/useCallback/useMemo/useRef) |
 | `hooks-ai.md` | (split from cookbook 2026-06-21) | — | Custom AI Hooks (useAI/useImageGeneration/useChat/useAutoSave/useDebounce) |
@@ -24,7 +24,7 @@
 | `sandbox-commands-media.md` | (split from cheatsheet 2026-06-21) | — | §17-25: Documents, Graphics/Video, Maps, Data, Web, DB, Editors, Z.ai, Other |
 | `sandbox-migration.md` | `Z.ai-Sandbox-Migration Guide.md` | 9.8K | Step-by-step migration of a Next.js/Vercel project between sandbox sessions, with checks for typical errors (rm -rf without verification, token in URL, ERESOLVE, etc.) |
 | `sandbox-subagents-architecture.md` | `Z.ai-Sandbox-Super-Z-Subagents-Education.md` | 10K | Architecture of Super Z + subagents: types, parallel execution, statelessness, unified worklog, skills system |
-| `verify-sandbox.sh` | `docs/sandbox/verify-sandbox.sh` | 8.5K | Bash script: 11 check groups (bun vs npm, dev server, API routes, allowedDevOrigins, XTransformPort, Dockerfile, versions, z-ai-web-dev-sdk, Prisma, submodule, hooks code quality) |
+| `verify-sandbox.sh` | `docs/sandbox/verify-sandbox.sh` | 8.5K | Bash script: 11 check groups (bun vs npm, dev server, API routes, allowedDevOrigins, XTransformPort, Dockerfile, versions, z-ai-web-dev-sdk, Prisma, hooks code quality) |
 | `INDEX.md` | `docs/sandbox/INDEX.md` (rewritten) | — | This file — table of contents + cross-document relationships |
 
 ---

@@ -25,6 +25,8 @@
 > MUST be atomic per submodule — never combine two submodule bumps in
 > one commit.
 
+> **NOTE (v1.3.0):** This standard was written for the multi-repo submodule architecture (Z-ai-platform with 3 git submodules: standards/, guard/, skills/). The repository is now a flat copy (Z-ai-governance) with no submodules — all directories are part of a single git repo. The layer model (L0-L2) and many structural principles remain conceptually valid, but submodule-specific sections (§4 submodule topology, §6 submodule conventions, §8 pointer update protocol, §9 submodule recovery) describe a topology that no longer exists. See CHANGELOG.md v1.3.0 for details.
+
 ---
 
 ## 1. Purpose

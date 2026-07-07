@@ -14,7 +14,7 @@
 set -euo pipefail
 
 WAIT_MODE=0
-REPO="stsgs1980/Z-ai-platform"
+REPO="stsgs1980/Z-ai-governance"
 
 for arg in "$@"; do
     case "$arg" in

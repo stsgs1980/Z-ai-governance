@@ -34,7 +34,7 @@
 set -euo pipefail
 
 HARD_MODE=0
-PLATFORM_DIR="/home/z/my-project/Z-ai-platform"
+PLATFORM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && git rev-parse --show-toplevel 2>/dev/null || pwd)"
 
 # ─── Usage ──────────────────────────────────────────────────────────────
 if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then

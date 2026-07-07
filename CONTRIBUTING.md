@@ -193,7 +193,7 @@ reciprocated (both sides must declare it).
 ## 6. Handling PAT (Personal Access Tokens)
 
 - **Never** commit a PAT in any tracked file.
-- **Never** embed a PAT in `.git/config` or `.gitmodules`.
+- **Never** embed a PAT in `.git/config`.
 - Use `~/.git-credentials` (mode 600) via `git config --global
   credential.helper store`.
 - After a push, delete the PAT from disk and revoke it on GitHub.

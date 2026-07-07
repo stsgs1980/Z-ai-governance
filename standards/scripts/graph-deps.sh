@@ -4,12 +4,12 @@
 # ============================================================================
 #
 # USAGE
-#   bash standards/scripts/graph-deps.sh                   # default: docs/_graph/
+#   bash standards/scripts/graph-deps.sh                   # default: graph/
 #   bash standards/scripts/graph-deps.sh --out=/tmp/x      # custom output dir
 #   bash standards/scripts/graph-deps.sh --dot-only        # emit DOT only
 #   bash standards/scripts/graph-deps.sh --open            # also xdg-open SVG
 #
-# OUTPUT (in OUT_DIR, default $PLATFORM_DIR/docs/_graph/)
+# OUTPUT (in OUT_DIR, default $PLATFORM_DIR/graph/)
 #   id-graph.svg   — vector graph (browsable in browser, zoomable)
 #   id-graph.png   — raster preview (for embedding in README/docs)
 #   id-graph.dot   — DOT source (for diffing in CI)
@@ -44,18 +44,18 @@
 
 set -euo pipefail
 
-# PLATFORM_DIR = the Z-ai-platform checkout (parent of this script's
-# standards/ submodule). Works for:
-#   - sandbox:        /home/z/my-project/Z-ai-platform/standards/scripts/graph-deps.sh
+# PLATFORM_DIR = the Z-ai-governance checkout (parent of this script's
+# standards/ directory). Works for:
+#   - sandbox:        /home/z/my-project/Z-ai-governance/standards/scripts/graph-deps.sh
 #   - CI checkout:    $GITHUB_WORKSPACE/standards/scripts/graph-deps.sh
 #   - standalone dev: anywhere — pass --platform=<path> to override
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLATFORM_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-# OUT_DIR = where SVG/PNG/DOT land. Default: $PLATFORM_DIR/docs/_graph/
+# OUT_DIR = where SVG/PNG/DOT land. Default: $PLATFORM_DIR/graph/
 # (kept inside the repo so it's browsable on GitHub UI).
 # Override with --out=<path> or env GRAPH_OUT_DIR.
-OUT_DIR="${GRAPH_OUT_DIR:-${PLATFORM_DIR}/docs/_graph}"
+OUT_DIR="${GRAPH_OUT_DIR:-${PLATFORM_DIR}/graph}"
 
 VERIFY="${PLATFORM_DIR}/standards/scripts/verify-id-graph.js"
 

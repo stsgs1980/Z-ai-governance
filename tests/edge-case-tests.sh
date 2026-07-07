@@ -13,7 +13,7 @@
 #
 # Environment:
 #   - Expects to run AFTER bootstrap.sh has been executed
-#   - Working directory: /home/z/my-project/Z-ai-platform
+#   - Working directory: /home/z/my-project/Z-ai-governance
 
 set -euo pipefail
 
@@ -497,7 +497,7 @@ test_memory_check() {
 
 main() {
     echo "=========================================="
-    echo "Z-ai-platform Edge Case Tests"
+    echo "Z-ai-governance Edge Case Tests"
     echo "=========================================="
     echo ""
     echo "These tests check error handling and edge cases."

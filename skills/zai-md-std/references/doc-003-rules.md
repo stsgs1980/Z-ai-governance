@@ -59,7 +59,7 @@ v    down arrow
 - SVG must be part of Design System, use design tokens, support theming
 - Primary icon library: Lucide
 - Brand logos: official SVG only (Next.js, TypeScript, Tailwind CSS, Prisma, etc.)
-- In documentation, use text descriptions or SVG via `![](path/to/icon.svg)`
+- In documentation, use text descriptions or SVG
 
 ## AI Chat Rules (Level [W])
 

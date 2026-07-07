@@ -59,8 +59,8 @@ verbatim (no renumbering) to keep all existing references stable.
 | RULE-VERSION-013   | Use verify-docs bump                  | 1.1     | [C]   | ACTIVE | Z-ai-guard/AGENT_RULES.md             |
 | RULE-COMMIT-014    | Pre-commit checklist                  | 1.1     | [C]   | ACTIVE | Z-ai-guard/AGENT_RULES.md             |
 | RULE-DOC-015       | No Unicode graphics                   | 1.0     | [W]   | ACTIVE | Z-ai-guard/AGENT_RULES.md             |
-| RULE-ARCH-016      | Submodule immutability                | 1.0     | [C]   | ACTIVE | Z-ai-guard/AGENT_RULES.md             |
-| RULE-ARCH-017      | Upstream write protection             | 1.0     | [C]   | ACTIVE | Z-ai-guard/AGENT_RULES.md             |
+| RULE-ARCH-016      | Architecture immutability              | 1.0     | [C]   | DEPRECATED (v1.3.0: flat repo, no submodules) | guard/rules/RULE-ARCH-016.md |
+| RULE-ARCH-017      | Upstream write protection             | 1.0     | [C]   | DEPRECATED (v1.3.0: flat repo, no submodules) | guard/rules/RULE-ARCH-017.md |
 
 > The RULE-<DOMAIN>-NNN format replaces the legacy RULE-001..RULE-017
 > numbering from AHG v2.5.0. Legacy numbers are migrated per §8. The

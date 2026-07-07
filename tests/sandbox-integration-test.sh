@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# sandbox-integration-test.sh — Test Z-ai-platform in sandbox environment
+# sandbox-integration-test.sh — Test Z-ai-governance in sandbox environment
 #
 # Usage:
 #   bash tests/sandbox-integration-test.sh
@@ -15,7 +15,7 @@
 #
 # Environment:
 #   - Expects to run AFTER bootstrap.sh has been executed
-#   - Working directory: /home/z/my-project/Z-ai-platform
+#   - Working directory: /home/z/my-project/Z-ai-governance
 #   - Does NOT clone from GitHub (uses existing installation)
 
 set -euo pipefail
@@ -692,7 +692,7 @@ test_summary() {
 
 main() {
     echo "=========================================="
-    echo "Z-ai-platform Sandbox Integration Tests"
+    echo "Z-ai-governance Sandbox Integration Tests"
     echo "=========================================="
     echo ""
     echo "Platform directory: $PLATFORM_DIR"

@@ -50,11 +50,10 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Checkout Z-ai-platform (with submodules)
+      - name: Checkout Z-ai-governance
         uses: actions/checkout@v5
         with:
           fetch-depth: 1
-          submodules: recursive
 
       - name: Setup Node.js
         uses: actions/setup-node@v5

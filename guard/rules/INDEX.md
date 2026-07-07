@@ -20,5 +20,5 @@
 | RULE-VERSION-013   | Use verify-docs bump         | [C]   | ACTIVE | RULE-VERSION-013.md   |
 | RULE-COMMIT-014    | Pre-commit checklist         | [C]   | ACTIVE | RULE-COMMIT-014.md    |
 | RULE-DOC-015       | No Unicode graphics          | [W]   | ACTIVE | RULE-DOC-015.md       |
-| RULE-ARCH-016      | Submodule immutability       | [C]   | ACTIVE | RULE-ARCH-016.md      |
+| RULE-ARCH-016      | Architecture immutability    | [C]   | ACTIVE | RULE-ARCH-016.md      |
 | RULE-ARCH-017      | Upstream write protection    | [C]   | ACTIVE | RULE-ARCH-017.md      |

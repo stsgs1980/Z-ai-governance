@@ -1,6 +1,6 @@
-# Z-ai-platform Tests
+# Z-ai-governance Tests
 
-Comprehensive test suite for Z-ai-platform components.
+Comprehensive test suite for Z-ai-governance components.
 
 ## Test Files
 
@@ -22,7 +22,7 @@ Comprehensive test suite for Z-ai-platform components.
 ### Run All Tests
 
 ```bash
-# From Z-ai-platform directory
+# From repository root
 bash tests/sandbox-integration-test.sh
 bash tests/edge-case-tests.sh
 bash tests/sandbox-behavior-test.sh
@@ -54,7 +54,7 @@ Tests core functionality:
 5. Verifiers
 6. Missing dependencies
 7. No git
-8. Existing Z-ai-platform
+8. Existing Z-ai-governance
 9. Skills directory conflicts
 10. Bootstrap output format
 11. Git config changes

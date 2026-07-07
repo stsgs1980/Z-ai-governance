@@ -128,7 +128,7 @@ Define rules. Not modified when starting a new project — only read and accepte
 | STD-DOC-003    | DOC-003-unicode-policy.md                | [C]+[W]+[I] | UI, production code, AI-chat                                                                             |
 | STD-DOC-004    | templates/README_TEMPLATE.md             | [W]         | README.md structure (non-normative template)                                                             |
 | STD-DOC-005    | guides/CODE_EXAMPLES_GUIDE.md            | [W]         | Code examples in documentation (non-normative guide)                                                     |
-| STD-ARCH-001   | ARCH-001-architecture-and-repo-layout.md | [C]         | 4-repo split, submodule topology, layer model                                                            |
+| STD-ARCH-001   | ARCH-001-architecture-and-repo-layout.md | [C]         | repo layout, layer model, flat architecture                                                            |
 | STD-ARCH-002   | ARCH-002-implementation-order.md         | [C]         | Standards installation order (this file)                                                                 |
 | STD-META-001   | META-001-standard-id-system.md           | [C]         | Standard ID system                                                                                       |
 | STD-META-002   | META-002-language-policy.md              | [C]         | Language policy: documentation, commits, branches, code, user communication                              |

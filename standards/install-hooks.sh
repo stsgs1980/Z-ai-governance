@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# install-hooks.sh — one-time bootstrap for git hooks in Z-ai-standards submodule
+# install-hooks.sh — one-time bootstrap for git hooks in standards/
 #
 # Usage:  bash install-hooks.sh
 #
-# NOTE: When used as a submodule of Z-ai-platform, hooks are managed by the
+# NOTE: When used within Z-ai-governance, hooks are managed by the
 # parent's .husky/ configuration. This script is for standalone use only.
 #
 # What it does:
 #   1. Creates .husky/pre-commit if it does not exist
 #   2. Runs verify-standards.js on commit (content-level invariants V04-V10)
 #   3. Cross-repo ID-graph checks (G01-G15) run in CI and in the
-#      parent Z-ai-platform pre-commit hook.
+#      parent repo pre-commit hook.
 
 set -euo pipefail
 
@@ -25,7 +25,7 @@ fi
 
 # Check if already managed by parent platform
 if [ -d .husky ] && [ -f .husky/pre-commit ]; then
-  echo "[install-hooks] .husky/pre-commit already exists (likely managed by parent Z-ai-platform)."
+  echo "[install-hooks] .husky/pre-commit already exists (likely managed by parent repo)."
   echo "[install-hooks] Skipping standalone hook setup."
   exit 0
 fi

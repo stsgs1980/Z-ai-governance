@@ -1,5 +1,7 @@
 # CI and Testing — Z-ai-platform
 
+> **NOTE (v1.3.0):** This document was written for the multi-repo submodule architecture. The repository is now a flat copy (Z-ai-governance) with no submodules. CI/CD references to submodule init, pointer bumps, and cross-repo workflows describe a setup that no longer exists. The testing methodology and verifier concepts remain valid.
+
 > Source: Merge of two draft documents ("Полный CI/CD Pipeline" and
 > "Уровни тестирования Z-ai-platform") plus an audit of 12 bugs in the
 > drafts against the actual repo state on 2026-06-21.

@@ -232,7 +232,7 @@ WRONG (do not do this):
 ### "Yes/No" follow-up to a plan
 
 ```
-Agent: "Я предлагаю удалить STD-ERR-002. Подтверждаете?"
+Agent: "Я предлагаю обновить STD-ARCH-001. Подтверждаете?"
 User: "Да"
 
 Classified as: IMPLICIT TASK (execution of proposed plan)

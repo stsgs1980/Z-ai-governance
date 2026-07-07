@@ -38,8 +38,8 @@ The full document is `standards/standards/DOC-002-markdown-standard.md`.
 | Blockquote | `>` |
 | Unordered list | `-` (strictly) |
 | Ordered list | `1.` |
-| Link | `[text](url)` |
-| Image | `![alt](url)` |
+| Link | `text` |
+| Image | `alt` |
 
 ### Text Tags for Statuses
 

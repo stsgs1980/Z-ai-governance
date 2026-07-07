@@ -3,16 +3,17 @@
 # bootstrap.sh — restore your custom skills in a fresh Z.ai sandbox session
 #
 # Usage:
-#   bash /home/z/my-project/Z-ai-platform/bootstrap.sh
+#   bash bootstrap.sh
+#   (run from repo root, or: bash <(curl -fsSL https://raw.githubusercontent.com/stsgs1980/Z-ai-governance/main/bootstrap.sh))
 #
 # What it does:
-#   1. Clones (or updates) stsgs1980/Z-ai-platform into /home/z/my-project/Z-ai-platform/
-#      with all submodules (standards, guard). Skills are in skills/ directly (monorepo).
-#   2. Normalizes git mode-bit handling (core.fileMode=false on platform + all
-#      submodules). Sandbox fs mount sets +x on all files, which git's default
+#   1. Clones (or updates) stsgs1980/Z-ai-governance into the current directory.
+#      Flat repo — standards/ and guard/ are regular directories (no submodules).
+#   2. Normalizes git mode-bit handling (core.fileMode=false).
+#      Sandbox fs mount sets +x on all files, which git's default
 #      core.fileMode=true flags as 'modified' (17-file noise). See
 #      SESSION_NOTES.md §12 LESSON-002.
-#   3. Symlinks every skill from Z-ai-platform/skills/* into
+#   3. Symlinks every skill from Z-ai-governance/skills/* into
 #      /home/z/my-project/skills/ so the sandbox can find them.
 #   4. Prints a list of available custom skills at the end.
 #
@@ -21,19 +22,19 @@
 
 set -euo pipefail
 
-PLATFORM_DIR="/home/z/my-project/Z-ai-platform"
+PLATFORM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && git rev-parse --show-toplevel 2>/dev/null || pwd)"
 SANDBOX_SKILLS_DIR="/home/z/my-project/skills"
-GITHUB_URL="https://github.com/stsgs1980/Z-ai-platform.git"
+GITHUB_URL="https://github.com/stsgs1980/Z-ai-governance.git"
 
-echo "=== Step 1: Ensure Z-ai-platform is cloned ==="
+echo "=== Step 1: Ensure Z-ai-governance is cloned ==="
 
 if [ ! -d "$PLATFORM_DIR/.git" ]; then
-    echo "Cloning Z-ai-platform into $PLATFORM_DIR ..."
-    git clone --recurse-submodules "$GITHUB_URL" "$PLATFORM_DIR"
+    echo "Cloning Z-ai-governance into $PLATFORM_DIR ..."
+    git clone "$GITHUB_URL" "$PLATFORM_DIR"
 else
-    echo "Z-ai-platform already exists. Pulling latest ..."
+    echo "Z-ai-governance already exists. Pulling latest ..."
     cd "$PLATFORM_DIR"
-    git pull --recurse-submodules --ff-only
+    git pull --ff-only
 fi
 
 echo ""
@@ -46,8 +47,7 @@ echo "=== Step 2: Normalize git mode-bit handling ==="
 # See SESSION_NOTES.md §12 LESSON-002 for full rationale.
 cd "$PLATFORM_DIR"
 git config core.fileMode false
-git submodule foreach --recursive 'git config core.fileMode false' 2>/dev/null || true
-echo "  core.fileMode=false applied to platform + submodules"
+echo "  core.fileMode=false applied"
 
 echo ""
 echo "=== Step 3: Symlink custom skills into sandbox skills dir ==="
@@ -71,7 +71,7 @@ for skill_dir in "$TOOLKIT_SKILLS_DIR"/*/; do
             LINKED_COUNT=$((LINKED_COUNT + 1))
         else
             # Real directory exists with this name. For our toolkit skills
-            # (the ones in Z-ai-platform), we want OUR version to win.
+            # (the ones in Z-ai-governance), we want OUR version to win.
             # Backup the sandbox version and replace with symlink.
             backup_dir="${target_link}.sandbox-backup"
             if [ -d "$backup_dir" ]; then

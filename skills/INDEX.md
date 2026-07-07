@@ -1,6 +1,6 @@
 # Skills Index
 
-> Index of all skills shipped with Z-ai-platform.
+> Index of all skills shipped with Z-ai-governance.
 > Auto-loaded by agents via `Skill(command="...")` in the Z.ai sandbox.
 > Source: `skills/zai-*/SKILL.md` (monorepo, not a submodule)
 

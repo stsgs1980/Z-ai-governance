@@ -69,7 +69,7 @@ repos, it is itself owned by the standards repo — same as
 ### 2.2. Invocation
 
 ```bash
-# From Z-ai-platform root (where all 4 submodules are checked out):
+# From the Z-ai-governance repository root:
 node standards/scripts/verify-id-graph.js
 
 # CI mode (skips network checks, fails fast):

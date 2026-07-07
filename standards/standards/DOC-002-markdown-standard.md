@@ -328,7 +328,7 @@ When CI is configured, replace with dynamic ones.
 - **Standards** (`standards/standards/*.md`) — they describe rules, not "built with" anything
 - **Rules** (`guard/rules/*.md`) — same
 - **Templates** (`templates/*.md`) — meta-docs, not applications
-- **Orchestrator / meta-repos** (e.g. `Z-ai-platform`, `Z-ai-standards`, `Z-ai-guard`, `Z-ai-skills`) — they pin submodules and govern, they do not ship an application stack
+- **Governance repos** (e.g. `Z-ai-governance`) — they define standards and rules, they do not ship an application stack
 - **Nested docs** (`docs/**/*.md`) — optional, not required
 
 If a file is unclear, the test is: "Does this repo ship a runnable application whose stack a reader would care about?" If yes, the root README must have a Stack Signature. If no (governance, standards, meta-repos), the Stack Signature is forbidden — it would be cargo cult. Skills are **permitted** to include a Stack Signature to indicate their runtime stack.

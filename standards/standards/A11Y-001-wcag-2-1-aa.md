@@ -377,7 +377,6 @@ Filled values MUST show ratio >= 4.5:1 for normal text.
 | Standard       | Relationship                                                                                                                                                                                                                                                         |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | STD-FE-001     | Frontend Standard references this standard for theme contrast validation (Section 11.5) and component accessibility patterns. FE-001 §11.5 updated in sync with A11Y-001 v1.3 to reference the automated contrast report (§7) instead of the deprecated empty table. |
-| STD-TEST-001   | Testing Standard — §8.2 of this standard adds jest-axe + Lighthouse gates that complement the unit/integration coverage rules in STD-TEST-001. Recommended for inclusion in STD-TEST-001 §3 (test categories) in a future version.                                   |
 | STD-DOC-005    | Accessible code examples in documentation                                                                                                                                                                                                                            |
 | STD-DESIGN-001 | Design System Standard: §4.2 Light/Dark Variants must satisfy WCAG AA ratios from §1.1 of this standard. §11 Animation tokens (P12) must respect the `prefers-reduced-motion` requirement in §5.1 of this standard.                                                  |
 | STD-META-001   | Standard ID System: registry entry for STD-A11Y-001 must be kept in sync with the version in this document's header. Previous registry listed this standard as DEPRECATED — corrected to ACTIVE in STD-META-001 v1.2 (see A11Y-001 below).                           |
@@ -441,7 +440,7 @@ This section documents discovered inconsistencies, missing content, and proposed
 **Problem:** During the v1.3 review, an overlap audit was conducted across A11Y-001, DESIGN-001, FE-001, TEST-001, and DOC-003. The audit identified three overlap points; one was resolved in v1.3 (FE-001 §11.5 reference to the deprecated empty §7 table — updated in sync) and two remain OPEN:
 
 1. **A11Y-001 §5.1 (prefers-reduced-motion) <-> DESIGN-001 §11 Animation tokens (P12):** DESIGN-001 defines animation tokens but does not cross-reference the `prefers-reduced-motion` requirement in A11Y-001 §5.1. A reader implementing animation tokens may miss the a11y requirement. Proposed fix: add a cross-reference in DESIGN-001 §11 pointing to A11Y-001 §5.1.
-2. **A11Y-001 §8.2 (jest-axe + Lighthouse) <-> TEST-001 (test categories):** A11Y-001 v1.3 adds automated a11y testing gates (jest-axe at unit level, Lighthouse at page level). STD-TEST-001 does not currently list a11y tests as a category. Proposed fix: add an "Accessibility tests" row to STD-TEST-001 §3 pointing to A11Y-001 §8.2.
+2. **[CLOSED] A11Y-001 §8.2 (jest-axe + Lighthouse) <-> TEST-001:** STD-TEST-001 has been deleted. This overlap point is no longer applicable.
 
 **Overlap points reviewed and found to be NON-issues (no action needed):**
 

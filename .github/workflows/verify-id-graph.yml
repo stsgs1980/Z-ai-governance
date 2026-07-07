@@ -1,13 +1,12 @@
 # Cross-repo ID graph verification + content-level standards verification
 #
 # Triggers:
-#   - Push to main in Z-ai-platform (covers submodule pointer bumps)
+#   - Push to main in Z-ai-governance
 #   - Pull request to main (catches breakage before merge)
 #   - Nightly schedule (catches drift even if no pushes happen)
 #   - Manual dispatch (workflow_dispatch)
 #
-# This workflow lives in Z-ai-platform (the orchestrator) because only
-# the orchestrator has all three submodules checked out together.
+# This workflow lives in Z-ai-governance (the orchestrator).
 #
 # Two verifiers run in sequence:
 #   1. verify-standards.js  — content-level invariants (V04-V10)
@@ -55,14 +54,10 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - name: Checkout Z-ai-platform (with submodules)
+      - name: Checkout Z-ai-governance
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          submodules: recursive
-
-      - name: Submodule status
-        run: git submodule status
 
       - name: Shell script syntax check
         run: |
@@ -156,7 +151,7 @@ jobs:
       # The graph produced by verify-id-graph.js is deterministic: same
       # input must produce same JSON output. The baseline file lives at
       # standards/_snapshots/id-graph-baseline.json (committed to the
-      # standards submodule). If the current graph differs from the
+      # standards/_snapshots/). If the current graph differs from the
       # baseline, this step FAILs and the PR author must either:
       #   (a) revert the unintended graph change, OR
       #   (b) run `node verify-id-graph.js --update-snapshot
@@ -180,7 +175,7 @@ jobs:
             echo ""
             echo "::warning::Graph snapshot mismatch. If this change is intentional, run:"
             echo "::warning::  node standards/scripts/verify-id-graph.js --update-snapshot --compare=standards/_snapshots/id-graph-baseline.json"
-            echo "::warning::Then commit the updated baseline to the standards submodule."
+            echo "::warning::Then commit the updated baseline."
           fi
           exit $exit_code
 
@@ -299,16 +294,15 @@ jobs:
       - name: Generate ID dependency graph
         id: graph
         run: |
-          mkdir -p docs/_graph
-          bash -x standards/scripts/graph-deps.sh --out=docs/_graph 2>&1 || {
+          bash -x standards/scripts/graph-deps.sh 2>&1 || {
             echo "graph-deps.sh FAILED, exit code $?"
             echo "--- debugging ---"
             which dot 2>&1 || echo "dot not found"
             which node 2>&1 || echo "node not found"
-            ls -la docs/_graph/ 2>&1 || echo "docs/_graph/ does not exist"
+            ls -la graph/ 2>&1 || echo "graph/ does not exist"
             exit 1
           }
-          ls -la docs/_graph/
+          ls -la graph/
 
       # -------------------------------------------------------------------------
       # Export ID graph as JSON for Z-ai-graph-viewer consumption.
@@ -316,12 +310,8 @@ jobs:
       # dashboards, audit scripts) read. The JSON is deterministic: same input
       # -> same output. Updated on every push to main.
       #
-      # URL: https://raw.githubusercontent.com/stsgs1980/Z-ai-platform/main/graph/id-graph.json
+      # URL: https://raw.githubusercontent.com/stsgs1980/Z-ai-governance/main/graph/id-graph.json
       # Format: see graph/README.md
-      #
-      # Layout:
-      #   docs/_graph/   — visual artifacts (SVG, PNG, DOT) for documentation
-      #   graph/         — machine-consumable exports (JSON) for API consumers
       # -------------------------------------------------------------------------
       - name: Export ID graph as JSON (for graph-viewer)
         id: graph-json
@@ -363,7 +353,7 @@ jobs:
         with:
           name: id-graph
           path: |
-            docs/_graph/
+            graph/
           retention-days: 30
 
       - name: Upload verifier output (on failure)
