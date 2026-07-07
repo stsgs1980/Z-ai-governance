@@ -85,7 +85,7 @@ block commits; they are reported but exit 0.
 ### 2.2 Installation
 
 ```bash
-cd /home/z/my-project/Z-ai-platform
+cd /home/z/my-project/Z-ai-governance
 ./install-hooks.sh
 ```None
 
@@ -161,7 +161,7 @@ The runtime implements the 5-tuple contract from
 | **success-criterion** | Commit created; all guards PASS or WARN-only; 0 FAIL                                                    |
 
 The contract layer is the **dogfood consumer** of Phase B. Every
-commit on Z-ai-platform itself runs through it. The runtime logs to
+commit on Z-ai-governance itself runs through it. The runtime logs to
 stderr and exits non-zero on any FAIL.
 
 ---
@@ -275,15 +275,15 @@ Recommended cadence: weekly, OR after any change to `bootstrap.sh`.
 
 ```bash
 # 1. Clean sandbox (NEVER use the live working tree — use a tmp path)
-SANDBOX="/tmp/Z-ai-platform-bootstrap-test-$(date +%s)"
+SANDBOX="/tmp/Z-ai-governance-bootstrap-test-$(date +%s)"
 mkdir -p "$SANDBOX"
 cd "$SANDBOX"
 
 # 2. Run bootstrap (clone + submodule init + symlink setup)
-bash <(curl -fsSL https://raw.githubusercontent.com/stsgs1980/Z-ai-platform/main/bootstrap.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/stsgs1980/Z-ai-governance/main/bootstrap.sh)
 
 # 3. Verify standards are present
-ls "$SANDBOX/Z-ai-platform/standards/standards/" | wc -l   # expect ~20 files
+ls "$SANDBOX/Z-ai-governance/standards/standards/" | wc -l   # expect ~20 files
 
 # 4. Verify skills are linked (not broken symlinks)
 find "$SANDBOX/skills" -type l ! -exec test -e {} \; -print | wc -l   # expect 0
@@ -304,7 +304,7 @@ rm -rf "$SANDBOX"
 
 ### 6.3 Critical safety note
 
-**NEVER run `rm -rf /home/z/my-project/Z-ai-platform`** as a "clean
+**NEVER run `rm -rf /home/z/my-project/Z-ai-governance`** as a "clean
 sandbox" step. That is the live working tree; you will lose
 uncommitted changes. Always use `/tmp/...` with a timestamp suffix.
 This is the same trap as `git reset --hard` wiping uncommitted work.

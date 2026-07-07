@@ -1,12 +1,14 @@
 # verify-id-graph.js — Specification v1.0
 
+> **DEPRECATED (v1.3.0):** This specification describes the multi-repo submodule architecture (Z-ai-platform with Z-ai-standards, Z-ai-guard, Z-ai-skills as separate git submodules). The repository is now a flat copy (Z-ai-governance) with no submodules. The verifier concepts (G01-G15 checks, scanning algorithm, snapshot comparison) remain valid and are implemented in `standards/scripts/verify-id-graph.js`. Submodule-specific sections (multi-repo scanning, .gitmodules detection, cross-repo path resolution) describe a topology that no longer exists.
+
 > ID: TOOL-VERIFY-004
 > Version: 1.0.0
-> Layer: L1 Standards (lives in `Z-ai-standards/scripts/`)
-> Owning repo: Z-ai-standards
+> Layer: L1 Standards (lives in `standards/scripts/`)
+> Owning repo: Z-ai-governance
 > Last Updated: 2026-06-17
 > Effective Date: 2026-06-17
-> Status: **APPROVED**
+> Status: **DEPRECATED** (see note above)
 > Related: STD-META-001 v2.0, STD-SKILL-001 v1.0, TOOL-VERIFY-002 (verify-standards.js)
 > Implements invariants: G01–G15 from STD-META-001 §10.2 and STD-SKILL-001 §13.2
 
