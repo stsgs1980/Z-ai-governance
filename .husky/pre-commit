@@ -1,13 +1,23 @@
 # ==============================================================================
-# pre-commit hook — Z-ai-platform (consolidated under Husky, 2026-07-04)
+# pre-commit hook -- Z-ai-governance (consolidated under Husky, 2026-07-04)
 # ==============================================================================
 #
 # Enforcement groups (run in order):
 #
-#   0. guard/ integrity + checklist (HARD)
-#      - check-no-bypass.sh       (RULE-INTEGRITY-011: no hook/rule tampering)
-#      - check-commit-checklist.sh (RULE-COMMIT-014: emoji, large files, worklog)
-#      - check-version-bump.sh     (RULE-VERSION-013: version via ahg.sh)
+#   0. guard/ integrity + checklist (HARD, 13 scripts)
+#      - check-no-bypass.sh         (RULE-INTEGRITY-011)
+#      - check-commit-checklist.sh  (RULE-COMMIT-014: large files, honesty)
+#      - check-version-bump.sh      (RULE-VERSION-013)
+#      - check-read-before-write.sh (RULE-READ-003)
+#      - check-no-loops.sh          (RULE-LOOPS-005)
+#      - check-ahg-integrity.sh     (RULE-ARCH-016/017)
+#      - check-sandbox-env.sh       (RULE-ENV-008)
+#      - check-session-start.sh     (RULE-AGENT-009)
+#      - check-work-cycle.sh        (RULE-STRUCT-007)
+#      - check-snapshot-sync.sh     (ID graph snapshot drift)
+#      - check-changelog-sync.sh    (CHANGELOG freshness)
+#      - check-script-coverage.sh   (pre-commit vs CI drift)
+#      - check-crlf.sh              (LF line ending enforcement)
 #
 #   1. guard/ (PROC-COCHANGE-003, PROC-WORKLOG-005)
 #      - code + docs sync (RULE-DOC-010, HARD)
@@ -18,7 +28,7 @@
 #      - verify-id-graph.js   -- cross-repo ID-graph invariants (G01-G15, HARD)
 #      - verify-skills.js     -- skill-side format invariants (S01-S09, HARD)
 #
-#   3. guard/ (PROC-LINECOUNT-004, HARD)
+#   3. guard/ (PROC-LINECOUNT-004, SOFT)
 #      - per-category file-size caps (RULE-MONOLITH-012)
 #
 #   4. lint-staged (eslint + prettier on staged files)
@@ -39,7 +49,7 @@ if ! bash guard/scripts/check-no-bypass.sh --hard; then
   exit 1
 fi
 
-# RULE-COMMIT-014: pre-commit checklist (emoji, large files, worklog)
+# RULE-COMMIT-014: pre-commit checklist (large files, honesty)
 echo "[pre-commit] check-commit-checklist.sh (RULE-COMMIT-014)"
 if ! bash guard/scripts/check-commit-checklist.sh --hard; then
   echo "[pre-commit] FAIL: commit checklist violations."
@@ -140,15 +150,13 @@ if ! command -v node >/dev/null 2>&1; then
   echo "[pre-commit] WARNING: Node.js not found in PATH -- skipping verifier runs."
   echo "[pre-commit] CI will catch any regressions; install Node.js to enable local checks."
 else
-  # Verify scripts live in the standards submodule, which MUST be checked out
-  # (`git submodule update --init --recursive`).
+  # Verify scripts live in standards/scripts/.
   VERIFY_STANDARDS="standards/scripts/verify-standards.js"
   VERIFY_ID_GRAPH="standards/scripts/verify-id-graph.js"
   VERIFY_SKILLS="standards/scripts/verify-skills.js"
 
   if [ ! -f "$VERIFY_STANDARDS" ] || [ ! -f "$VERIFY_ID_GRAPH" ]; then
-    echo "[pre-commit] WARNING: standards submodule not checked out -- skipping verify runs."
-    echo "[pre-commit] Run: git submodule update --init --recursive"
+    echo "[pre-commit] WARNING: standards/scripts/ not found -- skipping verify runs."
     echo "[pre-commit] CI will catch any regressions."
   else
     # Phase 1: verify-standards.js (content-level, fast)
@@ -173,8 +181,7 @@ else
       echo "[pre-commit] ---- output ----"
       sed 's/^/  /' /tmp/zai-precommit-vgraph.log
       echo "[pre-commit] ---- end output ----"
-      echo "[pre-commit] HARD check failures block CI. Fix the offending file(s)"
-      echo "[pre-commit] (in the appropriate submodule if needed), then re-commit."
+      echo "[pre-commit] HARD check failures block CI. Fix the offending file(s), then re-commit."
       echo "[pre-commit] To bypass (NOT recommended): git commit --no-verify"
       exit 1
     fi

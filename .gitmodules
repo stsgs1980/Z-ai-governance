@@ -1,6 +1,0 @@
-[submodule "standards"]
-	path = standards
-	url = https://github.com/stsgs1980/Z-ai-standards.git
-[submodule "guard"]
-	path = guard
-	url = https://github.com/stsgs1980/Z-ai-guard.git

@@ -1,10 +1,56 @@
 # CHANGELOG
 
-## Changelog for Z-ai-platform
+## Changelog for Z-ai-governance
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/).
+
+---
+
+## [1.3.0] - 2026-07-07
+
+### Changed
+
+- **Repository structure**: flat copy of Z-ai-platform -- no submodules
+  (guard/, standards/, skills/ are regular directories)
+- **Governance unification**: 14 duplicate implementations removed
+  (6 emoji, 4 line-count, 4 worklog) without loss of functionality
+- **Single source of truth**: `.zai/config.json` now the authoritative
+  threshold config for all governance checks
+- **`.zai/verify`**: rewritten as orchestrator that delegates to canonical
+  implementations in guard/scripts/ and standards/scripts/
+- **`.zai/setup.sh`**: rewritten with 4-phase approach, does not modify
+  pre-commit hooks
+- **Pre-commit hook**: all 13 check-*.sh scripts in Group 0
+  (was 3 in comment block, now matches actual execution)
+
+### Removed
+
+- **`.zai/lib/check-emoji.sh`**: duplicate of eslint-rules/ enforcement
+- **`.zai/lib/check-line-count.sh`**: duplicate of guard/scripts/line-count-check.sh
+- **`guard/eslint-rules/`** and **`guard/eslint.config.js`**: dead code, never called
+- **`standards/eslint-rules/`** and **`standards/eslint.config.js`**: dead code, never called
+- **`.gitmodules`**: no longer a multi-submodule repository
+
+### Fixed
+
+- **`check-commit-checklist.sh`**: removed emoji (Check 1) and worklog
+  (Check 3) -- now only checks large files and honesty
+- **`check-ahg-integrity.sh`**: fixed AGENT_RULES.md path
+- **`check-version-bump.sh`**: fixed bump.sh path, removed skills/package.json
+- **Emoji check**: skips when node_modules/eslint not installed
+- **All documents**: updated to reflect flat repository structure
+  (README, AGENT_RULES, CONTRIBUTING, HANDBOOK, guard/README, standards/README)
+
+### Statistics
+
+| Metric | 1.2.0 | 1.3.0 | Delta |
+| --- | --- | --- | --- |
+| Duplicate implementations | 14 | 0 | -14 |
+| Guard scripts | 18 | 18 | = |
+| Governance check sources | 8 | 3 | -5 |
+| Documents with submodule refs | 6 | 0 | -6 |
 
 ---
 

@@ -2,8 +2,14 @@
 
 > Companion to: STD-DOC-002 v2.4.3 (Markdown Formatting Standard)
 > Type: Reference appendix, NOT a separate standard
-> Last Updated: 2026-06-21
+> Last Updated: 2026-07-07
 > Status: ACTIVE (reference implementation)
+>
+> NOTE: In the current repository (Z-ai-governance), ESLint rules live
+> ONLY in the root `eslint-rules/` directory. The `guard/eslint-rules/`
+> and `standards/eslint-rules/` directories (referenced in some sections
+> below) were removed as dead code -- they were never called by lint-staged
+> or any other mechanism.
 
 This file is a **companion reference** to `DOC-002-markdown-standard.md`
 (STD-DOC-002 v2.4.3). It contains the full ESLint integration guide

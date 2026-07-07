@@ -12,7 +12,7 @@
 
 This standard defines two distinct ordering concerns:
 
-1. **Standards Installation Order** (§1) — the order in which the 20 normative standards MUST be read and accepted when onboarding a new project or agent. Each standard depends on concepts introduced by earlier standards.
+1. **Standards Installation Order** (section 1) -- the order in which the 19 normative standards MUST be read and accepted when onboarding a new project or agent. Each standard depends on concepts introduced by earlier standards.
 
 2. **Project Setup Sequence** (§2-§6) — the 6-step sequence for assembling a project (read standards -> deploy worklog -> reproducibility -> unicode policy -> markdown -> README). This sequence governs how the standards are _applied_ to a codebase, not how they are _learned_.
 
@@ -22,7 +22,7 @@ Violating either order leads to rework.
 
 ## 1. Standards Installation Order
 
-The 21 normative standards below MUST be installed (read, understood, and accepted) in this order. Each row cites the prerequisite standards whose concepts the current standard depends on.
+The 19 normative standards below MUST be installed (read, understood, and accepted) in this order. Each row cites the prerequisite standards whose concepts the current standard depends on.
 
 > **Implicit prerequisite (v2.6, 2026-06-19):** `STD-META-001` is required by
 > every other standard (it defines the ID system that all standards use to

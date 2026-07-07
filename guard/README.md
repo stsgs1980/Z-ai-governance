@@ -1,6 +1,6 @@
 # Z-ai-guard
 
-Enforcement layer for the Z-ai ecosystem: rules (what agents must do), procedures (what runs when a rule fires), and tools (the scripts rules call). All 17 RULE, 4 PROC, and 6 TOOL are ACTIVE with M003 + M004 migrations complete.
+Enforcement layer for the Z-ai ecosystem: rules (what agents must do), procedures (what runs when a rule fires), and tools (the scripts rules call). All 17 RULE, 4 PROC, and 2 TOOL are ACTIVE with M003 + M004 migrations complete.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
@@ -23,7 +23,7 @@ Enforcement layer for the Z-ai ecosystem: rules (what agents must do), procedure
 - 4 active procedures with executable scripts: SETUP-001, UPDATE-002, COCHANGE-003, LINECOUNT-004
 - 2 active tools: verify-docs.sh (integrity checks) and bump.sh (version management)
 - 5-group pre-commit hook: Group 0 (integrity + checklist, HARD), Group 1 (co-change + worklog, HARD), Group 2 (standards verify-*.js, HARD), Group 3 (line-count, SOFT), Group 4 (lint-staged eslint)
-- Auto-generated registry.json tracking all 27 IDs across RULE, PROC, and TOOL namespaces
+- Auto-generated registry.json tracking all 23 IDs across RULE, PROC, and TOOL namespaces
 - Cross-reference verification composing platform verifiers with guard-specific checks
 - Complete M002/M003/M004 migration from legacy AHG IDs to monolith naming convention
 
@@ -43,9 +43,11 @@ Enforcement layer for the Z-ai ecosystem: rules (what agents must do), procedure
 
 ### Installation
 
+This directory is part of the [Z-ai-governance](https://github.com/stsgs1980/Z-ai-governance) repository. Clone that repo to get guard/:
+
 ```bash
-git clone https://github.com/stsgs1980/Z-ai-guard.git
-cd Z-ai-guard
+git clone https://github.com/stsgs1980/Z-ai-governance.git
+cd Z-ai-governance
 ```
 
 ### Run
@@ -66,14 +68,14 @@ python scripts/build-registry.py --output registry.json
 | PROC-*        | 4/4   | COMPLETE (M003). All 4 PROC ACTIVE: SETUP-001, UPDATE-002, COCHANGE-003, LINECOUNT-004  |
 | TOOL-*        | 2/2   | COMPLETE (M004). TOOL-VERIFY-001 + TOOL-BUMP-005 ACTIVE                                 |
 | instructions/ | 4     | COMPLETE. 4 PROC-*.md spec files, all marked ACTIVE                                     |
-| scripts/      | 15    | 15 enforcement shell scripts (see .husky/pre-commit for call list) |
+| scripts/      | 18    | 18 shell scripts (13 check-*, 3 PROC, 2 setup) |
 | tools/        | 2     | verify-docs.sh (TOOL-VERIFY-001), bump.sh (TOOL-BUMP-005)                               |
-| registry.json | 1     | Auto-generated. 27 IDs (17 RULE + 4 PROC + 6 TOOL)                                      |
+| registry.json | 1     | Auto-generated. 23 IDs (17 RULE + 4 PROC + 2 TOOL)                                      |
 
 Pre-commit hook runs 5 groups managed by .husky/pre-commit:
   - Group 0: guard/scripts/check-*.sh (13 integrity + checklist + env scripts, HARD)
   - Group 1: co-change-check.sh + worklog-check.sh (HARD)
-  - Group 2: standards/scripts/verify-*.js (content + id-graph + skills, HARD)
+  - Group 2: verify-standards.js, verify-id-graph.js, verify-skills.js (HARD)
   - Group 3: line-count-check.sh (SOFT, advisory)
   - Group 4: lint-staged -> eslint (emoji, unicode, code-block-lang, HARD)
 
@@ -85,13 +87,13 @@ Canonical source: root eslint-rules/unicode-policy.js via lint-staged (STD-DOC-0
 - `rules/` - 17 RULE- rule files + INDEX.md catalog
   - RULE-ANSWER-001 through 017 covering: answer before act, worklog, read before write, commit structure, no loops, honest reporting, work structure, sandbox verification, session start, documentation sync, integrity protection, anti-monolith, version bumping, pre-commit checklist, no Unicode graphics, submodule immutability, upstream write protection
 - `instructions/` - 4 PROC-*.md spec files (SETUP-001, UPDATE-002, COCHANGE-003, LINECOUNT-004)
-- `scripts/` - build-registry.py, co-change-check.sh, line-count-check.sh, setup-001.sh, update-002.sh
+- `scripts/` - 18 shell scripts: 13 check-*.sh (integrity, commit, version, env), co-change-check.sh, worklog-check.sh, line-count-check.sh, setup-001.sh, update-002.sh; plus build-registry.py
 - `tools/` - verify-docs.sh (TOOL-VERIFY-001), bump.sh (TOOL-BUMP-005)
-- `registry.json` - Auto-generated registry of all 27 enforcement IDs
+- `registry.json` - Auto-generated registry of all 23 enforcement IDs
 
 ## Migration Plan
 
-Per STD-META-001 s11.2 and `Z-ai-standards/MIGRATIONS.md`:
+Per STD-META-001 s11.2 and `standards/MIGRATIONS.md`:
 
 ### M002 - RULE-001..RULE-017 to RULE-ANSWER-001..RULE-ARCH-017 (COMPLETE)
 
@@ -115,7 +117,7 @@ Per STD-META-001 s11.2 and `Z-ai-standards/MIGRATIONS.md`:
 | RULE-016 | RULE-ARCH-016      | Submodule immutability       |
 | RULE-017 | RULE-ARCH-017      | Upstream write protection    |
 
-Migration window documented as "NOT YET OPEN" in `Z-ai-standards/MIGRATIONS.md` because legacy IDs do not exist in the current ID graph.
+Migration window documented as "NOT YET OPEN" in `standards/MIGRATIONS.md` because legacy IDs do not exist in the current ID graph.
 
 ### M003 - AHG PROC-XXX to PROC-MONOLITH-XXX (COMPLETE 2026-06-25)
 
@@ -149,7 +151,7 @@ Migration window documented as "NOT YET OPEN" in `Z-ai-standards/MIGRATIONS.md` 
 | TOOL-VERIFY-001 | tools/verify-docs.sh | 2.1     | [C]   | ACTIVE (M004) |
 | TOOL-BUMP-005   | tools/bump.sh        | 2.1     | [C]   | ACTIVE (M004) |
 
-TOOL-VERIFY-002 (`verify-standards.js`), TOOL-VERIFY-004 (`verify-id-graph.js`), and TOOL-CHECKUPDATES-006 (`check-updates.sh`) live in **Z-ai-standards/scripts/** and are already implemented and active. TOOL-VERIFY-003 was retired 2026-06-18.
+TOOL-VERIFY-002 (`verify-standards.js`), TOOL-VERIFY-004 (`verify-id-graph.js`), and TOOL-CHECKUPDATES-006 (`check-updates.sh`) live in **standards/scripts/** and are already implemented and active. TOOL-VERIFY-003 was retired 2026-06-18.
 
 ## Known Issues
 
@@ -171,6 +173,8 @@ Six rules reference IDs that do not match the ID format (`<PREFIX>-<DOMAIN>-<NNN
 | RULE-COMMIT-014    | `TOOL-MONOLITH-VERIFY`    | `TOOL-VERIFY-001`    |
 
 The ID-graph verifier reports 13/13 HARD PASS on the graph that survived filtering, not on the rules as written. Fixing requires landing M003/M004 with proper IDs and updating the rule Related: lists.
+
+Note: This repo is now a flat copy (Z-ai-governance). The submodule-related aspects of these issues may no longer apply.
 
 ## License
 

@@ -49,12 +49,6 @@ git clone https://github.com/stsgs1980/Z-ai-standards.git
 cd Z-ai-standards
 ```
 
-Or as a submodule via Z-ai-platform:
-
-```bash
-git clone --recurse-submodules https://github.com/stsgs1980/Z-ai-platform.git
-```
-
 ### Run
 
 ```bash
@@ -67,7 +61,7 @@ node scripts/verify-id-graph.js
 
 ## Project Structure
 
-- `standards/` - 20 normative standards in flat `<DOMAIN>-<NNN>-<name>.md` layout
+- `standards/` - 19 normative standards in flat `<DOMAIN>-<NNN>-<name>.md` layout
   - Architecture: META-001, ARCH-001, ARCH-002
   - Documentation: DOC-002, DOC-003
   - Skills: SKILL-001
@@ -135,10 +129,8 @@ Non-normative companions (not in install order):
 | STD-FE-001 | Frontend Development | 2.4.0 | 2026-06-18 | [C] Critical |
 | STD-A11Y-001 | WCAG 2.1 AA Accessibility | 1.2.0 | 2026-06-18 | [C] Critical |
 | STD-ERR-001 | Error Handling Core | 2.1.0 | 2026-06-18 | [C] Critical |
-| STD-ERR-002 | Error Recovery | 1.1.0 | 2026-06-18 | [C] Critical |
 | STD-SEC-001 | Security Core | 2.1.0 | 2026-06-18 | [C] Critical |
 | STD-SEC-002 | Security Extended | 1.1.0 | 2026-06-18 | [C] Critical |
-| STD-TEST-001 | Testing | 1.2.0 | 2026-06-18 | [C] Critical |
 | STD-AGENT-001 | Subagent | 1.1.0 | 2026-06-18 | [C] Critical |
 | STD-AGENT-002 | Orchestration | 1.1.0 | 2026-06-18 | [C] Critical |
 
@@ -147,12 +139,12 @@ Non-normative companions (not in install order):
 | When working on... | Also check... |
 |---|---|
 | **Frontend** (FE-001) | A11Y-001 (WCAG), DESIGN-001 (tokens), ERR-001 (boundary patterns) |
-| **Errors** (ERR-001, ERR-002) | AGENT-002 (error propagation), FE-001 (Error Boundary) |
+| **Errors** (ERR-001) | AGENT-002 (error propagation), FE-001 (Error Boundary) |
 | **Security** (SEC-001, SEC-002) | ENV-001 (secrets, env), GIT-001 (push protection) |
-| **GitHub** (GIT-001, GIT-002) | TEST-001 (CI gates), ENV-002 (sandbox git rules) |
+| **GitHub** (GIT-001, GIT-002) | ENV-002 (sandbox git rules) |
 | **Documentation** (DOC-002, DOC-003) | templates/, guides/ -- apply rules via these artifacts |
 | **Design** (DESIGN-001) | FE-001 (token consumption), A11Y-001 (contrast) |
-| **Agents** (AGENT-001, AGENT-002) | ERR-001 (recovery), TEST-001 (subagent test isolation) |
+| **Agents** (AGENT-001, AGENT-002) | ERR-001 (recovery) |
 | **Environment** (ENV-001, ENV-002) | GIT-001 (sandbox git ops), SEC-001 (secrets) |
 | **Meta** (META-001) | Every other file -- meta defines the ID system all use |
 | **Architecture** (ARCH-001, ARCH-002) | Every other file -- ARCH-002 defines the install order |
@@ -166,7 +158,7 @@ node scripts/verify-standards.js   # V04-V10 per-repo invariants
 node scripts/verify-id-graph.js    # G01-G15 cross-repo invariants
 ```
 
-The pre-commit hook (managed by parent Z-ai-platform .husky/pre-commit) runs all three verify-*.js scripts. `install-hooks.sh` is for standalone use only (when standards/ is not a submodule).
+The pre-commit hook (`.husky/pre-commit` in repo root) runs all three verify-*.js scripts in Group 2.
 
 ## Contributing
 
@@ -191,7 +183,7 @@ Active migrations tracked in MIGRATIONS.md:
 
 | Version | Date | Change |
 |---|---|---|
-| 2.1.0 | 2026-06-18 | Flat layout: renamed all 20 standards to <DOMAIN>-<NNN>-<name>.md convention. Merged 3 STUBs with working drafts. Split ARCH into ARCH-001 + ARCH-002. Updated README with install order table for all 20 standards |
+| 2.1.0 | 2026-06-18 | Flat layout: renamed all 18 standards to <DOMAIN>-<NNN>-<name>.md convention. Merged 3 STUBs with working drafts. Split ARCH into ARCH-001 + ARCH-002. Updated README with install order table for all 18 standards |
 | 2.0.1 | 2026-06-18 | Restructured standards/ into per-domain subfolders. Moved templates/ and guides/ |
 | 2.0.0 | 2026-06-17 | Initial formalized release. 6 standards formalized as STD-*-vX.Y.md |
 

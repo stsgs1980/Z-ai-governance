@@ -10,13 +10,11 @@
 > verified_by: scripts/verify-id-graph.js#G02,G03,G04,G07
 > Related: STD-META-001 (ID system)
 
-> **Status: APPROVED.** This revision replaces the v0.1 stub with a full
-> normative standard governing the four-repository split of the Z-ai
-> ecosystem. All four repositories are now live on GitHub and the
-> submodule topology has been exercised end-to-end through both pointer
-> bumps and a cross-repo CI workflow. v1.0 formalizes the conventions
-> that were already de-facto in `Z-ai-platform/README.md` and
-> `Z-ai-platform/CONTRIBUTING.md`.
+> **Status: APPROVED.** This standard describes the original Z-ai-platform
+> four-repository architecture with submodules. The current repository
+> (Z-ai-governance) is a flat copy where guard/, standards/, and skills/
+> are regular directories. Layer assignment (invariant 3) and ID-form
+> references (invariant 4) still apply.
 >
 > **Key invariants.** (1) The orchestrator repository MUST pin exactly
 > three submodules: `standards/`, `guard/`, `skills/`. (2) Submodule

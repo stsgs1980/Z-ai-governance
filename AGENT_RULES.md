@@ -1,10 +1,10 @@
 # AGENT_RULES.md — Single Entry Point for Z-ai Agents
 
 > **Owner**: Platform maintainer (this repo's owner)
-> **Target**: Z-ai-platform v2.7.0 (2026-07-04)
-> **Submodule pins**: standards@4b0fdf5 · guard@91b81b97 (skills inline since a3d358b)
+> **Target**: Z-ai-governance v1.3.0 (flat copy, 2026-07-07)
+> **Repository**: Flat copy — no submodules (guard/, standards/, skills/ are regular directories)
 > **Status**: ACTIVE — supersedes bootstrap.sh as the agent onboarding source
-> **Last Updated**: 2026-07-06
+> **Last Updated**: 2026-07-07
 
 This file is the **single orchestration entry point** for any agent
 operating in the Z-ai sandbox. It tells you what to read, in what order,
@@ -82,8 +82,8 @@ Skipping Step 1–4 = you are operating without context. Expect drift.
 When two sources disagree, the higher one wins. No exceptions.
 
 ```
-  Priority 1 (highest)  STD-*      standards/  — contracts, ID system
-  Priority 2            RULE-*  guard/  — runtime constraints
+  Priority 1 (highest)  STD-*      standards/standards/  — contracts, ID system
+  Priority 2            RULE-*  guard/rules/  — runtime constraints
   Priority 3            AGENT_RULES.md  (this file)  — orchestration
   Priority 4 (lowest)   ZAI-*      skills/    — capability instructions
 ```
@@ -105,15 +105,17 @@ Authoritative catalog of all 17 runtime rules. Do not memorize — load it.
 Location:    guard/rules/INDEX.md
 Count:       17 RULE-* (declared)
 Enforcement: 13+ enforced at runtime via .husky/pre-commit (5 groups)
-              Group 0: check-no-bypass, check-commit-checklist, check-version-bump,
-                       check-read-before-write, check-no-loops, check-ahg-integrity,
-                       check-sandbox-env, check-session-start, check-work-cycle,
-                       check-snapshot-sync, check-changelog-sync,
+              Group 0 (HARD, 13 scripts): check-no-bypass, check-commit-checklist,
+                       check-version-bump, check-read-before-write, check-no-loops,
+                       check-ahg-integrity, check-sandbox-env, check-session-start,
+                       check-work-cycle, check-snapshot-sync, check-changelog-sync,
                        check-script-coverage, check-crlf
-              Group 1: co-change-check (RULE-DOC-010), worklog-check (RULE-WORKLOG-002)
-              Group 2: verify-standards.js, verify-id-graph.js, verify-skills.js
-              Group 3: line-count-check (advisory)
-              Group 4: lint-staged (emoji/unicode via eslint)
+              Group 1 (HARD): co-change-check (RULE-DOC-010),
+                             worklog-check (RULE-WORKLOG-002)
+              Group 2 (HARD): verify-standards.js (V01-V18),
+                             verify-id-graph.js (G01-G15), verify-skills.js (S01-S09)
+              Group 3 (SOFT): line-count-check (advisory)
+              Group 4: lint-staged (emoji/unicode via eslint-rules/)
 Trust level: 13+ of 17 enforced; remainder are declared intent or LLM-only
 ```
 
@@ -125,7 +127,7 @@ The 5 rules most likely to bite you:
 | RULE-WORKLOG-002 | Worklog before/after      | Append to `worklog.md` before AND after every action                                           |
 | RULE-READ-003    | Read before write         | Open the file before editing it                                                                |
 | RULE-COMMIT-014  | Pre-commit checklist      | Run verifiers before `git commit`                                                              |
-| RULE-ARCH-017    | Upstream write protection | **Never** push to standards/ or guard/ — these are upstream submodules (skills/ is now inline) |
+| RULE-ARCH-017    | Upstream write protection | **Never** force-push to standards/ or guard/ — these are upstream layers (skills/ is inline) |
 
 Full registry: `guard/rules/INDEX.md` (17 entries, machine-parseable table).
 
@@ -139,8 +141,7 @@ in ID-graph validation), 3 do not (opt-out per STD-SKILL-001).
 ```
 Location:    skills/INDEX.md
 Count:       14 skills (11 with ZAI-* ID, 3 without)
-Layout:      inline monorepo (since commit a3d358b, 2026-07-03;
-             was a git submodule before)
+Layout:      inline monorepo (since 2026-07-03; flat directory in this repo)
 ```
 
 Skills are capabilities, not contracts. They tell you HOW to do something.
@@ -157,7 +158,7 @@ produce inconsistent mental models. ARCH-002 declares the canonical order.
 Location:    standards/standards/ARCH-002-implementation-order.md
 Count:       19 STD-* IDs
 Verifiers:   standards/scripts/verify-standards.js (V-checks)
-             standards/scripts/verify-id-graph.js   (G-checks, 13/13 PASS at v2.6.0)
+             standards/scripts/verify-id-graph.js   (G-checks)
 ```
 
 Tier 1 (foundational, read first): STD-META-001, STD-ARCH-001, STD-DOC-002
@@ -245,7 +246,7 @@ the static layer is consistent.
 These will get your work reverted. Do not do them, even if asked.
 
 ```
-  ✗  git push into standards/ or guard/ submodules
+  ✗  Force-pushing or rewriting history in standards/ or guard/
      → violates RULE-ARCH-017 (upstream protection; skills/ is inline, not upstream)
 
   ✗  Skipping worklog.md before/after an action
@@ -274,14 +275,14 @@ These will get your work reverted. Do not do them, even if asked.
 
 ## §9. Version Lock
 
-This file targets a specific platform version. If submodule pointers
-drift, this file may give incorrect references.
+This file targets the Z-ai-governance flat repository. All directories
+(standards/, guard/, skills/) are part of this single repo -- there are
+no submodules.
 
 ```
-  Platform:     v2.7.0  (2026-07-04)
-  standards@    4b0fdf5  (verified 2026-07-04)
-  guard@        91b81b97  (verified 2026-07-04)
-  skills:       inline monorepo (not a submodule since a3d358b)
+  Repository:   Z-ai-governance (flat copy of Z-ai-platform)
+  Version:      v1.3.0  (2026-07-07)
+  Structure:    standards/, guard/, skills/ — regular directories
   Node:         >=20.12.0 (local), v24.x (sandbox)
 ```
 
@@ -289,21 +290,17 @@ drift, this file may give incorrect references.
 which landed in Node 20.12. Local Windows dev on Node 20.11 will fail the
 pre-commit hook. Use `fnm` (or equivalent) to pin `.node-version`
 (22.22.3) on Windows. The Z.ai sandbox ships Node preinstalled (v24.x)
-— no action needed there.
-
-If `git submodule status` shows different SHAs → re-read ARCH-002,
-INDEX.md, and verify-id-graph.js output before trusting this file.
+-- no action needed there.
 
 ---
 
 ## §10. Change Protocol
 
-This file is owned by the platform maintainer. Changes require:
+This file is owned by the repository maintainer. Changes require:
 
 1. Update `Last Updated` date in header
-2. Update `Submodule pins` if any submodule moved
-3. Bump platform tag (e.g. v2.6.0 → v2.6.1) if rules change
-4. Commit to platform repo (never to submodules — see §8)
+2. Bump version tag (e.g. v1.3.0 -> v1.3.1) if rules change
+3. Commit to this repository (see section 8 for forbidden actions)
 
 Do not edit this file from a subagent context. Propose changes in
-`worklog.md` and let the platform maintainer apply them.
+`worklog.md` and let the maintainer apply them.
