@@ -2,12 +2,12 @@
   "version": "1.1.7",
   "effective_date": "2026-07-06",
   "summary": {
-    "ids_extracted": 54,
-    "related_edges": 116,
+    "ids_extracted": 24,
+    "related_edges": 50,
     "aligned_with_edges": 0,
     "hard_pass": 13,
     "hard_fail": 0,
-    "warnings": 2
+    "warnings": 24
   },
   "checks": [
     {
@@ -91,12 +91,100 @@
   ],
   "warnings": [
     {
+      "id": "W03",
+      "detail": "STD-AGENT-002: STD not referenced by any RULE/ZAI (dead standard)"
+    },
+    {
+      "id": "W03",
+      "detail": "STD-GIT-002: STD not referenced by any RULE/ZAI (dead standard)"
+    },
+    {
+      "id": "W03",
+      "detail": "STD-SEC-002: STD not referenced by any RULE/ZAI (dead standard)"
+    },
+    {
+      "id": "W03",
+      "detail": "STD-SKILL-001: STD not referenced by any RULE/ZAI (dead standard)"
+    },
+    {
+      "id": "W03",
+      "detail": "STD-DOC-007: STD not referenced by any RULE/ZAI (dead standard)"
+    },
+    {
+      "id": "W03",
+      "detail": "STD-DOC-006: STD not referenced by any RULE/ZAI (dead standard)"
+    },
+    {
+      "id": "W03",
+      "detail": "STD-DOC-004: STD not referenced by any RULE/ZAI (dead standard)"
+    },
+    {
+      "id": "W03",
+      "detail": "STD-DOC-005: STD not referenced by any RULE/ZAI (dead standard)"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"CONTRIBUTING.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/MIGRATIONS.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"guard/rules/RULE-ARCH-016.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/RULE-ARCH-016.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/skill-creator.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/README.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/doctor.sh\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/CONTRIBUTING.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-id-registry.md: references \"bootstrap.sh\" which does not exist in standards/ tree"
+    },
+    {
       "id": "W13",
       "detail": "META-001-id-registry.md: references \"status.sh\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
-      "detail": "META-001-id-registry.md: references \"Z-ai-platform/status.sh\" which does not exist in standards/ tree"
+      "detail": "META-001-id-registry.md: references \"Z-ai-standards/MIGRATIONS.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-id-registry.md: references \"Z-ai-governance/bootstrap.sh\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-id-registry.md: references \"Z-ai-governance/status.sh\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"standards/MIGRATIONS.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"standards/docs/sandbox/INDEX.md\" which does not exist in standards/ tree"
+    },
+    {
+      "id": "W13",
+      "detail": "META-001-standard-id-system.md: references \"guard/rules/INDEX.md\" which does not exist in standards/ tree"
     }
   ],
   "ids": [
@@ -106,7 +194,7 @@
       "domain": "AGENT",
       "number": "001",
       "title": "Standard: Subagent Standard v1.1 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/AGENT-001-subagent.md",
+      "file": "standards/standards/AGENT-001-subagent.md",
       "repo": "standards"
     },
     {
@@ -115,7 +203,7 @@
       "domain": "AGENT",
       "number": "002",
       "title": "Standard: Orchestration Standard v1.1 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/AGENT-002-orchestration.md",
+      "file": "standards/standards/AGENT-002-orchestration.md",
       "repo": "standards"
     },
     {
@@ -124,7 +212,7 @@
       "domain": "ARCH",
       "number": "001",
       "title": "Standard: Architecture & Repo Layout v1.1.2 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ARCH-001-architecture-and-repo-layout.md",
+      "file": "standards/standards/ARCH-001-architecture-and-repo-layout.md",
       "repo": "standards"
     },
     {
@@ -133,7 +221,7 @@
       "domain": "ARCH",
       "number": "002",
       "title": "Standard: Implementation Order v2.6",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ARCH-002-implementation-order.md",
+      "file": "standards/standards/ARCH-002-implementation-order.md",
       "repo": "standards"
     },
     {
@@ -142,7 +230,7 @@
       "domain": "DESIGN",
       "number": "001",
       "title": "Design System Standard",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/DESIGN-001-design-system.md",
+      "file": "standards/standards/DESIGN-001-design-system.md",
       "repo": "standards"
     },
     {
@@ -151,7 +239,7 @@
       "domain": "DOC",
       "number": "002",
       "title": "Standard: Markdown Formatting v2.4.4 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/DOC-002-markdown-standard.md",
+      "file": "standards/standards/DOC-002-markdown-standard.md",
       "repo": "standards"
     },
     {
@@ -160,7 +248,7 @@
       "domain": "DOC",
       "number": "003",
       "title": "Standard: Unicode Policy v2.3",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/DOC-003-unicode-policy.md",
+      "file": "standards/standards/DOC-003-unicode-policy.md",
       "repo": "standards"
     },
     {
@@ -169,7 +257,7 @@
       "domain": "ENV",
       "number": "001",
       "title": "Standard: Reproducibility v2.1",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ENV-001-reproducibility.md",
+      "file": "standards/standards/ENV-001-reproducibility.md",
       "repo": "standards"
     },
     {
@@ -178,7 +266,7 @@
       "domain": "ENV",
       "number": "002",
       "title": "Standard: Z.ai Integration v1.3 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ENV-002-zai-integration.md",
+      "file": "standards/standards/ENV-002-zai-integration.md",
       "repo": "standards"
     },
     {
@@ -187,7 +275,7 @@
       "domain": "ERR",
       "number": "001",
       "title": "Standard: Error Handling Core v2.1 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ERR-001-error-handling.md",
+      "file": "standards/standards/ERR-001-error-handling.md",
       "repo": "standards"
     },
     {
@@ -196,7 +284,7 @@
       "domain": "FE",
       "number": "001",
       "title": "Standard: Frontend Development v2.4 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/FE-001-frontend.md",
+      "file": "standards/standards/FE-001-frontend.md",
       "repo": "standards"
     },
     {
@@ -205,7 +293,7 @@
       "domain": "GIT",
       "number": "001",
       "title": "Standard: GitHub Core v2.1 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/GIT-001-github.md",
+      "file": "standards/standards/GIT-001-github.md",
       "repo": "standards"
     },
     {
@@ -214,7 +302,7 @@
       "domain": "GIT",
       "number": "002",
       "title": "Standard: GitHub Sandbox Safety v1.1 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/GIT-002-github-sandbox.md",
+      "file": "standards/standards/GIT-002-github-sandbox.md",
       "repo": "standards"
     },
     {
@@ -223,7 +311,7 @@
       "domain": "META",
       "number": "001",
       "title": "Standard: Standard ID System v2.0 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/META-001-standard-id-system.md",
+      "file": "standards/standards/META-001-standard-id-system.md",
       "repo": "standards"
     },
     {
@@ -232,7 +320,7 @@
       "domain": "META",
       "number": "002",
       "title": "Standard: Language Policy v1.0 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/META-002-language-policy.md",
+      "file": "standards/standards/META-002-language-policy.md",
       "repo": "standards"
     },
     {
@@ -241,7 +329,7 @@
       "domain": "SEC",
       "number": "001",
       "title": "Standard: Security Core v2.1 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SEC-001-security-core.md",
+      "file": "standards/standards/SEC-001-security-core.md",
       "repo": "standards"
     },
     {
@@ -250,7 +338,7 @@
       "domain": "SEC",
       "number": "002",
       "title": "Standard: Security Extended v1.1 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SEC-002-security-extended.md",
+      "file": "standards/standards/SEC-002-security-extended.md",
       "repo": "standards"
     },
     {
@@ -259,907 +347,307 @@
       "domain": "SKILL",
       "number": "001",
       "title": "Standard: Skill Format & Identification v1.1 (EN)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SKILL-001-skill-format.md",
+      "file": "standards/standards/SKILL-001-skill-format.md",
       "repo": "standards"
-    },
-    {
-      "id": "RULE-AGENT-009",
-      "prefix": "RULE",
-      "domain": "AGENT",
-      "number": "009",
-      "title": "RULE-AGENT-009: Session Start Protocol (drift prevention)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-AGENT-009.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-ANSWER-001",
-      "prefix": "RULE",
-      "domain": "ANSWER",
-      "number": "001",
-      "title": "RULE-ANSWER-001: Answer before act (no unsolicited action)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ANSWER-001.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-ARCH-016",
-      "prefix": "RULE",
-      "domain": "ARCH",
-      "number": "016",
-      "title": "RULE-ARCH-016: AHG submodule is immutable architecture (no removal, no inlining)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ARCH-016.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-ARCH-017",
-      "prefix": "RULE",
-      "domain": "ARCH",
-      "number": "017",
-      "title": "RULE-ARCH-017: Upstream write protection (no consumer agent may push to AHG)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ARCH-017.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-COMMIT-004",
-      "prefix": "RULE",
-      "domain": "COMMIT",
-      "number": "004",
-      "title": "RULE-COMMIT-004: One logical block -- one commit",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-COMMIT-004.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-COMMIT-014",
-      "prefix": "RULE",
-      "domain": "COMMIT",
-      "number": "014",
-      "title": "RULE-COMMIT-014: Pre-commit mandatory checklist",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-COMMIT-014.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-DOC-010",
-      "prefix": "RULE",
-      "domain": "DOC",
-      "number": "010",
-      "title": "RULE-DOC-010: Documentation sync (no code without docs)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-DOC-010.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-DOC-015",
-      "prefix": "RULE",
-      "domain": "DOC",
-      "number": "015",
-      "title": "RULE-DOC-015: No Unicode graphics (UNICODE_POLICY compliance)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-DOC-015.md",
-      "repo": "guard"
     },
     {
       "id": "RULE-ENV-008",
       "prefix": "RULE",
       "domain": "ENV",
       "number": "008",
-      "title": "RULE-ENV-008: Sandbox verification (no fake setup)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ENV-008.md",
-      "repo": "guard"
+      "title": "verify-id-graph.js — Specification v1.0",
+      "file": "standards/docs/verify-id-graph-spec-v1.0.md",
+      "repo": "platform"
     },
     {
-      "id": "RULE-HONEST-006",
-      "prefix": "RULE",
-      "domain": "HONEST",
-      "number": "006",
-      "title": "RULE-HONEST-006: Honest reporting",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-HONEST-006.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-INTEGRITY-011",
-      "prefix": "RULE",
-      "domain": "INTEGRITY",
-      "number": "011",
-      "title": "RULE-INTEGRITY-011: Integrity protection (no self-sabotage)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-INTEGRITY-011.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-LOOPS-005",
-      "prefix": "RULE",
-      "domain": "LOOPS",
-      "number": "005",
-      "title": "RULE-LOOPS-005: No loops",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-LOOPS-005.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-MONOLITH-012",
-      "prefix": "RULE",
-      "domain": "MONOLITH",
-      "number": "012",
-      "title": "RULE-MONOLITH-012: Anti-monolith (file size by category)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-MONOLITH-012.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-READ-003",
-      "prefix": "RULE",
-      "domain": "READ",
-      "number": "003",
-      "title": "RULE-READ-003: Read before write",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-READ-003.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-STRUCT-007",
-      "prefix": "RULE",
-      "domain": "STRUCT",
-      "number": "007",
-      "title": "RULE-STRUCT-007: Work structure",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-STRUCT-007.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-VERSION-013",
-      "prefix": "RULE",
-      "domain": "VERSION",
-      "number": "013",
-      "title": "RULE-VERSION-013: Use ahg bump for version updates",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-VERSION-013.md",
-      "repo": "guard"
-    },
-    {
-      "id": "RULE-WORKLOG-002",
-      "prefix": "RULE",
-      "domain": "WORKLOG",
-      "number": "002",
-      "title": "RULE-WORKLOG-002: worklog -- BEFORE and AFTER every action",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-WORKLOG-002.md",
-      "repo": "guard"
-    },
-    {
-      "id": "PROC-COCHANGE-003",
-      "prefix": "PROC",
-      "domain": "COCHANGE",
-      "number": "003",
-      "title": "PROC-COCHANGE-003: Co-change check (code + docs sync)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-COCHANGE-003.md",
-      "repo": "guard"
-    },
-    {
-      "id": "PROC-LINECOUNT-004",
-      "prefix": "PROC",
-      "domain": "LINECOUNT",
-      "number": "004",
-      "title": "PROC-LINECOUNT-004: Line count check (anti-monolith enforcement)",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-LINECOUNT-004.md",
-      "repo": "guard"
-    },
-    {
-      "id": "PROC-SETUP-001",
-      "prefix": "PROC",
-      "domain": "SETUP",
-      "number": "001",
-      "title": "PROC-SETUP-001: Project installer procedure",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-SETUP-001.md",
-      "repo": "guard"
-    },
-    {
-      "id": "PROC-UPDATE-002",
-      "prefix": "PROC",
-      "domain": "UPDATE",
-      "number": "002",
-      "title": "PROC-UPDATE-002: Project update procedure",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-UPDATE-002.md",
-      "repo": "guard"
-    },
-    {
-      "id": "ZAI-DEV-006",
-      "prefix": "ZAI",
-      "domain": "DEV",
-      "number": "006",
-      "title": "Skill: Zai Answer Before Act v1.0.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-answer-before-act/SKILL.md",
-      "repo": "skills"
-    },
-    {
-      "id": "ZAI-ARCH-002",
-      "prefix": "ZAI",
-      "domain": "ARCH",
-      "number": "002",
-      "title": "Skill: Zai Anti-Monolith v1.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-anti-monolith/SKILL.md",
-      "repo": "skills"
-    },
-    {
-      "id": "ZAI-DEV-004",
-      "prefix": "ZAI",
-      "domain": "DEV",
-      "number": "004",
-      "title": "Skill: Zai Debugging v1.0.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-debugging/SKILL.md",
-      "repo": "skills"
-    },
-    {
-      "id": "ZAI-DEV-003",
-      "prefix": "ZAI",
-      "domain": "DEV",
-      "number": "003",
-      "title": "Skill: Zai Frontend Styling Expert v1.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-frontend-styling-expert/SKILL.md",
-      "repo": "skills"
-    },
-    {
-      "id": "ZAI-DOC-001",
-      "prefix": "ZAI",
+      "id": "STD-DOC-007",
+      "prefix": "STD",
       "domain": "DOC",
-      "number": "001",
-      "title": "Skill: Zai Markdown Standard v1.0.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-md-std/SKILL.md",
-      "repo": "skills"
+      "number": "007",
+      "title": "AGENT_RULES.md Template v1.0",
+      "file": "standards/templates/AGENT_RULES_TEMPLATE.md",
+      "repo": "platform"
     },
     {
-      "id": "ZAI-ARCH-001",
-      "prefix": "ZAI",
-      "domain": "ARCH",
-      "number": "001",
-      "title": "Skill: Zai Mermaid Diagramming v1.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-mermaid-diagrams/SKILL.md",
-      "repo": "skills"
+      "id": "STD-DOC-006",
+      "prefix": "STD",
+      "domain": "DOC",
+      "number": "006",
+      "title": "Changelog Template v1.0",
+      "file": "standards/templates/CHANGELOG_TEMPLATE.md",
+      "repo": "platform"
     },
     {
-      "id": "ZAI-DEV-002",
-      "prefix": "ZAI",
-      "domain": "DEV",
-      "number": "002",
-      "title": "Skill: Zai Performance Code Generator v1.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-performance-code-generator/SKILL.md",
-      "repo": "skills"
-    },
-    {
-      "id": "ZAI-ARCH-003",
-      "prefix": "ZAI",
-      "domain": "ARCH",
-      "number": "003",
-      "title": "Skill: Zai Phi Layout v3.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-phi-layout/SKILL.md",
-      "repo": "skills"
-    },
-    {
-      "id": "ZAI-DEV-001",
-      "prefix": "ZAI",
-      "domain": "DEV",
-      "number": "001",
-      "title": "Skill: Zai Project Clone v1.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-project-clone/SKILL.md",
-      "repo": "skills"
-    },
-    {
-      "id": "ZAI-META-003",
-      "prefix": "ZAI",
-      "domain": "META",
-      "number": "003",
-      "title": "Skill: Zai Prompt Engineering v1.1",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-prompt-engineering/SKILL.md",
-      "repo": "skills"
-    },
-    {
-      "id": "ZAI-DEV-005",
-      "prefix": "ZAI",
-      "domain": "DEV",
-      "number": "005",
-      "title": "Skill: Zai Sandbox Rules v1.5.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-sandbox-rules/SKILL.md",
-      "repo": "skills"
-    },
-    {
-      "id": "ZAI-DEVTOOLS-001",
-      "prefix": "ZAI",
-      "domain": "DEVTOOLS",
-      "number": "001",
-      "title": "Skill: Zai Skill Creator v1.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-skill-creator/SKILL.md",
-      "repo": "skills"
-    },
-    {
-      "id": "ZAI-ARCH-004",
-      "prefix": "ZAI",
-      "domain": "ARCH",
+      "id": "STD-DOC-004",
+      "prefix": "STD",
+      "domain": "DOC",
       "number": "004",
-      "title": "Skill: Zai UI Composer v1.1.2",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-ui-composer/SKILL.md",
-      "repo": "skills"
+      "title": "Standard: README Template v3.0",
+      "file": "standards/templates/README_TEMPLATE.md",
+      "repo": "platform"
     },
     {
-      "id": "ZAI-META-005",
-      "prefix": "ZAI",
-      "domain": "META",
+      "id": "STD-DOC-005",
+      "prefix": "STD",
+      "domain": "DOC",
       "number": "005",
-      "title": "Skill: Zai Workflow Discipline v2.0",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-workflow-discipline/SKILL.md",
-      "repo": "skills"
+      "title": "Worklog Template v1.0",
+      "file": "standards/templates/WORKLOG_TEMPLATE.md",
+      "repo": "platform"
     }
   ],
   "related_edges": [
     {
       "from": "STD-AGENT-001",
       "to": "STD-ENV-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/AGENT-001-subagent.md"
+      "file": "standards/standards/AGENT-001-subagent.md"
     },
     {
       "from": "STD-AGENT-001",
       "to": "STD-GIT-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/AGENT-001-subagent.md"
+      "file": "standards/standards/AGENT-001-subagent.md"
     },
     {
       "from": "STD-AGENT-001",
       "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/AGENT-001-subagent.md"
+      "file": "standards/standards/AGENT-001-subagent.md"
     },
     {
       "from": "STD-AGENT-001",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/AGENT-001-subagent.md"
+      "file": "standards/standards/AGENT-001-subagent.md"
     },
     {
       "from": "STD-AGENT-001",
       "to": "STD-META-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/AGENT-001-subagent.md"
+      "file": "standards/standards/AGENT-001-subagent.md"
     },
     {
       "from": "STD-AGENT-002",
       "to": "STD-AGENT-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/AGENT-002-orchestration.md"
+      "file": "standards/standards/AGENT-002-orchestration.md"
     },
     {
       "from": "STD-AGENT-002",
       "to": "STD-ERR-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/AGENT-002-orchestration.md"
+      "file": "standards/standards/AGENT-002-orchestration.md"
     },
     {
       "from": "STD-AGENT-002",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/AGENT-002-orchestration.md"
+      "file": "standards/standards/AGENT-002-orchestration.md"
     },
     {
       "from": "STD-ARCH-001",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ARCH-001-architecture-and-repo-layout.md"
+      "file": "standards/standards/ARCH-001-architecture-and-repo-layout.md"
     },
     {
       "from": "STD-ARCH-002",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ARCH-002-implementation-order.md"
+      "file": "standards/standards/ARCH-002-implementation-order.md"
     },
     {
       "from": "STD-ARCH-002",
       "to": "STD-ARCH-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ARCH-002-implementation-order.md"
+      "file": "standards/standards/ARCH-002-implementation-order.md"
     },
     {
       "from": "STD-DESIGN-001",
       "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/DESIGN-001-design-system.md"
+      "file": "standards/standards/DESIGN-001-design-system.md"
     },
     {
       "from": "STD-DESIGN-001",
       "to": "STD-DOC-003",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/DESIGN-001-design-system.md"
+      "file": "standards/standards/DESIGN-001-design-system.md"
     },
     {
       "from": "STD-DESIGN-001",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/DESIGN-001-design-system.md"
+      "file": "standards/standards/DESIGN-001-design-system.md"
     },
     {
       "from": "STD-DOC-002",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/DOC-002-markdown-standard.md"
+      "file": "standards/standards/DOC-002-markdown-standard.md"
     },
     {
       "from": "STD-DOC-002",
       "to": "STD-META-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/DOC-002-markdown-standard.md"
+      "file": "standards/standards/DOC-002-markdown-standard.md"
     },
     {
       "from": "STD-DOC-002",
       "to": "STD-ARCH-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/DOC-002-markdown-standard.md"
+      "file": "standards/standards/DOC-002-markdown-standard.md"
     },
     {
       "from": "STD-DOC-003",
       "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/DOC-003-unicode-policy.md"
+      "file": "standards/standards/DOC-003-unicode-policy.md"
     },
     {
       "from": "STD-ENV-001",
       "to": "STD-ARCH-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ENV-001-reproducibility.md"
+      "file": "standards/standards/ENV-001-reproducibility.md"
     },
     {
       "from": "STD-ENV-001",
       "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ENV-001-reproducibility.md"
+      "file": "standards/standards/ENV-001-reproducibility.md"
     },
     {
       "from": "STD-ENV-001",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ENV-001-reproducibility.md"
+      "file": "standards/standards/ENV-001-reproducibility.md"
     },
     {
       "from": "STD-ENV-002",
       "to": "STD-ENV-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ENV-002-zai-integration.md"
+      "file": "standards/standards/ENV-002-zai-integration.md"
     },
     {
       "from": "STD-ENV-002",
       "to": "STD-ARCH-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ENV-002-zai-integration.md"
+      "file": "standards/standards/ENV-002-zai-integration.md"
     },
     {
       "from": "STD-ERR-001",
       "to": "STD-FE-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ERR-001-error-handling.md"
+      "file": "standards/standards/ERR-001-error-handling.md"
     },
     {
       "from": "STD-ERR-001",
       "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ERR-001-error-handling.md"
+      "file": "standards/standards/ERR-001-error-handling.md"
     },
     {
       "from": "STD-ERR-001",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/ERR-001-error-handling.md"
+      "file": "standards/standards/ERR-001-error-handling.md"
     },
     {
       "from": "STD-FE-001",
       "to": "STD-DESIGN-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/FE-001-frontend.md"
+      "file": "standards/standards/FE-001-frontend.md"
     },
     {
       "from": "STD-FE-001",
       "to": "STD-ENV-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/FE-001-frontend.md"
+      "file": "standards/standards/FE-001-frontend.md"
     },
     {
       "from": "STD-FE-001",
       "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/FE-001-frontend.md"
+      "file": "standards/standards/FE-001-frontend.md"
     },
     {
       "from": "STD-FE-001",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/FE-001-frontend.md"
+      "file": "standards/standards/FE-001-frontend.md"
     },
     {
       "from": "STD-GIT-001",
       "to": "STD-ENV-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/GIT-001-github.md"
+      "file": "standards/standards/GIT-001-github.md"
     },
     {
       "from": "STD-GIT-001",
       "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/GIT-001-github.md"
+      "file": "standards/standards/GIT-001-github.md"
     },
     {
       "from": "STD-GIT-001",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/GIT-001-github.md"
+      "file": "standards/standards/GIT-001-github.md"
     },
     {
       "from": "STD-GIT-001",
       "to": "STD-META-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/GIT-001-github.md"
+      "file": "standards/standards/GIT-001-github.md"
     },
     {
       "from": "STD-GIT-002",
       "to": "STD-GIT-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/GIT-002-github-sandbox.md"
+      "file": "standards/standards/GIT-002-github-sandbox.md"
     },
     {
       "from": "STD-GIT-002",
       "to": "STD-ENV-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/GIT-002-github-sandbox.md"
+      "file": "standards/standards/GIT-002-github-sandbox.md"
     },
     {
       "from": "STD-GIT-002",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/GIT-002-github-sandbox.md"
+      "file": "standards/standards/GIT-002-github-sandbox.md"
     },
     {
       "from": "STD-META-002",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/META-002-language-policy.md"
+      "file": "standards/standards/META-002-language-policy.md"
     },
     {
       "from": "STD-SEC-001",
       "to": "STD-ENV-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SEC-001-security-core.md"
+      "file": "standards/standards/SEC-001-security-core.md"
     },
     {
       "from": "STD-SEC-001",
       "to": "STD-GIT-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SEC-001-security-core.md"
+      "file": "standards/standards/SEC-001-security-core.md"
     },
     {
       "from": "STD-SEC-001",
       "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SEC-001-security-core.md"
+      "file": "standards/standards/SEC-001-security-core.md"
     },
     {
       "from": "STD-SEC-001",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SEC-001-security-core.md"
+      "file": "standards/standards/SEC-001-security-core.md"
     },
     {
       "from": "STD-SEC-002",
       "to": "STD-SEC-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SEC-002-security-extended.md"
+      "file": "standards/standards/SEC-002-security-extended.md"
     },
     {
       "from": "STD-SEC-002",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SEC-002-security-extended.md"
+      "file": "standards/standards/SEC-002-security-extended.md"
     },
     {
       "from": "STD-SKILL-001",
       "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SKILL-001-skill-format.md"
+      "file": "standards/standards/SKILL-001-skill-format.md"
     },
     {
       "from": "STD-SKILL-001",
       "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/standards/standards/SKILL-001-skill-format.md"
-    },
-    {
-      "from": "RULE-AGENT-009",
-      "to": "RULE-DOC-010",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-AGENT-009.md"
-    },
-    {
-      "from": "RULE-ANSWER-001",
-      "to": "RULE-HONEST-006",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ANSWER-001.md"
-    },
-    {
-      "from": "RULE-ANSWER-001",
-      "to": "RULE-STRUCT-007",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ANSWER-001.md"
-    },
-    {
-      "from": "RULE-ARCH-016",
-      "to": "RULE-INTEGRITY-011",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ARCH-016.md"
-    },
-    {
-      "from": "RULE-ARCH-016",
-      "to": "STD-ARCH-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ARCH-016.md"
-    },
-    {
-      "from": "RULE-ARCH-017",
-      "to": "RULE-INTEGRITY-011",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ARCH-017.md"
-    },
-    {
-      "from": "RULE-ARCH-017",
-      "to": "RULE-ARCH-016",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ARCH-017.md"
-    },
-    {
-      "from": "RULE-ARCH-017",
-      "to": "STD-ARCH-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ARCH-017.md"
-    },
-    {
-      "from": "RULE-COMMIT-004",
-      "to": "RULE-WORKLOG-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-COMMIT-004.md"
-    },
-    {
-      "from": "RULE-COMMIT-014",
-      "to": "RULE-WORKLOG-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-COMMIT-014.md"
-    },
-    {
-      "from": "RULE-COMMIT-014",
-      "to": "RULE-COMMIT-004",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-COMMIT-014.md"
-    },
-    {
-      "from": "RULE-COMMIT-014",
-      "to": "STD-SEC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-COMMIT-014.md"
-    },
-    {
-      "from": "RULE-DOC-010",
-      "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-DOC-010.md"
-    },
-    {
-      "from": "RULE-DOC-015",
-      "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-DOC-015.md"
+      "file": "standards/standards/SKILL-001-skill-format.md"
     },
     {
       "from": "RULE-ENV-008",
       "to": "STD-ENV-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ENV-008.md"
+      "file": "standards/docs/verify-id-graph-spec-v1.0.md"
     },
     {
       "from": "RULE-ENV-008",
       "to": "STD-ENV-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ENV-008.md"
+      "file": "standards/docs/verify-id-graph-spec-v1.0.md"
     },
     {
-      "from": "RULE-ENV-008",
-      "to": "STD-GIT-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-ENV-008.md"
-    },
-    {
-      "from": "RULE-HONEST-006",
-      "to": "RULE-INTEGRITY-011",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-HONEST-006.md"
-    },
-    {
-      "from": "RULE-INTEGRITY-011",
-      "to": "STD-ENV-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-INTEGRITY-011.md"
-    },
-    {
-      "from": "RULE-LOOPS-005",
-      "to": "RULE-HONEST-006",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-LOOPS-005.md"
-    },
-    {
-      "from": "RULE-MONOLITH-012",
-      "to": "RULE-COMMIT-004",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-MONOLITH-012.md"
-    },
-    {
-      "from": "RULE-MONOLITH-012",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-MONOLITH-012.md"
-    },
-    {
-      "from": "RULE-MONOLITH-012",
+      "from": "STD-DOC-004",
       "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-MONOLITH-012.md"
+      "file": "standards/templates/README_TEMPLATE.md"
     },
     {
-      "from": "RULE-MONOLITH-012",
-      "to": "STD-FE-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-MONOLITH-012.md"
-    },
-    {
-      "from": "RULE-READ-003",
-      "to": "RULE-DOC-010",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-READ-003.md"
-    },
-    {
-      "from": "RULE-STRUCT-007",
-      "to": "RULE-WORKLOG-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-STRUCT-007.md"
-    },
-    {
-      "from": "RULE-STRUCT-007",
-      "to": "RULE-COMMIT-004",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-STRUCT-007.md"
-    },
-    {
-      "from": "RULE-STRUCT-007",
-      "to": "STD-AGENT-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-STRUCT-007.md"
-    },
-    {
-      "from": "RULE-VERSION-013",
-      "to": "RULE-WORKLOG-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-VERSION-013.md"
-    },
-    {
-      "from": "RULE-WORKLOG-002",
-      "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/rules/RULE-WORKLOG-002.md"
-    },
-    {
-      "from": "PROC-COCHANGE-003",
-      "to": "RULE-DOC-010",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-COCHANGE-003.md"
-    },
-    {
-      "from": "PROC-COCHANGE-003",
-      "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-COCHANGE-003.md"
-    },
-    {
-      "from": "PROC-COCHANGE-003",
-      "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-COCHANGE-003.md"
-    },
-    {
-      "from": "PROC-LINECOUNT-004",
-      "to": "RULE-MONOLITH-012",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-LINECOUNT-004.md"
-    },
-    {
-      "from": "PROC-LINECOUNT-004",
-      "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-LINECOUNT-004.md"
-    },
-    {
-      "from": "PROC-SETUP-001",
-      "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-SETUP-001.md"
-    },
-    {
-      "from": "PROC-SETUP-001",
-      "to": "RULE-ENV-008",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-SETUP-001.md"
-    },
-    {
-      "from": "PROC-UPDATE-002",
-      "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-UPDATE-002.md"
-    },
-    {
-      "from": "PROC-UPDATE-002",
-      "to": "RULE-AGENT-009",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-UPDATE-002.md"
-    },
-    {
-      "from": "PROC-UPDATE-002",
-      "to": "PROC-SETUP-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/guard/instructions/PROC-UPDATE-002.md"
-    },
-    {
-      "from": "ZAI-DEV-006",
-      "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-answer-before-act/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-006",
-      "to": "RULE-ANSWER-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-answer-before-act/SKILL.md"
-    },
-    {
-      "from": "ZAI-ARCH-002",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-anti-monolith/SKILL.md"
-    },
-    {
-      "from": "ZAI-ARCH-002",
-      "to": "ZAI-ARCH-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-anti-monolith/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-004",
-      "to": "STD-ERR-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-debugging/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-004",
-      "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-debugging/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-003",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-frontend-styling-expert/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-003",
-      "to": "STD-FE-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-frontend-styling-expert/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-003",
-      "to": "STD-DESIGN-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-frontend-styling-expert/SKILL.md"
-    },
-    {
-      "from": "ZAI-DOC-001",
-      "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-md-std/SKILL.md"
-    },
-    {
-      "from": "ZAI-DOC-001",
+      "from": "STD-DOC-004",
       "to": "STD-DOC-003",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-md-std/SKILL.md"
-    },
-    {
-      "from": "ZAI-DOC-001",
-      "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-md-std/SKILL.md"
-    },
-    {
-      "from": "ZAI-ARCH-001",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-mermaid-diagrams/SKILL.md"
-    },
-    {
-      "from": "ZAI-ARCH-001",
-      "to": "STD-DOC-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-mermaid-diagrams/SKILL.md"
-    },
-    {
-      "from": "ZAI-ARCH-001",
-      "to": "STD-ARCH-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-mermaid-diagrams/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-002",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-performance-code-generator/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-002",
-      "to": "STD-FE-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-performance-code-generator/SKILL.md"
-    },
-    {
-      "from": "ZAI-ARCH-003",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-phi-layout/SKILL.md"
-    },
-    {
-      "from": "ZAI-ARCH-003",
-      "to": "STD-FE-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-phi-layout/SKILL.md"
-    },
-    {
-      "from": "ZAI-ARCH-003",
-      "to": "STD-DESIGN-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-phi-layout/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-001",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-project-clone/SKILL.md"
-    },
-    {
-      "from": "ZAI-META-003",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-prompt-engineering/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-005",
-      "to": "STD-ENV-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-sandbox-rules/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-005",
-      "to": "STD-ENV-002",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-sandbox-rules/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEV-005",
-      "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-sandbox-rules/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEVTOOLS-001",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-skill-creator/SKILL.md"
-    },
-    {
-      "from": "ZAI-DEVTOOLS-001",
-      "to": "STD-META-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-skill-creator/SKILL.md"
-    },
-    {
-      "from": "ZAI-ARCH-004",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-ui-composer/SKILL.md"
-    },
-    {
-      "from": "ZAI-ARCH-004",
-      "to": "ZAI-META-005",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-ui-composer/SKILL.md"
-    },
-    {
-      "from": "ZAI-META-005",
-      "to": "STD-SKILL-001",
-      "file": "/home/runner/work/Z-ai-governance/Z-ai-governance/skills/zai-workflow-discipline/SKILL.md"
+      "file": "standards/templates/README_TEMPLATE.md"
     }
   ],
   "aligned_with_edges": [],
-  "exported_at": "2026-07-07T14:40:50.100Z"
+  "exported_at": "2026-07-07T17:15:46.532Z"
 }
