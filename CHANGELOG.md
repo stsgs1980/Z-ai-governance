@@ -193,5 +193,5 @@ None. All changes are additive or corrective.
 
 ### Added
 
-- Initial Z-ai-platform project as orchestrator
+- Initial Z-ai-governance project as orchestrator
 - Basic change logging structure per Z-ai standards

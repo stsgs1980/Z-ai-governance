@@ -36,7 +36,7 @@ Read AGENT_RULES.md, analyzed structure.
    - Files: `rules/INDEX.md` (8), `instructions/PROC-LINECOUNT-004.md` (7), `instructions/PROC-COCHANGE-003.md` (4)
 
 3. **Fixed co-change-check.sh**
-   - Replaced hardcoded `PLATFORM_DIR="/home/z/my-project/Z-ai-platform"` with auto-detection:
+   - Replaced hardcoded `PLATFORM_DIR="/home/z/my-project/Z-ai-governance"` with auto-detection:
      `SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"`
      `PLATFORM_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"`
    - Converted CRLF -> LF line endings (bash compatibility)

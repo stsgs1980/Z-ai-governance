@@ -1,4 +1,4 @@
-> **DEPRECATED (v1.3.0):** This rule was written for the multi-repo submodule architecture (Z-ai-platform, now Z-ai-governance, with 3 git submodules). The repository is now a flat copy (Z-ai-governance) with no submodules. The core principle — do not restructure the governance layer's relationship to consumer projects — remains valid, but submodule-specific mechanics (pointer bumps, `.gitmodules`, `git submodule update`) no longer apply.
+> **DEPRECATED (v1.3.0):** This rule was written for the multi-repo submodule architecture (Z-ai-governance, now Z-ai-governance, with 3 git submodules). The repository is now a flat copy (Z-ai-governance) with no submodules. The core principle — do not restructure the governance layer's relationship to consumer projects — remains valid, but submodule-specific mechanics (pointer bumps, `.gitmodules`, `git submodule update`) no longer apply.
 
 ---
 id: RULE-ARCH-016

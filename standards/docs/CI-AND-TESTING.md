@@ -3,13 +3,13 @@
 > **NOTE (v1.3.0):** This document was written for the multi-repo submodule architecture. The repository is now a flat copy (Z-ai-governance) with no submodules. CI/CD references to submodule init, pointer bumps, and cross-repo workflows describe a setup that no longer exists. The testing methodology and verifier concepts remain valid.
 
 > Source: Merge of two draft documents ("Полный CI/CD Pipeline" and
-> "Уровни тестирования Z-ai-platform") plus an audit of 12 bugs in the
+> "Уровни тестирования Z-ai-governance") plus an audit of 12 bugs in the
 > drafts against the actual repo state on 2026-06-21.
 > Owning standard: STD-META-001 (this is a project doc, not a standard).
 > Last Updated: 2026-06-21
 
 This document is the canonical reference for the CI pipeline and the
-testing layer model of Z-ai-platform. It supersedes the two earlier
+testing layer model of Z-ai-governance. It supersedes the two earlier
 drafts (which contained 12 factual bugs against actual repo state —
 see §11 for the audit table).
 
@@ -20,10 +20,10 @@ The 4-repo architecture is documented in `README.md` and
 
 ## 1. Architecture overview
 
-Z-ai-platform is an orchestrator repo with 3 submodules:
+Z-ai-governance is an orchestrator repo with 3 submodules:
 
 ```text
-Z-ai-platform/                  (orchestrator)
+Z-ai-governance/                  (orchestrator)
 ├── .github/workflows/          (CI pipelines)
 ├── .githooks/                  (pre-commit, commit-msg)
 ├── standards/                  (submodule: STD-* standards + verifiers)
@@ -289,7 +289,7 @@ ls "$SANDBOX/Z-ai-governance/standards/standards/" | wc -l   # expect ~20 files
 find "$SANDBOX/skills" -type l ! -exec test -e {} \; -print | wc -l   # expect 0
 
 # 5. Verify ID graph passes
-node "$SANDBOX/Z-ai-platform/standards/scripts/verify-id-graph.js"
+node "$SANDBOX/Z-ai-governance/standards/scripts/verify-id-graph.js"
 
 # 6. Cleanup
 rm -rf "$SANDBOX"
@@ -719,7 +719,7 @@ Previous W13 implementation maintained a whitelist of ~30 known false-positive r
 Root-cause fix in this iteration:
 
 1. **Expanded candidates list** to include `path.join(platformRoot, 'skills', 'skills', refPath)` — resolves path-like refs (`commit-work/CONTRACT.md`, `session-handoff/CONTRACT.md`, `gepetto/README.md`, `react-dev/README.md`) to actual files in skills/skills/ tree.
-2. **Fixed submodule path resolution** — submodules are mounted INSIDE `Z-ai-platform/` (per `.gitmodules`: skills/ at `Z-ai-platform/skills/`, guard/ at `Z-ai-platform/guard/`), NOT as siblings at `../Z-ai-skills/` or `../Z-ai-guard/`. Original candidates list used `../Z-ai-skills/` which never resolved. Added correct paths `path.join(platformRoot, 'skills', ...)` and `path.join(platformRoot, 'guard', ...)`.
+2. **Fixed submodule path resolution** — submodules are mounted INSIDE `Z-ai-governance/` (per `.gitmodules`: skills/ at `Z-ai-governance/skills/`, guard/ at `Z-ai-governance/guard/`), NOT as siblings at `../Z-ai-skills/` or `../Z-ai-guard/`. Original candidates list used `../Z-ai-skills/` which never resolved. Added correct paths `path.join(platformRoot, 'skills', ...)` and `path.join(platformRoot, 'guard', ...)`.
 
 **W13 false-positive count: 11 -> 0.** All 11 prior false positives now resolve correctly through the candidates list. Whitelist kept small (~15 entries) for genuinely planned/historical/generic refs (planned scripts like `validate.sh`, `install.sh`; historical extraction sources like `AGENT_RULES.md`; generic file-type names like `SKILL.md`, `CONTRACT.md`).
 
@@ -884,7 +884,7 @@ The two layers are independent and complementary:
 audit proposal). `$PWD` matching is fragile — clone paths vary across
 machines and sandboxes, and any prefix that matches the live tree also
 matches legitimately similar sandbox paths (e.g.
-`/home/z/sandbox/Z-ai-platform-test`). The uncommitted-state check is
+`/home/z/sandbox/Z-ai-governance-test`). The uncommitted-state check is
 path-independent and catches the root cause directly.
 
 **Candidate for promotion:** Phase C may encode this as guard check G0
@@ -896,7 +896,7 @@ stash-then-reset recipe from LESSON-004 into automated enforcement.
 ## 11. Bug audit of the original drafts
 
 The two draft documents ("Полный CI/CD Pipeline" and "Уровни
-тестирования Z-ai-platform") contained 12 factual bugs against the
+тестирования Z-ai-governance") contained 12 factual bugs against the
 actual repo state. This section documents them so future contributors
 do not re-introduce them.
 
@@ -913,7 +913,7 @@ do not re-introduce them.
 | 9   | L8 chat compliance checks `chat-logs/agent-responses.log`      | File does not exist anywhere in the repo.                                                                                     | Removed (speculative test deleted) |
 | 10  | No `permissions:` block in workflow                            | PR comment step needs `pull-requests: write`.                                                                                 | §4.3                               |
 | 11  | `npm install -g yq` in L2                                      | `verify-id-graph.js` does not use `yq`. Wasted install time.                                                                  | Not in actual workflow (§4)        |
-| 12  | `rm -rf /home/z/my-project/Z-ai-platform` in L6 bootstrap test | Wipes the live working tree. Same trap as LESSON-004. Automated two-layer guard proposed in §10.8.1 (LESSON-004a).            | §6.1, §10.8, §10.8.1               |
+| 12  | `rm -rf /home/z/my-project/Z-ai-governance` in L6 bootstrap test | Wipes the live working tree. Same trap as LESSON-004. Automated two-layer guard proposed in §10.8.1 (LESSON-004a).            | §6.1, §10.8, §10.8.1               |
 
 ---
 
@@ -921,7 +921,7 @@ do not re-introduce them.
 
 | Date       | Change                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-06-21 | Initial creation. Merges two draft documents ("Полный CI/CD Pipeline" and "Уровни тестирования Z-ai-platform") into one canonical reference. Documents the actual existing workflow (`.github/workflows/verify-id-graph.yml`, 250 lines) instead of a hypothetical one. Includes §11 bug audit table documenting 12 factual errors in the drafts against actual repo state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 2026-06-21 | Initial creation. Merges two draft documents ("Полный CI/CD Pipeline" and "Уровни тестирования Z-ai-governance") into one canonical reference. Documents the actual existing workflow (`.github/workflows/verify-id-graph.yml`, 250 lines) instead of a hypothetical one. Includes §11 bug audit table documenting 12 factual errors in the drafts against actual repo state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | 2026-06-21 | Rewrite of §9 — expanded from a flat 7-row table into a structured priority matrix (§9.1) with P0/P1/P2 sections (§9.2/9.3/9.4), each item carrying explicit owner, target quarter, and dependencies. Adds §9.2.2 `verify-skills.js` scope (35/36 skills have no validator — formalised as P0 blocker for v2.5.0). Adds §9.3.2 `run-contract.sh --dry-run` in CI (the `--dry-run` flag already exists in `run-contract.sh` §1, so this is a one-step CI addition with no script-side prerequisite). Adds §9.4.3 `--help` flag for verifiers (P2 UX improvement). Adds §10.8.1 LESSON-004a — refined two-layer guard (uncommitted-state check + `--force` flag) replacing the audit's initial `$PWD`-prefix proposal, which is fragile across clone paths and sandbox configurations. Updates §11 #12 to point at §10.8.1.                                                                                                                                                                                                                                                                                                                                                                     |
 | 2026-06-21 | **All three P0 items in §9.2 marked IMPLEMENTED.** (1) §9.2.1 snapshot test: `verify-id-graph.js` v1.1.4 adds `--snapshot`/`--compare`/`--update-snapshot` flags, baseline at `standards/_snapshots/id-graph-baseline.json`, CI step in `verify-id-graph.yml`. (2) §9.2.2 `verify-skills.js` v1.0.0: new skills-side verifier with 9 checks (S01-S09 mapping to V11a-V14b), soft-default mode (S02/S03/S05 are SOFT until 15 pre-existing violations remediated, then `--strict` flip), Phase 3 in `.githooks/pre-commit`, CI step in `verify-id-graph.yml`. (3) §9.2.3 e2e test: `.github/workflows/e2e-verifiers.yml` with 5 tests (V11 violation, cleanup PASS, S02 violation, cleanup PASS, snapshot compare mismatch), smoke-tested locally. Remediation backlog for `--strict` flip: 6 STS skills with `name: foo_sts`, 1 `phi-layout` wrong name, 3 skills missing `_sts` suffix, 4 skills missing `version:` field.                                                                                                                                                                                                                                                                   |
 | 2026-06-21 | **§9.2.2 REMEDIATED — `verify-skills.js` flipped to `--strict` default.** All 15 pre-existing violations closed in a single remediation patch. Root-cause analysis revealed 7 of 8 S02 violations were false-positives caused by a contradiction in STD-SKILL-001 §3.3 ("name must match folder name without `_sts` suffix") vs §9.1 + §11 checklist ("name matches folder name with `_sts` suffix"). Verifier v1.0.0 had implemented the §3.3 wording literally. Same patch clarifies §3.3 to defer to §9.1, fixes verifier S02 to compare without stripping suffix, and fixes the one real S02 violation (`phi-layout` `name: golden-grid` -> `name: phi-layout`). S03 violations (`anti-monolith`, `session-experience`, `session-log`) were genuine: these system skills had `author: STS` field set despite having canonical ZAI-ARCH/SESSION IDs (not ZAI-STS-XXX); `author:` field dropped. S05 violations were 4 skills missing `version:` (`gepetto`, `reducing-entropy`, `session-handoff`, `skill-creator`); `version: 1.0` added. After remediation: `verify-skills.js --strict` 6/6 HARD PASS, 0 SOFT warnings. `.githooks/pre-commit` Phase 3 + CI step promoted to `--strict`. |

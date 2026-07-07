@@ -10,7 +10,7 @@
 > verified_by: scripts/verify-id-graph.js#G02,G03,G04,G07
 > Related: STD-META-001 (ID system)
 
-> **Status: APPROVED.** This standard describes the original Z-ai-platform
+> **Status: APPROVED.** This standard describes the original Z-ai-governance
 > four-repository architecture with submodules. The current repository
 > (Z-ai-governance) is a flat copy where guard/, standards/, and skills/
 > are regular directories. Layer assignment (invariant 3) and ID-form
@@ -25,7 +25,7 @@
 > MUST be atomic per submodule — never combine two submodule bumps in
 > one commit.
 
-> **NOTE (v1.3.0):** This standard was written for the multi-repo submodule architecture (Z-ai-platform with 3 git submodules: standards/, guard/, skills/). The repository is now a flat copy (Z-ai-governance) with no submodules — all directories are part of a single git repo. The layer model (L0-L2) and many structural principles remain conceptually valid, but submodule-specific sections (§4 submodule topology, §6 submodule conventions, §8 pointer update protocol, §9 submodule recovery) describe a topology that no longer exists. See CHANGELOG.md v1.3.0 for details.
+> **NOTE (v1.3.0):** This standard was written for the multi-repo submodule architecture (Z-ai-governance with 3 git submodules: standards/, guard/, skills/). The repository is now a flat copy (Z-ai-governance) with no submodules — all directories are part of a single git repo. The layer model (L0-L2) and many structural principles remain conceptually valid, but submodule-specific sections (§4 submodule topology, §6 submodule conventions, §8 pointer update protocol, §9 submodule recovery) describe a topology that no longer exists. See CHANGELOG.md v1.3.0 for details.
 
 ---
 
@@ -65,18 +65,18 @@ README, this standard wins.
 
 This standard applies to:
 
-- **All four repositories** in the Z-ai ecosystem: `Z-ai-platform`,
+- **All four repositories** in the Z-ai ecosystem: `Z-ai-governance`,
   `Z-ai-standards`, `Z-ai-guard`, `Z-ai-skills`.
 - **All artifacts** carrying an ID under STD-META-001 (i.e. all `STD-*`,
   `RULE-*`, `PROC-*`, `TOOL-*`, and `ZAI-*` artifacts).
 - **All scripts** under `*/scripts/` in any of the four repositories
   that read or write across repository boundaries.
-- **All CI workflows** under `Z-ai-platform/.github/workflows/`.
+- **All CI workflows** under `Z-ai-governance/.github/workflows/`.
 
 This standard does NOT apply to:
 
 - Consumer projects that consume Z-ai-skills as a plain git dependency
-  (not as a submodule of Z-ai-platform). Such projects follow
+  (not as a submodule of Z-ai-governance). Such projects follow
   STD-SKILL-001, not this standard.
 - Personal scratch repositories that have not been onboarded as a
   submodule. They are out of scope until promoted.
@@ -92,7 +92,7 @@ question carries an ID declared under STD-META-001.
 
 | Term                     | Definition                                                                                                                                                                      |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Orchestrator**         | The `Z-ai-platform` repository. Layer L0. Pins the three submodules and runs cross-repo CI.                                                                                     |
+| **Orchestrator**         | The `Z-ai-governance` repository. Layer L0. Pins the three submodules and runs cross-repo CI.                                                                                     |
 | **Submodule**            | A git submodule pinned by the orchestrator. Three exist: `standards/`, `guard/`, `skills/`.                                                                                     |
 | **Layer**                | One of L0 (orchestrator), L1 (standards), L2 (rules/procedures/tools), L3 (skills). Determines which `Related:` edges are legal.                                                |
 | **Pointer**              | The commit SHA recorded by git in the orchestrator's index for a given submodule. Bumping a pointer = recording a new SHA.                                                      |
@@ -111,11 +111,11 @@ question carries an ID declared under STD-META-001.
 
 The Z-ai ecosystem consists of exactly four repositories. Adding or
 removing a repository requires a major-version bump of this standard
-(v1.x -> v2.0) and a migration entry in `Z-ai-platform/MIGRATIONS.md`.
+(v1.x -> v2.0) and a migration entry in `Z-ai-governance/MIGRATIONS.md`.
 
 | Repository       | URL                                               | Layer | Purpose                                                                      |
 | ---------------- | ------------------------------------------------- | ----- | ---------------------------------------------------------------------------- |
-| `Z-ai-platform`  | `https://github.com/stsgs1980/Z-ai-platform.git`  | L0    | Orchestrator: pins submodules, runs cross-repo CI                            |
+| `Z-ai-governance`  | `https://github.com/stsgs1980/Z-ai-governance.git`  | L0    | Orchestrator: pins submodules, runs cross-repo CI                            |
 | `Z-ai-standards` | `https://github.com/stsgs1980/Z-ai-standards.git` | L1    | Standards (`STD-*`), verifiers (`verify-standards.js`, `verify-id-graph.js`) |
 | `Z-ai-guard`     | `https://github.com/stsgs1980/Z-ai-guard.git`     | L2    | Rules (`RULE-*`), procedures (`PROC-*`), tools (`TOOL-*`)                    |
 | `Z-ai-skills`    | `https://github.com/stsgs1980/Z-ai-skills.git`    | L3    | Skills (`ZAI-*`), skill catalog, skill runtime integration                   |
@@ -158,7 +158,7 @@ The 4-repo split exists so each layer can evolve independently:
    directly — it does NOT need `Z-ai-standards` or `Z-ai-guard`. The
    4-repo split makes this possible.
 4. **Cross-repo CI catches drift.** `verify-id-graph.js` runs in
-   `Z-ai-platform` CI and verifies that all `Related:` edges across all
+   `Z-ai-governance` CI and verifies that all `Related:` edges across all
    four repos resolve. A monorepo would not catch the same class of
    drift between consumer projects and the canonical sources.
 
@@ -194,7 +194,7 @@ STD-META-001 §2.1:
 
 | ID prefix | Layer | Owning repository | Repository path                                                                                                         |
 | --------- | ----- | ----------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| (none)    | L0    | `Z-ai-platform`   | top-level files (`.gitmodules`, `README.md`, `CONTRIBUTING.md`, `install-hooks.sh`, `.github/workflows/*`, `scripts/*`) |
+| (none)    | L0    | `Z-ai-governance`   | top-level files (`.gitmodules`, `README.md`, `CONTRIBUTING.md`, `install-hooks.sh`, `.github/workflows/*`, `scripts/*`) |
 | `STD-`    | L1    | `Z-ai-standards`  | `standards/standards/*.md`                                                                                              |
 | `RULE-`   | L2    | `Z-ai-guard`      | `guard/rules/*.md`                                                                                                      |
 | `PROC-`   | L2    | `Z-ai-guard`      | `guard/procedures/*.md` (currently inline in `rules/` per existing convention)                                          |
@@ -386,7 +386,7 @@ The `.gitmodules` file in the orchestrator MUST conform to:
 
 ### 6.2. Recursive Clone Support
 
-`git clone --recurse-submodules https://github.com/stsgs1980/Z-ai-platform.git`
+`git clone --recurse-submodules https://github.com/stsgs1980/Z-ai-governance.git`
 MUST produce a working tree with all three submodules checked out at
 the pinned SHAs. This is verified by the `verify-standards.js` and
 `verify-id-graph.js` scripts (run by the `.githooks/pre-commit` hook
@@ -401,11 +401,11 @@ Files that live in a submodule MUST NOT be copied into the orchestrator.
 This includes:
 
 - Copying `standards/scripts/verify-id-graph.js` to
-  `Z-ai-platform/scripts/verify-id-graph.js`.
+  `Z-ai-governance/scripts/verify-id-graph.js`.
 - Copying `guard/rules/RULE-ARCH-016.md` to
-  `Z-ai-platform/RULE-ARCH-016.md`.
+  `Z-ai-governance/RULE-ARCH-016.md`.
 - Copying `skills/skills/skill-creator/SKILL.md` to
-  `Z-ai-platform/skill-creator.md`.
+  `Z-ai-governance/skill-creator.md`.
 
 Inlined copies drift from the canonical source within days. They are
 FORBIDDEN. This rule extends RULE-ARCH-016 (submodule immutability)
@@ -606,7 +606,7 @@ If `git clone --recurse-submodules` fails, the cause is one of:
 2. **A submodule was made private.** The clone lacks credentials.
    Recovery: either make the submodule public again, or document that
    the ecosystem requires authenticated access (and update
-   `Z-ai-platform/README.md` accordingly).
+   `Z-ai-governance/README.md` accordingly).
 3. **A submodule was deleted.** This is a topology change requiring a
    major-version bump of this standard. Recovery: follow the migration
    protocol in STD-META-001 §8.
@@ -668,7 +668,7 @@ checked out simultaneously.
 
 The orchestrator's CI workflow triggers on:
 
-1. **Push to `main`** in `Z-ai-platform` (covers pointer bumps and
+1. **Push to `main`** in `Z-ai-governance` (covers pointer bumps and
    orchestrator file changes).
 2. **Pull request to `main`** (covers proposed changes before merge).
 3. **Nightly at 03:00 UTC** (catches drift if submodule `main`
@@ -712,7 +712,7 @@ This section documents discovered inconsistencies, missing content, and proposed
 
 - `Z-ai-guard/rules/RULE-ENV-008.md` (planned rule for bootstrap enforcement)
 - `Z-ai-skills/skills/INDEX.md` (planned skills tree index)
-- `Z-ai-platform/doctor.sh` (planned diagnostics script)
+- `Z-ai-governance/doctor.sh` (planned diagnostics script)
 - bare `INDEX.md` (disambiguate via context — `docs/sandbox/INDEX.md` exists, `skills/INDEX.md` planned)
 
 These references are intentional — they describe the target state of the cascade model, not the current state. Without them, the cascade section would describe only what exists today, not what the architecture is building toward.
@@ -738,9 +738,9 @@ These references are intentional — they describe the target state of the casca
 - **RULE-ARCH-017** (in `Z-ai-guard`) — Upstream write protection
   rule. This standard defines the submodule topology that
   RULE-ARCH-017 governs write access to.
-- **`Z-ai-platform/README.md`** — Informal overview of the platform.
+- **`Z-ai-governance/README.md`** — Informal overview of the platform.
   When in conflict, this standard wins.
-- **`Z-ai-platform/CONTRIBUTING.md`** — Procedural guide for
+- **`Z-ai-governance/CONTRIBUTING.md`** — Procedural guide for
   contributors. Procedural details (e.g. "how to run the verifier
   locally") live in CONTRIBUTING.md; normative requirements live in
   this standard.
