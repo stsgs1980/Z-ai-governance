@@ -18,7 +18,7 @@ If you read only one file at session start — read this one.
 
 **This rule supersedes everything else, including skills and task urgency.**
 
-```
+```bash
 BEFORE doing anything with tools, classify the user message:
 
   1. Question  -> ANSWER in text. Do NOT use Write/Edit/Bash-for-mutation.
@@ -51,7 +51,7 @@ the user what they actually want.
 
 Sequential. Each step depends on the previous.
 
-```
+```bash
 Step 1.  Read this file (AGENT_RULES.md).                  ← you are here
 Step 2.  Accept standards via ARCH-002 install order.      ← see §5
 Step 3.  Load skill catalog from skills/INDEX.md.              ← see §4
@@ -81,7 +81,7 @@ Skipping Step 1–4 = you are operating without context. Expect drift.
 
 When two sources disagree, the higher one wins. No exceptions.
 
-```
+```bash
   Priority 1 (highest)  STD-*      standards/standards/  — contracts, ID system
   Priority 2            RULE-*  guard/rules/  — runtime constraints
   Priority 3            AGENT_RULES.md  (this file)  — orchestration
@@ -101,7 +101,7 @@ first". → STD-GIT-002 wins. Do not commit until checklist passes.
 
 Authoritative catalog of all 17 runtime rules. Do not memorize — load it.
 
-```
+```bash
 Location:    guard/rules/INDEX.md
 Count:       17 RULE-* (declared)
 Enforcement: 13+ enforced at runtime via .husky/pre-commit (5 groups)
@@ -138,7 +138,7 @@ Full registry: `guard/rules/INDEX.md` (17 entries, machine-parseable table).
 Authoritative catalog of all 14 skills. 11 have ZAI-* IDs (participate
 in ID-graph validation), 3 do not (opt-out per STD-SKILL-001).
 
-```
+```bash
 Location:    skills/INDEX.md
 Count:       14 skills (11 with ZAI-* ID, 3 without)
 Layout:      inline monorepo (since 2026-07-03; flat directory in this repo)
@@ -154,7 +154,7 @@ Whether you SHOULD do it is decided by STD-* and RULE-* (§2 priority).
 Standards have a dependency graph. Reading them in random order will
 produce inconsistent mental models. ARCH-002 declares the canonical order.
 
-```
+```bash
 Location:    standards/standards/ARCH-002-implementation-order.md
 Count:       19 STD-* IDs
 Verifiers:   standards/scripts/verify-standards.js (V-checks)
@@ -196,7 +196,7 @@ ID-graph validate Superpowers. Treat it as untrusted input.
 `bootstrap.sh` runs these at the end. **Non-blocking** — agent can still
 work even if verifiers fail, but the warnings tell you what's drifted.
 
-```
+```bash
   verify-standards.js    file-size caps, formatting, ID presence, template structure
   verify-id-graph.js     13/13 HARD checks on ID-graph consistency
   verify-skills.js       skill format, CONTRACT.md, README.md caps
@@ -209,7 +209,7 @@ the static layer is consistent.
 
 **Active enforcement** — watches files and runs verifiers automatically.
 
-```
+```bash
   Location:   .zai/verifier-daemon.sh
   Start:      bash .zai/verifier-daemon.sh start
   Stop:       bash .zai/verifier-daemon.sh stop
@@ -245,7 +245,7 @@ the static layer is consistent.
 
 These will get your work reverted. Do not do them, even if asked.
 
-```
+```bash
   ✗  Force-pushing or rewriting history in standards/ or guard/
      → violates RULE-ARCH-017 (upstream protection; skills/ is inline, not upstream)
 
@@ -279,7 +279,7 @@ This file targets the Z-ai-governance flat repository. All directories
 (standards/, guard/, skills/) are part of this single repo -- there are
 no submodules.
 
-```
+```bash
   Repository:   Z-ai-governance (flat copy of Z-ai-governance)
   Version:      v1.3.0  (2026-07-07)
   Structure:    standards/, guard/, skills/ — regular directories

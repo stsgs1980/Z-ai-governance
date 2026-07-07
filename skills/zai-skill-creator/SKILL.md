@@ -87,7 +87,7 @@ id: ZAI-XXX-NNN  # optional
 
 #### Skill Structure
 
-```
+```python
 skill-name/
 |-- SKILL.md (required)
 |   |-- YAML frontmatter (name, description, author, version)
@@ -149,7 +149,7 @@ After writing or editing a SKILL.md, and before launching eval runs. This is a g
 
 Spawn a fact-checker subagent that reads `agents/fact-checker.md` and verifies the skill. Pass it:
 
-```
+```python
 Skill path: <path-to-skill>
 Output path: <workspace>/fact-check.json
 ```
@@ -184,7 +184,7 @@ Put results in `<skill-name>-workspace/` as sibling to skill directory. Organize
 For each test case, spawn two subagents in the same turn — one with skill, one without. Launch everything at once using the `task` tool.
 
 **With-skill run:**
-```
+```python
 Execute this task:
 - Skill path: <path-to-skill>
 - Task: <eval prompt>

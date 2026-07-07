@@ -39,7 +39,7 @@ The full document is `standards/standards/DOC-003-unicode-policy.md`.
 
 Allowed only inside fenced code blocks:
 
-```
+```js
 ->   right arrow
 <-   left arrow
 =>   implication

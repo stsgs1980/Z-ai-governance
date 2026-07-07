@@ -62,7 +62,7 @@ echo ""
 
 # 3. Critical skills check
 echo "=== Critical skills check ==="
-for skill in zai-skill-creator zai-skill-registry; do
+for skill in zai-skill-creator; do
     target="$SANDBOX_SKILLS_DIR/$skill"
     if [ -L "$target" ]; then
         real_path=$(readlink -f "$target")

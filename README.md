@@ -105,7 +105,7 @@ node standards/scripts/verify-id-graph.js     # Should show: 13/13 HARD PASS
 
 ### Pre-commit Hook Chain
 
-```
+```python
 Group 0 (HARD): 13 guard integrity + checklist scripts
   check-no-bypass.sh         (RULE-INTEGRITY-011: no hook tampering)
   check-commit-checklist.sh  (RULE-COMMIT-014: large files, honesty)

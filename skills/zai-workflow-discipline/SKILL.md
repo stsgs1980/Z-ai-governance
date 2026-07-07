@@ -41,12 +41,12 @@ This skill is **ALWAYS ACTIVE**. It must be followed:
 - WHAT to expect (the expected output or result)
 
 **BAD:**
-```
+```bash
 Run: npm run build && git push
 ```
 
 **GOOD:**
-```
+```bash
 We need to rebuild and push because the preload fix removes the failed experience entry from the cache warm-up list. This eliminates the "1 failed" message on startup.
 
 1. Build checks that TypeScript compiles without errors
@@ -65,12 +65,12 @@ npm run build && git push
 - What output to expect (success/failure signals)
 
 **BAD:**
-```
+```bash
 Stop the server, then rebuild, then restart.
 ```
 
 **GOOD:**
-```
+```bash
 In the terminal where `next dev` is running, press Ctrl+C to stop it.
 Then in the SAME terminal, run:
   cd /home/z/my-project/dashboard-integration && npm run build
@@ -130,12 +130,12 @@ This is the single most important rule for any deployment, install script, or co
 **The ONLY exception:** New files that don't exist at destination — these can be created without comparison.
 
 **BAD:**
-```
+```bash
 install.ps1  # blindly overwrites all files
 ```
 
 **GOOD:**
-```
+```bash
 Before running install.ps1, I need to check what files have been
 modified locally on WIN that differ from the git repo.
 
@@ -181,12 +181,12 @@ Which do you prefer?
 - NEVER move on to the next step without addressing the failure
 
 **BAD:**
-```
+```bash
 Preload finished: 4 ok, 1 failed. Done!
 ```
 
 **GOOD:**
-```
+```bash
 Preload finished: 4 ok, 1 failed.
 The 1 failure was the "experience" type — memory_cli.py export doesn't support this type yet.
 Options: (a) Add experience support to the export command, or (b) Remove experience from preload list.

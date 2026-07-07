@@ -63,7 +63,7 @@ inline code, code blocks, and file/folder names.
 
 **Code block diagram whitelist** (level [I], only inside fenced `text` blocks):
 
-```
+```js
 ->  <-  =>  <=  |  +  -  v  ^  >  <
 ```
 
@@ -115,16 +115,16 @@ not supported by the renderer, use `text` or `bash` as a fallback.
 Correct:
 ```bash
 npm install
-```
+```js
 
 ```text
 Some preformatted content
-```
+```js
 
 Incorrect:
 ```
 Bare fence without language
-```
+```js
 ```
 
 Inline code uses single backticks:
@@ -330,7 +330,7 @@ Before:    ```
 
 After:     ```text
            some text
-           ```
+           ```text
 ```
 
 **Mistake 4: Unicode status icons**

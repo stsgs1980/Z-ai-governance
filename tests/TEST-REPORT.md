@@ -56,7 +56,7 @@ Run separately. See `tests/sandbox-behavior-test.sh`.
 
 ### `.gitattributes` coverage
 
-```
+```text
 *.sh text eol=lf
 *.bash text eol=lf
 *.py text eol=lf

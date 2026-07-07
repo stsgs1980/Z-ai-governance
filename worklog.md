@@ -46,7 +46,7 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
 
 **Entry:** Create zai-governance-template — universal governance layer
 
-**Context:** Z-ai-platform is a complete project with governance. Other projects need governance without the Z-ai-specific application code. Template should be clean, universal, and ready to use.
+**Context:** Z-ai-governance is a complete project with governance. Other projects need governance without the Z-ai-specific application code. Template should be clean, universal, and ready to use.
 
 **What to include:**
 
@@ -71,19 +71,19 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
 
 **When to create:**
 
-- After Z-ai-platform governance is finalized
+- After Z-ai-governance governance is finalized
 - After sandbox testing is complete
 - When first external project needs governance
 
 **Dependencies:**
 
-- Z-ai-platform governance finalized (15/17 rules enforced)
+- Z-ai-governance governance finalized (15/17 rules enforced)
 - Sandbox testing passed (all checks work)
 - Documentation complete (README, troubleshooting)
 
 **Next steps:**
 
-1. Finalize Z-ai-platform governance (current status: ready)
+1. Finalize Z-ai-governance governance (current status: ready)
 2. Test in sandbox (current status: passed)
 3. Create zai-governance-template repository
 4. Add to npm or use as git submodule
@@ -331,7 +331,7 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
 - Details:
   - read worklog.md
   - Added "Maintenance Workflow" section after Tier 6
-  - Documented Z-ai-platform = develop/test bed role
+  - Documented Z-ai-governance = develop/test bed role
   - Documented zai-governance-template = distribute role
   - 7 tasks for automation:
     - 7.1: Git submodule setup (30m)
@@ -340,14 +340,14 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
     - 7.4: promote.sh for version bumps (1h)
     - 7.5: MAINTENANCE.md in template (30m)
     - 7.6: Quarterly review automation (2h)
-    - 7.7: Webhook auto-port Z-ai-platform push to template (4h)
+    - 7.7: Webhook auto-port Z-ai-governance push to template (4h)
   - Total: ~10 hours
   - Updated total backlog to ~60 hours (was ~50)
 
 ## 2026-07-06 (31)
 
 - Status: Done
-- Task: Make Z-ai-graph-viewer show true Z-ai-platform state
+- Task: Make Z-ai-graph-viewer show true Z-ai-governance state
 - Details:
   - read .github/workflows/verify-id-graph.yml
   - read governance-escalation-report.md
@@ -383,12 +383,12 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
   - Created graph/README.md: API contract (endpoints, refresh, examples, stability)
   - Updated standards/_graph/README.md: URLs now point to graph/ (not standards/_graph/)
   - Refresh timeline: ~3 min from push to visible
-  - Total: 3 repos affected (Z-ai-platform main, standards submodule, graph-viewer)
+  - Total: 3 repos affected (Z-ai-governance main, standards submodule, graph-viewer)
 
 ## 2026-07-06 (33)
 
 - Status: Done
-- Task: Make Z-ai-graph-viewer show true Z-ai-platform state (end-to-end)
+- Task: Make Z-ai-graph-viewer show true Z-ai-governance state (end-to-end)
 - Details:
   - Work in C:/Users/stsgr/My Projects/Z-ai-graph-viewer/ (explicit permission)
   - Created src/lib/url-fetcher.ts: fetch JSON from URL, transform to IdGraph
@@ -411,7 +411,7 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
     - Bumped version 1.1.6 -> 1.1.7
     - Updated snapshot: 53->54 IDs, 97->109 edges
   - Final state: graph-viewer consumes the data, URL has all graph fields
-  - Result: end-to-end works (push in Z-ai-platform -> visible in graph-viewer within ~3 min)
+  - Result: end-to-end works (push in Z-ai-governance -> visible in graph-viewer within ~3 min)
 
 ## 2026-07-06 (34)
 
@@ -427,7 +427,7 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
     - Skip commits matching bot patterns (github-actions[bot], *@noreply.github.com, _bot@_)
     - Bot commits reset the unlogged run counter
   - Tested: 5 commits checked, 2 bot skipped, 0 unlogged, RESULT: PASS
-  - Pushed to guard (cbc5e4e) and Z-ai-platform main
+  - Pushed to guard (cbc5e4e) and Z-ai-governance main
 
 ## 2026-07-06 (35)
 
@@ -464,7 +464,7 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
   - Renamed scripts to .cjs (package.json has type:module)
 
 Status: 16/17 rules enforced, 0 soft warnings, 30/30 sandbox tests, CHANGELOG 1.2.0.
-Z-ai-platform is governance-complete. Remaining work is split into tiers.
+Z-ai-governance is governance-complete. Remaining work is split into tiers.
 
 ### Tier 1: Next logical step (high priority)
 
@@ -500,7 +500,7 @@ Z-ai-platform is governance-complete. Remaining work is split into tiers.
 | --- | --------------------------------- | -------- | ------------------------------------------------------------------------------------------------ |
 | 4.1 | Create GOVERNANCE.md (defect #11) | 1h       | Escalation paths, decision process, conflict resolution, who owns what. Currently no formal doc. |
 | 4.2 | Create CONTRIBUTING.md            | 30m      | Already exists (5.9KB). Verify it covers current workflow.                                       |
-| 4.3 | Create DEPENDENCY-GUIDE.md        | 1h       | How projects should depend on Z-ai-platform. Submodule vs npm vs direct copy.                    |
+| 4.3 | Create DEPENDENCY-GUIDE.md        | 1h       | How projects should depend on Z-ai-governance. Submodule vs npm vs direct copy.                    |
 | 4.4 | Create MIGRATIONS.md (template)   | 1h       | Per-version migration guide template for projects using this governance.                         |
 | 4.5 | Create tests/coverage-report.md   | 30m      | Script-by-script coverage report. What each script catches, when to extend.                      |
 
@@ -521,7 +521,7 @@ Z-ai-platform is governance-complete. Remaining work is split into tiers.
 | --- | -------------------------------------------- | -------- | ------------------------------------------------------------ |
 | 6.1 | bootstrap.sh sidecar pattern (defect #15-18) | 1 day    | --uninstall, idempotency, integration markers.               |
 | 6.2 | Anti-monolith auto-activation (defect #20)   | 4h       | Skill that fires when files exceed thresholds.               |
-| 6.3 | Ecosystem governance scope (defect #2)       | 1 day    | Enforce rules across all Z-ai repos, not just Z-ai-platform. |
+| 6.3 | Ecosystem governance scope (defect #2)       | 1 day    | Enforce rules across all Z-ai repos, not just Z-ai-governance. |
 
 ### Open governance defects (from governance-escalation-report.md)
 
@@ -549,7 +549,7 @@ Z-ai-platform is governance-complete. Remaining work is split into tiers.
 
 ## Maintenance Workflow (after zai-governance-template is created)
 
-Z-ai-platform is the "live" instance where new governance features are developed
+Z-ai-governance is the "live" instance where new governance features are developed
 and tested. zai-governance-template is the "distributable" that other projects consume.
 The workflow below describes how changes flow between them.
 
@@ -557,13 +557,13 @@ The workflow below describes how changes flow between them.
 
 | Repo                        | Role               | Changes                                     |
 | --------------------------- | ------------------ | ------------------------------------------- |
-| **Z-ai-platform**           | Develop + test bed | All new governance features first land here |
+| **Z-ai-governance**           | Develop + test bed | All new governance features first land here |
 | **zai-governance-template** | Distribute         | Receives only tested, stable changes        |
 
 ### Update flow
 
-```
-Z-ai-platform (live)              zai-governance-template (dist)
+```bash
+Z-ai-governance (live)              zai-governance-template (dist)
        │                                       │
        │  1. Need to add/fix governance        │
        │  2. Develop + iterate (13 scripts)    │
@@ -585,21 +585,21 @@ Z-ai-platform (live)              zai-governance-template (dist)
 | #   | Task                                                | Estimate | Notes                                                                                                                  |
 | --- | --------------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
 | 7.1 | Set up git submodule for template                   | 30m      | Other projects can do `git submodule update` to get latest governance. Tested in zai-governance-template repo.         |
-| 7.2 | Create `sync.sh` script for cherry-pick             | 1h       | Semi-automatic script: detects governance changes in Z-ai-platform, prompts to port to template. Logs what was synced. |
+| 7.2 | Create `sync.sh` script for cherry-pick             | 1h       | Semi-automatic script: detects governance changes in Z-ai-governance, prompts to port to template. Logs what was synced. |
 | 7.3 | Add CI on template repo                             | 30m      | Template must also pass 13 governance scripts + verifiers. Otherwise template is "broken" example.                     |
 | 7.4 | Create `promote.sh` for version bumps               | 1h       | Auto-bump template version, update template CHANGELOG, generate MIGRATIONS.md section.                                 |
 | 7.5 | Document the maintenance workflow                   | 30m      | Add `MAINTENANCE.md` to template with: when to sync, how to sync, who maintains what.                                  |
-| 7.6 | Quarterly review automation                         | 2h       | Cron job that runs governance scripts on Z-ai-platform, reports drift, suggests actions.                               |
-| 7.7 | Webhook: Z-ai-platform push → auto-port to template | 4h       | GitHub Action on Z-ai-platform that opens PR on template with cherry-picked changes. Reviewer approves or rejects.     |
+| 7.6 | Quarterly review automation                         | 2h       | Cron job that runs governance scripts on Z-ai-governance, reports drift, suggests actions.                               |
+| 7.7 | Webhook: Z-ai-governance push → auto-port to template | 4h       | GitHub Action on Z-ai-governance that opens PR on template with cherry-picked changes. Reviewer approves or rejects.     |
 
 ### Submodule + sync.sh detail
 
 **Submodule approach** (simpler):
 
 ```bash
-# In zai-governance-template, add Z-ai-platform as submodule
+# In zai-governance-template, add Z-ai-governance as submodule
 cd zai-governance-template
-git submodule add https://github.com/stsgs1980/Z-ai-platform.git reference
+git submodule add https://github.com/stsgs1980/Z-ai-governance.git reference
 # Reference doc: standards/, guard/, skills/ extracted from reference/
 
 # In other project:
@@ -611,8 +611,8 @@ git submodule add https://github.com/stsgs1980/zai-governance-template.git
 
 ```bash
 #!/bin/bash
-# sync.sh — Port governance changes from Z-ai-platform to template
-PLATFORM_DIR="$HOME/my-project/Z-ai-platform"
+# sync.sh — Port governance changes from Z-ai-governance to template
+PLATFORM_DIR="$HOME/my-project/Z-ai-governance"
 TEMPLATE_DIR="$HOME/my-project/zai-governance-template"
 
 # Detect changed governance files
@@ -679,8 +679,8 @@ fi
   - Removed .gitmodules ref from CONTRIBUTING.md
   - Fixed guard/README.md: "submodule immutability" → "architecture immutability"
   - Fixed ARCH-002 table: ARCH-001 description "4-repo split, submodule topology" → "repo layout, flat architecture"
-  - Fixed ENV-002: "clone Z-ai-platform with submodules" → "clone Z-ai-governance"
-  - Fixed verify-id-graph-spec: "From Z-ai-platform root (4 submodules)" → "From Z-ai-governance root"
+  - Fixed ENV-002: "clone Z-ai-governance with submodules" → "clone Z-ai-governance"
+  - Fixed verify-id-graph-spec: "From Z-ai-governance root (4 submodules)" → "From Z-ai-governance root"
   - Fixed sandbox-guide: removed --recurse-submodules, updated URL to Z-ai-governance, added flat-repo note to §11
   - Fixed sandbox/INDEX: removed submodule from descriptions
   - Fixed DOC-002-markdown-standard: "Orchestrator/meta-repos pin submodules" → "Governance repos define standards"

@@ -23,7 +23,7 @@ Three locations were considered:
 
 ### 1. Full ID graph (for graph visualization)
 
-```
+```http
 GET https://raw.githubusercontent.com/stsgs1980/Z-ai-governance/main/graph/id-graph.json
 ```
 
@@ -66,7 +66,7 @@ GET https://raw.githubusercontent.com/stsgs1980/Z-ai-governance/main/graph/id-gr
 
 ### 2. Summary only (for dashboards / health checks)
 
-```
+```http
 GET https://raw.githubusercontent.com/stsgs1980/Z-ai-governance/main/graph/id-graph-summary.json
 ```
 
@@ -91,7 +91,7 @@ GET https://raw.githubusercontent.com/stsgs1980/Z-ai-governance/main/graph/id-gr
 
 ## Directory layout
 
-```
+```text
 Z-ai-governance/
 └── graph/              # Graph data — JSON exports for API consumers  ← YOU ARE HERE
     ├── id-graph.json
@@ -235,7 +235,7 @@ curl -s https://raw.githubusercontent.com/stsgs1980/Z-ai-governance/main/graph/i
 
 ### Refresh timeline
 
-```
+```text
 T+0:00   Developer pushes to Z-ai-governance main
 T+0:30   GitHub Actions CI starts
 T+1:00   verify-id-graph.js --json generates new data
@@ -260,7 +260,7 @@ The JSON shape is governed by **verify-id-graph.js v1.1.x**. Within v1.1.x:
 
 Pin to a specific version:
 
-```
+```http
 GET .../id-graph.json?v=1.1.6
 ```
 
@@ -286,7 +286,7 @@ If `Z-ai-graph-viewer` shows X, that X is what is actually in Z-ai-governance.
 
 For reproducibility, fetch from a specific commit SHA:
 
-```
+```http
 GET https://raw.githubusercontent.com/stsgs1980/Z-ai-governance/<commit-sha>/graph/id-graph.json
 ```
 

@@ -2,10 +2,10 @@
 
 ---
 id: RULE-ARCH-016
-title: AHG submodule is immutable architecture (no removal, no inlining)
-version: 1.0
+title: AHG governance layer is immutable architecture (no removal, no inlining)
+version: 1.1
 level: [C]
-status: ACTIVE
+status: DEPRECATED
 source: Z-ai-guard v3.0.0 (RULE-ARCH-016)
 owning-standard: STD-META-001 v2.0
 last-updated: 2026-06-17
@@ -14,7 +14,7 @@ related:
   - STD-ARCH-001
 ---
 
-# RULE-ARCH-016: AHG submodule is immutable architecture (no removal, no inlining)
+# RULE-ARCH-016: AHG governance layer is immutable architecture (no removal, no inlining) [DEPRECATED]
 
 The anti-hallucination-guard git submodule is a structural component of this
 project, not an optional dependency. Agents MUST NOT propose or execute any

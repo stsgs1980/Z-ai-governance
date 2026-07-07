@@ -68,7 +68,7 @@ superseded by a proper fix in PR #9.
 
 **GitHub branch protection (MUST be configured by owner):**
 
-```
+```text
 Repository Settings > Branches > Branch protection rules > main
   [x] Require a pull request before merging
   [x] Require approvals (1)

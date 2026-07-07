@@ -1,218 +1,217 @@
-# Справочник по структуре Z-ai-governance
+# Z-ai-governance Structure Handbook
 
-> Краткий обзор каждого каталога и ключевого файла в корне проекта.
-> Для полных спецификаций — читайте соответствующие стандарты в `standards/`.
+> Quick reference for every directory and key file in the project root.
+> For full specifications, see the corresponding standards in `standards/`.
 
 ---
 
-## Каталоги
+## Directories
 
 ### `.husky/`
 
-Git-хуки (Husky v9). Запускаются автоматически при `git commit`.
+Git hooks (Husky v9). Run automatically on `git commit`.
 
-| Хук          | Что делает                                                                                                   | Уровень                 |
-| ------------ | ------------------------------------------------------------------------------------------------------------ | ----------------------- |
-| `pre-commit` | co-change проверка + worklog + verify-standards + verify-id-graph + verify-skills + line-count + lint-staged | HARD (блокирует коммит) |
-| `commit-msg` | Проверка Conventional Commits (G4/G5/G6)                                                                     | HARD                    |
+| Hook          | Purpose                                                                                                      | Level                    |
+| ------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------ |
+| `pre-commit`  | co-change check + worklog + verify-standards + verify-id-graph + verify-skills + line-count + lint-staged     | HARD (blocks the commit) |
+| `commit-msg`  | Conventional Commits validation (G4/G5/G6)                                                                   | HARD                     |
 
-Обход: `git commit --no-verify` (только в экстренных случаях).
+Override: `git commit --no-verify` (emergency use only).
 
 ---
 
 ### `.github/workflows/`
 
-CI-пайплайны GitHub Actions.
+GitHub Actions CI pipelines.
 
-| Workflow              | Что делает                                                                                        |
-| --------------------- | ------------------------------------------------------------------------------------------------- |
-| `verify-id-graph.yml` | verify-standards.js + verify-id-graph.js + verify-skills.js + line-count-check + graph generation |
-| `e2e-verifiers.yml`   | E2E проверка верификаторов                                                                        |
+| Workflow              | Purpose                                                                                    |
+| --------------------- | ------------------------------------------------------------------------------------------ |
+| `verify-id-graph.yml` | verify-standards.js + verify-id-graph.js + verify-skills.js + line-count-check + graph gen |
+| `e2e-verifiers.yml`   | E2E verifier validation                                                                    |
 
-Запускается при push/PR в main + nightly (03:00 UTC).
+Triggered on push/PR to main + nightly (03:00 UTC).
 
 ---
 
 ### `.zai/`
 
-Внутренняя конфигурация Z.ai sandbox.
+Internal Z.ai sandbox configuration.
 
-| Файл          | Назначение                  |
+| File          | Purpose                     |
 | ------------- | --------------------------- |
-| `config.json` | Конфигурация sandbox        |
-| `setup.sh`    | Первичная настройка sandbox |
-| `lib/`        | Обёртки: check-worklog.sh (делегирует к guard/scripts/) |
-| `verify`      | Проверка конфигурации       |
+| `config.json` | Sandbox configuration        |
+| `setup.sh`    | Primary sandbox setup        |
+| `lib/`        | Wrappers: check-worklog.sh (delegates to guard/scripts/) |
+| `verify`      | Configuration verification   |
 
 ---
 
 ### `eslint-rules/`
 
-Кастомные ESLint-правила для Markdown.
+Custom ESLint rules for Markdown.
 
-| Файл                     | Правило                                                  |
-| ------------------------ | -------------------------------------------------------- |
-| `code-block-language.js` | Блоки кода должны указывать язык (STD-DOC-002 4.3)       |
-| `unicode-policy.js`      | Запрет emoji/Unicode graphics в .md файлах (STD-DOC-003) |
+| File                     | Rule                                                        |
+| ------------------------ | ----------------------------------------------------------- |
+| `code-block-language.js` | Code blocks must specify a language (STD-DOC-002 4.3)       |
+| `unicode-policy.js`      | Prohibits emoji/Unicode graphics in .md files (STD-DOC-003) |
 
 ---
 
 ### `eslint-processors/`
 
-ESLint-процессоры для извлечения кода из Markdown.
+ESLint processors for extracting code from Markdown.
 
-| Файл                   | Назначение                                       |
-| ---------------------- | ------------------------------------------------ |
-| `markdown-snippets.js` | Извлекает code blocks из .md для проверки ESLint |
+| File                   | Purpose                                            |
+| ---------------------- | -------------------------------------------------- |
+| `markdown-snippets.js` | Extracts code blocks from .md for ESLint checking  |
 
 ---
 
 ### `guard/`
 
-Правила и процедуры enforcement.
+Enforcement rules and procedures.
 
-| Каталог/файл    | Назначение                                                                                                      |
-| --------------- | --------------------------------------------------------------------------------------------------------------- |
-| `rules/`        | 17 правил RULE-001..017 (atomic rules)                                                                         |
-| `scripts/`      | 18 скриптов: 13 check-*.sh (integrity), co-change-check + worklog-check + line-count-check (PROC), setup-001 + update-002 (setup) |
-| `instructions/` | Инструкции к процедурам                                                    |
-| `tools/`        | Инструменты (verify-docs, bump)                                            |
-| `registry.json` | Реестр правил со статусами                                                 |
+| Directory/file  | Purpose                                                                                                        |
+| --------------- | -------------------------------------------------------------------------------------------------------------- |
+| `rules/`        | 17 rules RULE-001..017 (atomic rules)                                                                          |
+| `scripts/`      | 18 scripts: 13 check-*.sh (integrity), co-change-check + worklog-check + line-count-check (PROC), setup-001 + update-002 (setup) |
+| `instructions/` | Procedure instructions                                                                                         |
+| `tools/`        | Tools (verify-docs, bump)                                                                                      |
+| `registry.json` | Rule registry with statuses                                                                                    |
 
 ---
 
 ### `standards/`
 
-Нормативные стандарты + верификаторы.
+Normative standards + verifiers.
 
-| Каталог/файл    | Назначение                                                              |
-| --------------- | ----------------------------------------------------------------------- |
-| `standards/`    | 19 .md стандарт (STD-FE-001, STD-DOC-002, ...)                          |
-| `templates/`    | Шаблоны: README, WORKLOG, CHANGELOG, AGENT_RULES                        |
-| `guides/`       | Необязательные гайды (CODE_EXAMPLES_GUIDE)                              |
-| `docs/sandbox/` | Документация sandbox (hooks, команды)                                   |
-| `scripts/`      | Верификаторы: verify-standards.js, verify-id-graph.js, verify-skills.js |
-| `_snapshots/`   | Baseline для snapshot-сравнения ID-графа                                |
+| Directory/file  | Purpose                                                              |
+| --------------- | --------------------------------------------------------------------- |
+| `standards/`    | 19 .md standards (STD-FE-001, STD-DOC-002, ...)                      |
+| `templates/`    | Templates: README, WORKLOG, CHANGELOG, AGENT_RULES                   |
+| `guides/`       | Optional guides (CODE_EXAMPLES_GUIDE)                                 |
+| `docs/sandbox/` | Sandbox documentation (hooks, commands)                                |
+| `scripts/`      | Verifiers: verify-standards.js, verify-id-graph.js, verify-skills.js  |
+| `_snapshots/`   | Baseline for ID graph snapshot comparison                             |
 
 ---
 
 ### `skills/`
 
-Каталог скиллов (монорепо, не submodule).
+Skills directory (monorepo, not submodules).
 
-| Скилл                            | Назначение                                         |
-| -------------------------------- | -------------------------------------------------- |
-| `zai-anti-monolith`              | Автоматическая декомпозиция при превышении лимитов |
-| `zai-debugging`                  | Систематический дебаггинг                          |
-| `zai-frontend-styling-expert`    | CSS/Tailwind стилизация                            |
-| `zai-md-std`                     | Markdown стандарт                                  |
-| `zai-mermaid-diagrams`           | Mermaid диаграммы                                  |
-| `zai-performance-code-generator` | Оптимизация кода                                   |
-| `zai-phi-layout`                 | Layout по золотому сечению                         |
-| `zai-project-clone`              | Клонирование проектов                              |
-| `zai-prompt-engineering`         | Инжиниринг промптов                                |
-| `zai-sandbox-rules`              | Правила sandbox                                    |
-| `zai-skill-creator`              | Создание скиллов                                   |
-| `zai-skill-registry`             | Реестр скиллов                                     |
-| `zai-ui-composer`                | UI компоновка                                      |
-| `zai-workflow-discipline`        | Дисциплина workflow                                |
+| Skill                            | Purpose                                          |
+| -------------------------------- | ------------------------------------------------ |
+| `zai-anti-monolith`              | Automatic decomposition when thresholds exceeded |
+| `zai-debugging`                  | Systematic debugging                             |
+| `zai-frontend-styling-expert`    | CSS/Tailwind styling                             |
+| `zai-md-std`                     | Markdown standard                                |
+| `zai-mermaid-diagrams`           | Mermaid diagrams                                 |
+| `zai-performance-code-generator` | Code optimization                                |
+| `zai-phi-layout`                 | Golden ratio layout                              |
+| `zai-project-clone`              | Project cloning                                  |
+| `zai-prompt-engineering`         | Prompt engineering                               |
+| `zai-sandbox-rules`              | Sandbox rules                                    |
+| `zai-skill-creator`              | Skill creation                                   |
+| `zai-ui-composer`                | UI composition                                   |
+| `zai-workflow-discipline`        | Workflow discipline                              |
 
 ---
 
 ### `src/`
 
-Исходный код проекта (инфраструктурные тесты).
+Project source code (infrastructure tests).
 
-| Файл                     | Назначение                                                                      |
-| ------------------------ | ------------------------------------------------------------------------------- |
-| `infrastructure.test.ts` | Проверка инфраструктуры: package.json, tsconfig, .gitignore, .husky |
+| File                     | Purpose                                                                     |
+| ------------------------ | --------------------------------------------------------------------------- |
+| `infrastructure.test.ts` | Infrastructure check: package.json, tsconfig, .gitignore, .husky            |
 
 ---
 
 ### `tests/`
 
-Sandbox-интеграционные тесты (bash).
+Sandbox integration tests (bash).
 
-| Файл                          | Назначение                       |
+| File                          | Purpose                          |
 | ----------------------------- | -------------------------------- |
-| `sandbox-integration-test.sh` | 20 интеграционных тестов sandbox |
-| `sandbox-behavior-test.sh`    | 10 тестов поведения sandbox      |
-| `edge-case-tests.sh`          | 15 edge-case тестов              |
+| `sandbox-integration-test.sh` | 20 sandbox integration tests     |
+| `sandbox-behavior-test.sh`    | 10 sandbox behavior tests        |
+| `edge-case-tests.sh`          | 15 edge-case tests               |
 
 ---
 
 ### `graph/`
 
-Данные ID-графа (генерируются CI).
+ID graph data (generated by CI).
 
-| Файл                     | Назначение                                  |
-| ------------------------ | ------------------------------------------- |
-| `id-graph.json`          | Полный граф в JSON (для graph-viewer)       |
-| `id-graph-summary.json`  | Сводка графа (для дашбордов/health checks)  |
-| `README.md`              | API документация для внешних инструментов   |
+| File                     | Purpose                                   |
+| ------------------------ | ----------------------------------------- |
+| `id-graph.json`          | Full graph in JSON (for graph-viewer)     |
+| `id-graph-summary.json`  | Graph summary (for dashboards/health)     |
+| `README.md`              | API documentation for external tools      |
 
 ---
 
 ### `eslint.config.js`
 
-ESLint flat config (v9+). Маппит правила из `eslint-rules/` и `eslint-processors/`.
+ESLint flat config (v9+). Maps rules from `eslint-rules/` and `eslint-processors/`.
 
 ---
 
 ### `vitest.config.ts`
 
-Конфигурация Vitest для TypeScript-тестов.
+Vitest configuration for TypeScript tests.
 
 ---
 
 ### `tsconfig.json`
 
-TypeScript конфигурация (strict mode, ES2022+, ESNext modules).
+TypeScript configuration (strict mode, ES2022+, ESNext modules).
 
 ---
 
-## Ключевые файлы в корне
+## Key Root Files
 
-| Файл                              | Назначение                                                        |
-| --------------------------------- | ----------------------------------------------------------------- |
-| `AGENT_RULES.md`                  | Точка входа для агентов: протокол онбординга, приоритеты, запреты |
-| `README.md`                       | Описание проекта                                                  |
-| `CHANGELOG.md`                    | Журнал изменений (Keep a Changelog)                               |
-| `CONTRIBUTING.md`                 | Гайд для контрибьюторов                                           |
-| `worklog.md`                      | Аппенди-онли лог действий (STD-DOC-008)                           |
-| `bootstrap.sh`                    | Единая точка входа: install + update + restore                    |
-| `scripts/status.sh`               | Диагностика состояния проекта                                     |
-| `scripts/save-work.sh`            | Сохранение текущей работы                                         |
-| `package.json`                    | NPM-конфигурация: скрипты, зависимости                            |
-| `.prettierrc`                     | Prettier: LF, 100 chars, double quotes                            |
-| `.zai/config.json`                | Единый источник порогов для governance                            |
-| `.env.example`                    | Пример переменных окружения                                       |
-| `scripts/fix-code-block-langs.py` | Разовый скрипт исправления языков в code blocks                   |
+| File                              | Purpose                                                        |
+| --------------------------------- | --------------------------------------------------------------- |
+| `AGENT_RULES.md`                  | Agent entry point: onboarding protocol, priorities, prohibitions |
+| `README.md`                       | Project description                                            |
+| `CHANGELOG.md`                    | Changelog (Keep a Changelog format)                            |
+| `CONTRIBUTING.md`                 | Contributor guide                                              |
+| `worklog.md`                      | Append-only action log (STD-DOC-008)                           |
+| `bootstrap.sh`                    | Single entry point: install + update + restore                 |
+| `scripts/status.sh`               | Project health diagnostics                                     |
+| `scripts/save-work.sh`            | Save current work                                              |
+| `package.json`                    | NPM configuration: scripts, dependencies                       |
+| `.prettierrc`                     | Prettier: LF, 100 chars, double quotes                         |
+| `.zai/config.json`                | Single source of thresholds for governance                     |
+| `.env.example`                    | Environment variable example                                   |
+| `scripts/fix-code-block-langs.py` | One-time script for fixing code block language tags            |
 
 ---
 
-## npm-скрипты
+## npm Scripts
 
-| Команда                 | Действие                 |
+| Command                 | Action                   |
 | ----------------------- | ------------------------ |
-| `npm run lint`          | ESLint для .ts/.tsx      |
-| `npm run lint:fix`      | ESLint + автоисправление |
-| `npm run format`        | Prettier форматирование  |
-| `npm run format:check`  | Prettier проверка        |
-| `npm run typecheck`     | TypeScript проверка      |
-| `npm run test`          | Vitest запуск            |
-| `npm run test:watch`    | Vitest в watch-режиме    |
-| `npm run test:coverage` | Vitest + покрытие        |
-| `npm run check:md`      | Проверка Markdown        |
+| `npm run lint`          | ESLint for .ts/.tsx      |
+| `npm run lint:fix`      | ESLint + auto-fix        |
+| `npm run format`        | Prettier formatting      |
+| `npm run format:check`  | Prettier check           |
+| `npm run typecheck`     | TypeScript check         |
+| `npm run test`          | Vitest run               |
+| `npm run test:watch`    | Vitest in watch mode     |
+| `npm run test:coverage` | Vitest + coverage        |
+| `npm run check:md`      | Markdown check           |
 | `npm run check:graph`   | verify-id-graph.js       |
 | `npm run validate`      | lint + typecheck + test  |
 | `npm run prepare`       | Husky install            |
 
 ---
 
-## Потоки данных
+## Data Flows
 
-```
+```bash
 git commit
   -> .husky/pre-commit
        -> Group 0: guard/scripts/check-*.sh (13 integrity scripts, HARD)

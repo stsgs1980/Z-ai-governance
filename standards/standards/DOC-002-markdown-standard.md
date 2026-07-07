@@ -493,7 +493,7 @@ This section shows a small README snippet that violates multiple rules, then the
 
 ```bash
 npm install alpha
-```
+```text
 
 ## Components
 
@@ -541,7 +541,7 @@ Violations:
 
 ```bash
 npm install alpha
-```
+```text
 
 ## Components
 

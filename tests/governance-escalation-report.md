@@ -1,8 +1,8 @@
-# Z-ai-platform Governance Escalation Report (updated)
+# Z-ai-governance Governance Escalation Report (updated)
 
 > **Report ID:** ZAI-ESCAL-2026-07-04-001
 > **Author:** Z.ai Code agent (GLM-5.2, sandbox session web-8a05ea4a)
-> **Recipient:** Z-ai-platform maintainer (Stsgs1980)
+> **Recipient:** Z-ai-governance maintainer (Stsgs1980)
 > **Date:** 2026-07-04 (original), 2026-07-06 (update)
 > **Platform HEAD at discovery:** `a0187687970b0ad8392a2a8efa2f893dd19f78a4`
 > **Platform HEAD at update:** `243c421`
@@ -22,7 +22,7 @@ heuristic fixed (`standards@f52e9f0`), `constants.js` REPO_GLOBS fixed
 inconsistency resolved (both AGENT_RULES.md and AGENT-RULES.md supported).
 
 **12 structural governance gaps remain OPEN** (Sections D-I). These are not bugs in
-existing code but architectural/process deficiencies that prevent Z-ai-platform from
+existing code but architectural/process deficiencies that prevent Z-ai-governance from
 operating as a full governance system across its ecosystem.
 
 **Resolved 2026-07-06:** #1 (baseline regenerated 42->55), #3 (V18 added),
@@ -39,7 +39,7 @@ This report covers: (D) ecosystem governance gap analysis — enforcement layers
 repo-scoped, not ecosystem-scoped; (E) maturity assessment (~1.5/5) with roadmap
 (G1-G8); (F) `bootstrap.sh` sidecar architecture proposal; (G) compliance scoring
 for public visibility; (H) case study of `zai-anti-monolith` skill auto-activation
-failure; (I) conceptual reframing of Z-ai-platform as soft agency regulator.
+failure; (I) conceptual reframing of Z-ai-governance as soft agency regulator.
 
 ---
 
@@ -50,7 +50,7 @@ failure; (I) conceptual reframing of Z-ai-platform as soft agency regulator.
 | 1   | Baseline snapshot `id-graph-baseline.json` encodes buggy 42 IDs (actual: 55)                                                            | RESOLVED | 2026-07-06                                                                                                                                                                                                                                                                                  |
 | 2   | Ecosystem governance gap: enforcement scope = repo scope, not ecosystem scope                                                           | OPEN     | D                                                                                                                                                                                                                                                                                           |
 | 3   | `verify-standards.js` has no V-check for README.md template compliance (V15/V16/V17 cover worklog/CHANGELOG/AGENT_RULES but not README) | RESOLVED | V18 added 2026-07-06                                                                                                                                                                                                                                                                        |
-| 4   | Root `README.md` of Z-ai-platform is not in any V-check scan scope                                                                      | RESOLVED | Added to V04/V08 2026-07-06                                                                                                                                                                                                                                                                 |
+| 4   | Root `README.md` of Z-ai-governance is not in any V-check scan scope                                                                      | RESOLVED | Added to V04/V08 2026-07-06                                                                                                                                                                                                                                                                 |
 | 5   | V04 strips code fences before Unicode scan, creating blind spot for ASCII art diagrams                                                  | RESOLVED | Box-drawing extraction 2026-07-06                                                                                                                                                                                                                                                           |
 | 6   | 15 of 17 RULE-MONOLITH-* are declared intent only (no runtime enforcement)                                                              | PARTIAL  | Now 16/17 enforced (was 2). Group 0: INTEGRITY-011, COMMIT-014, DOC-015, VERSION-013. Group 0+: READ-003, LOOPS-005, HONEST-006, WORKLOG-002 (heuristic). Group 1: ARCH-016, ARCH-017, ENV-008, AGENT-009, DOC-010, STRUCT-007 (automated). Remaining 1 (ANSWER-001) requires LLM judgment. |
 | 7   | No automated enforcement of RULE-MONOLITH-002 (worklog before/after) via pre-commit                                                     | RESOLVED | 2026-07-06 — check-session-start.sh enforces worklog modification (4h active window heuristic) + check-commit-checklist.sh WORKLOG-002                                                                                                                                                      |
@@ -135,7 +135,7 @@ git commit -m "chore: regenerate id-graph baseline (42 -> 55 IDs)"
 ### D.1 Context
 
 While building `Z-ai-graph-viewer` (a separate repository at
-`https://github.com/stsgs1980/Z-ai-graph-viewer` that visualizes the Z-ai-platform ID
+`https://github.com/stsgs1980/Z-ai-graph-viewer` that visualizes the Z-ai-governance ID
 graph), the author wrote an initial `README.md` that violated STD-DOC-004 v3.0 in
 7 distinct ways (missing badges, wrong section order, Unicode pseudographics in an
 ASCII diagram, wrong Stack Signature format, description too long, architecture
@@ -146,9 +146,9 @@ the fact, and a follow-up commit (`2a7b7a4`) was required to bring the README in
 compliance.
 
 This section analyzes which enforcement layers should have caught the violations
-and why none of them did. The finding is structural: the Z-ai-platform governance
-system's scope is the Z-ai-platform repository, not the ecosystem of repositories
-that declare compliance with Z-ai-platform standards.
+and why none of them did. The finding is structural: the Z-ai-governance governance
+system's scope is the Z-ai-governance repository, not the ecosystem of repositories
+that declare compliance with Z-ai-governance standards.
 
 ### D.2 Layer-by-Layer Enforcement Analysis
 
@@ -158,7 +158,7 @@ that declare compliance with Z-ai-platform standards.
 | ---------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | RULE-MONOLITH-003 (Read before write)    | Author did not read `README_TEMPLATE.md` before writing README     | "Declared intent only" per AGENT_RULES Section 3: "2 of 17 enforced at runtime; 15 are declared intent only". No automated check. |
 | RULE-MONOLITH-014 (Pre-commit checklist) | Author did not run verifiers before committing to zai-graph-viewer | Same: declared intent. Plus pre-commit hook is repo-scoped (see Layer 2).                                                         |
-| RULE-MONOLITH-002 (Worklog before/after) | Author did not append to worklog before action                     | Declared intent. Plus `worklog.md` lives in Z-ai-platform, not in zai-graph-viewer.                                               |
+| RULE-MONOLITH-002 (Worklog before/after) | Author did not append to worklog before action                     | Declared intent. Plus `worklog.md` lives in Z-ai-governance, not in zai-graph-viewer.                                               |
 
 **Result:** 3 rules applicable, 0 fired. All 3 are declared-intent-only with no
 runtime enforcement.
@@ -167,7 +167,7 @@ runtime enforcement.
 
 | Component                            | Should Have                                                          | Why It Did Not                                                                                                                                          |
 | ------------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Z-ai-platform/.husky/pre-commit`    | Run verify-standards + verify-id-graph + verify-skills + lint-staged | Hook is per-repo: fires only on `git commit` inside Z-ai-platform. Author committed to zai-graph-viewer, a separate repository without Husky installed. |
+| `Z-ai-governance/.husky/pre-commit`    | Run verify-standards + verify-id-graph + verify-skills + lint-staged | Hook is per-repo: fires only on `git commit` inside Z-ai-governance. Author committed to zai-graph-viewer, a separate repository without Husky installed. |
 | `zai-graph-viewer/.husky/pre-commit` | (does not exist)                                                     | Author did not set up Husky in zai-graph-viewer. `package.json` has no `husky` dependency, no `.husky/` directory.                                      |
 
 **Result:** 0 fired. Hooks are repo-scoped, not ecosystem-scoped.
@@ -176,7 +176,7 @@ runtime enforcement.
 
 | Verifier                                            | What It Checks                                                                                                                            | Why It Did Not                                                                                                                                                                                                                                                     |
 | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `verify-standards.js` V04 (no emoji/Unicode)        | 30 files in `standards/standards/` + `standards/templates/` + `standards/docs/sandbox/`                                                   | Does not scan root `README.md` of Z-ai-platform. Does not scan external repos. Additionally, V04 strips code fences (`.replace(/```[\s\S]*?```/g, "")`) before scanning, so Unicode inside code blocks is invisible — the ASCII diagram was inside a fenced block. |
+| `verify-standards.js` V04 (no emoji/Unicode)        | 30 files in `standards/standards/` + `standards/templates/` + `standards/docs/sandbox/`                                                   | Does not scan root `README.md` of Z-ai-governance. Does not scan external repos. Additionally, V04 strips code fences (`.replace(/```[\s\S]*?```/g, "")`) before scanning, so Unicode inside code blocks is invisible — the ASCII diagram was inside a fenced block. |
 | `verify-standards.js` V08 (code fence language)     | Same 30 files                                                                                                                             | Does not scan zai-graph-viewer. (Author's README passed V08 anyway: all fences had language.)                                                                                                                                                                      |
 | `verify-standards.js` V10 (badges)                  | Checks that `README_TEMPLATE.md` itself contains badges guidance (Section 3 row + Section 5 example + Section 6 checklist mention)        | V10 verifies the template, not that actual READMEs have badges. No V-check validates "README.md follows README_TEMPLATE".                                                                                                                                          |
 | `verify-standards.js` V15-V17 (template compliance) | V15: worklog.md follows WORKLOG_TEMPLATE. V16: CHANGELOG.md follows CHANGELOG_TEMPLATE. V17: AGENT_RULES.md follows AGENT_RULES_TEMPLATE. | **No V18 for README.md.** V15/V16/V17 cover 3 files; README.md is not in the list.                                                                                                                                                                                 |
@@ -185,7 +185,7 @@ runtime enforcement.
 
 **Result:** 0 fired. Key finding: `verify-standards.js` has no V-check for
 "README.md follows README_TEMPLATE". V15/V16/V17 do this for worklog/CHANGELOG/
-AGENT_RULES, but README is a gap. Even the root `README.md` of Z-ai-platform itself
+AGENT_RULES, but README is a gap. Even the root `README.md` of Z-ai-governance itself
 is not scanned by any V-check (confirmed by code inspection: `PATHS` object does
 not include root README).
 
@@ -193,18 +193,18 @@ not include root README).
 
 | Rule                                  | What It Checks             | Why It Did Not                                                                                                       |
 | ------------------------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `eslint-rules/unicode-policy.js`      | Unicode chars in .md       | Configured in `Z-ai-platform/eslint.config.js`. zai-graph-viewer uses `eslint-config-next` without this custom rule. |
+| `eslint-rules/unicode-policy.js`      | Unicode chars in .md       | Configured in `Z-ai-governance/eslint.config.js`. zai-graph-viewer uses `eslint-config-next` without this custom rule. |
 | `eslint-rules/code-block-language.js` | Code fence language in .md | Same: not installed in zai-graph-viewer.                                                                             |
 
 **Result:** 0 fired. Custom ESLint rules are not packaged for reuse. They live in
-`Z-ai-platform/eslint-rules/` and cannot be imported into zai-graph-viewer without
+`Z-ai-governance/eslint-rules/` and cannot be imported into zai-graph-viewer without
 copying the files.
 
 #### Layer 5: Background Monitor (verifier-daemon.sh)
 
 | Component             | What It Does                                                                                      | Why It Did Not                                                                                                                 |
 | --------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Daemon (polling mode) | Watches 5 dirs: `src/`, `standards/standards/`, `standards/templates/`, `guard/rules/`, `skills/` | Does not watch `zai-graph-viewer/`. Even if it did, the daemon is a process running for Z-ai-platform, not for external repos. |
+| Daemon (polling mode) | Watches 5 dirs: `src/`, `standards/standards/`, `standards/templates/`, `guard/rules/`, `skills/` | Does not watch `zai-graph-viewer/`. Even if it did, the daemon is a process running for Z-ai-governance, not for external repos. |
 
 **Result:** 0 fired. Daemon is repo-scoped.
 
@@ -212,17 +212,17 @@ copying the files.
 
 | Workflow                                              | What It Checks                                                        | Why It Did Not                                                                 |
 | ----------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `Z-ai-platform/.github/workflows/verify-id-graph.yml` | verify-standards + verify-id-graph + verify-skills + graph generation | Per-repo workflow: fires on push/PR to Z-ai-platform, not to zai-graph-viewer. |
+| `Z-ai-governance/.github/workflows/verify-id-graph.yml` | verify-standards + verify-id-graph + verify-skills + graph generation | Per-repo workflow: fires on push/PR to Z-ai-governance, not to zai-graph-viewer. |
 | `zai-graph-viewer/.github/workflows/`                 | (does not exist)                                                      | Author did not create CI for zai-graph-viewer.                                 |
 
 **Result:** 0 fired. zai-graph-viewer has no CI at all.
 
 ### D.3 Structural Root Cause
 
-All six enforcement layers share the same scope boundary: the Z-ai-platform
+All six enforcement layers share the same scope boundary: the Z-ai-governance
 repository. None of them have a concept of "ecosystem of repositories that declare
-compliance with Z-ai-platform standards". `zai-graph-viewer` references
-Z-ai-platform in its README, consumes its data, and declares adherence to its
+compliance with Z-ai-governance standards". `zai-graph-viewer` references
+Z-ai-governance in its README, consumes its data, and declares adherence to its
 standards — but from an enforcement perspective it is just another external repo.
 
 Three concrete gaps, all structural:
@@ -239,7 +239,7 @@ nothing in the enforcement chain validates that claim.
 to CHANGELOG_TEMPLATE), V17 (AGENT_RULES.md to AGENT_RULES_TEMPLATE). There is no
 V18 for README.md to README_TEMPLATE. V10 only checks that the template itself
 contains badges guidance, not that actual READMEs have badges. Even the root
-`README.md` of Z-ai-platform is not in any V-check scan scope.
+`README.md` of Z-ai-governance is not in any V-check scan scope.
 
 #### Gap D.3.3: V04 Code-Fence Stripping Creates Unicode Blind Spot
 
@@ -258,13 +258,13 @@ applied incrementally.
 
 | #     | Fix                                                                                                                                                                                                       | Effort                                                       | Effect                                                                                                                                             |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| D.4.1 | Add V18: "README.md follows README_TEMPLATE" — check section order, badges presence, Stack Signature format, description length, no Unicode pseudographics                                                | ~50 lines in `verify-standards.js`                           | Catches badges/section-order/Stack-Signature/description-length violations inside Z-ai-platform                                                    |
-| D.4.2 | Include root `README.md` of Z-ai-platform in V04, V08, V11 scan scope                                                                                                                                     | 2 lines (add `path.join(REPO_ROOT, 'README.md')` to targets) | Catches Unicode/code-fence/size violations in root README                                                                                          |
+| D.4.1 | Add V18: "README.md follows README_TEMPLATE" — check section order, badges presence, Stack Signature format, description length, no Unicode pseudographics                                                | ~50 lines in `verify-standards.js`                           | Catches badges/section-order/Stack-Signature/description-length violations inside Z-ai-governance                                                    |
+| D.4.2 | Include root `README.md` of Z-ai-governance in V04, V08, V11 scan scope                                                                                                                                     | 2 lines (add `path.join(REPO_ROOT, 'README.md')` to targets) | Catches Unicode/code-fence/size violations in root README                                                                                          |
 | D.4.3 | Package ESLint rules as npm package (`@zai/eslint-rules`) for reuse in ecosystem repos                                                                                                                    | ~2 hours                                                     | Allows zai-graph-viewer (and future ecosystem repos) to install `unicode-policy.js` + `code-block-language.js` via `npm install @zai/eslint-rules` |
 | D.4.4 | Create `zai-graph-viewer/.github/workflows/verify-readme.yml` — CI that runs V-checks against README on every PR                                                                                          | ~30 lines YAML                                               | Catches violations on PRs to zai-graph-viewer                                                                                                      |
 | D.4.5 | V04: do not strip code fences for Unicode box-drawing chars (U+2500-U+257F) and arrows (U+2B00-U+2B07)                                                                                                    | 1 regex change                                               | Catches ASCII art diagrams even inside code blocks                                                                                                 |
 | D.4.6 | Pre-commit hook template for ecosystem repos — a `.husky/pre-commit` template that can be copied into any repo declaring compliance                                                                       | ~1 hour                                                      | Extends enforcement to derivative repos                                                                                                            |
-| D.4.7 | Ecosystem compliance registry — a manifest file (e.g. `zai-compliance.json`) in each ecosystem repo listing which STD-* standards it follows, plus a meta-CI in Z-ai-platform that scans registered repos | ~1 day                                                       | Establishes ecosystem-scope governance layer                                                                                                       |
+| D.4.7 | Ecosystem compliance registry — a manifest file (e.g. `zai-compliance.json`) in each ecosystem repo listing which STD-* standards it follows, plus a meta-CI in Z-ai-governance that scans registered repos | ~1 day                                                       | Establishes ecosystem-scope governance layer                                                                                                       |
 
 ### D.5 Honest Assessment
 
@@ -272,7 +272,7 @@ No system "failed" in the sense of "broke". All systems work as designed — but
 their design scope does not cover the case of a separate repository declaring
 compliance. This is not a bug but a structural gap in the governance architecture.
 
-`zai-graph-viewer` is the first repository outside Z-ai-platform to declare
+`zai-graph-viewer` is the first repository outside Z-ai-governance to declare
 compliance with its standards. The gap was discovered when the author wrote a
 README that violated STD-DOC-004 v3.0 in 7 ways, pushed it to GitHub, and no
 enforcement mechanism fired. The violations were caught only by manual review
@@ -297,20 +297,20 @@ git checkout 578fff0
 # 2. Observe README.md has: no badges, wrong section order, ASCII diagram with
 #    Unicode box-drawing chars, wrong Stack Signature format, etc.
 
-# 3. Run any Z-ai-platform verifier against this README — none will fire:
+# 3. Run any Z-ai-governance verifier against this README — none will fire:
 #    - verify-standards.js scans only standards/ files, not external repos
 #    - ESLint rules are not installed in zai-graph-viewer
 #    - No CI exists in zai-graph-viewer
 #    - Pre-commit hook is not installed in zai-graph-viewer
 
 # 4. The violations pass silently. This is the gap.
-```
+```bash
 
 ### D.7 Recommendation
 
 The maintainer should decide whether ecosystem-scope governance is a goal. If yes,
 fixes D.4.3 (npm package) and D.4.7 (ecosystem registry) are the highest-impact
-changes. If no (Z-ai-platform governance stays repo-scoped), the gap is accepted
+changes. If no (Z-ai-governance governance stays repo-scoped), the gap is accepted
 and external repos are responsible for their own compliance — in which case
 `zai-graph-viewer` should add its own CI (D.4.4) and its own Husky hook (D.4.6) to
 enforce STD-DOC-004 on its README.
@@ -321,9 +321,9 @@ enforce STD-DOC-004 on its README.
 
 ### E.1 Purpose
 
-Section D identified structural gaps in the Z-ai-platform governance system and
+Section D identified structural gaps in the Z-ai-governance governance system and
 proposed 7 fixes (D.4.1 through D.4.7) to close them. This section answers the
-follow-up question: "After applying Section D fixes, will Z-ai-platform be a real
+follow-up question: "After applying Section D fixes, will Z-ai-governance be a real
 governance system?" The answer is: partially. Section D moves the system from
 maturity level ~1.5 to ~2.3 on a 5-level scale. To reach level 4-5 (a "full"
 governance system), additional work (G1-G8 below) is required.
@@ -349,7 +349,7 @@ A 5-level scale adapted from CMMI for governance systems:
 | Rules declared (RULE-MONOLITH-*)          | 17 rules in `guard/rules/`                                  | 3     |
 | Rules enforced at runtime                 | 15 of 17 (was 2) — pre-commit + CI enforcement              | 2.5   |
 | Verifiers (V/G/S-checks)                  | 15 V-checks, 15 G-checks, 10 S-checks, all passing          | 3     |
-| Pre-commit hook                           | Active for Z-ai-platform repo, runs verifiers + lint-staged | 2     |
+| Pre-commit hook                           | Active for Z-ai-governance repo, runs verifiers + lint-staged | 2     |
 | CI (GitHub Actions)                       | Active, runs on push/PR/nightly + governance enforcement    | 2.5   |
 | Background monitor (daemon)               | Implemented but polling-only, no inotifywait                | 2     |
 | Ecosystem-scope enforcement               | None — all enforcement is repo-scoped                       | 0     |
@@ -432,16 +432,16 @@ If all 7 fixes from Section D.4 are applied:
 
 | Question                                                           | Answer                                                                                           |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| After Section D, is Z-ai-platform a governance system?             | Partially. Maturity ~2.3/5. Better than now, but not "real" yet.                                 |
-| After Section D + G1-G8, is Z-ai-platform a governance system?     | Yes, credible for 3-5 repos. Maturity ~3.3/5.                                                    |
+| After Section D, is Z-ai-governance a governance system?             | Partially. Maturity ~2.3/5. Better than now, but not "real" yet.                                 |
+| After Section D + G1-G8, is Z-ai-governance a governance system?     | Yes, credible for 3-5 repos. Maturity ~3.3/5.                                                    |
 | After Section D + G1-G8 + federated + onboarding + scoring?        | Yes, mature for 20+ repos. Maturity ~4.5/5.                                                      |
-| Can Z-ai-platform ever be a "perfect" governance system (level 5)? | No. 6-8 rules require human judgement and will always be declared-intent. Level 5 is asymptotic. |
+| Can Z-ai-governance ever be a "perfect" governance system (level 5)? | No. 6-8 rules require human judgement and will always be declared-intent. Level 5 is asymptotic. |
 
 ### E.9 Roadmap Summary
 
 | Phase             | Scope                                                        | Timeline   | Outcome                                          |
 | ----------------- | ------------------------------------------------------------ | ---------- | ------------------------------------------------ |
-| Phase 1           | Apply Section D.4.1-D.4.2 (V18, root README in scope)        | 1 day      | Catches README violations inside Z-ai-platform   |
+| Phase 1           | Apply Section D.4.1-D.4.2 (V18, root README in scope)        | 1 day      | Catches README violations inside Z-ai-governance   |
 | Phase 2           | Apply Section D.4.3-D.4.4 (npm package, zai-graph-viewer CI) | 3 days     | Ecosystem-scope enforcement for zai-graph-viewer |
 | Phase 3           | Apply G1-G2 (worklog + read-before-write auto-enforce)       | 1 week     | 4/17 rules enforced (was 2)                      |
 | Phase 4           | Apply G5 (GOVERNANCE.md) + G7 (quarterly review)             | 1 week     | Process and cadence defined                      |
@@ -458,22 +458,22 @@ If all 7 fixes from Section D.4 are applied:
 ### F.1 Problem Statement
 
 The current `bootstrap.sh` does three categories of work in a single script with no
-flags, blurring the line between "install Z-ai-platform locally" and "integrate
-Z-ai-platform into parent sandbox":
+flags, blurring the line between "install Z-ai-governance locally" and "integrate
+Z-ai-governance into parent sandbox":
 
 | Step | Action                                              | Touches Parent?             | Risk |
 | ---- | --------------------------------------------------- | --------------------------- | ---- |
-| 1    | `git clone` or `git pull` Z-ai-platform             | No                          | Low  |
-| 2    | `git config core.fileMode false`                    | No (only Z-ai-platform git) | Low  |
+| 1    | `git clone` or `git pull` Z-ai-governance             | No                          | Low  |
+| 2    | `git config core.fileMode false`                    | No (only Z-ai-governance git) | Low  |
 | 3    | Symlink 14 skills into `/home/z/my-project/skills/` | Yes                         | High |
 | 4    | Run verifiers (read-only)                           | No                          | Low  |
 | 5    | Print AGENT_RULES.md                                | No                          | Low  |
 
 Step 3 is the root problem. After bootstrap, `/home/z/my-project/skills/` contains
-14 symlinks pointing into `Z-ai-platform/skills/`. This breaks the principle "clone
+14 symlinks pointing into `Z-ai-governance/skills/`. This breaks the principle "clone
 the main project freely" because:
 
-- Removing or moving `Z-ai-platform/` leaves parent with broken symlinks
+- Removing or moving `Z-ai-governance/` leaves parent with broken symlinks
 - Parent sandbox reset leaves symlinks in unpredictable state
 - Re-running `bootstrap.sh` overwrites `.sandbox-backup` directories, losing parent
   originals
@@ -486,7 +486,7 @@ the main project freely" because:
 | No implicit mutations    | `git clone` plus `bash bootstrap.sh` with no flags does not touch parent at all                                  |
 | Progressive disclosure   | Integration levels 0 to 4, each explicit opt-in via flag                                                         |
 | Reversible               | For every `--install-*` there is an `--uninstall` that restores prior state                                      |
-| Isolated state           | All Z-ai-platform state lives inside `Z-ai-platform/` or a single `.zai-config.json` in parent (only at Level 4) |
+| Isolated state           | All Z-ai-governance state lives inside `Z-ai-governance/` or a single `.zai-config.json` in parent (only at Level 4) |
 | Detectable               | Parent can check "is Z-ai-governance installed?" via a single marker file                                        |
 | Idempotent               | Re-running `bootstrap.sh` does not clobber state or lose backups                                                 |
 | Survives sandbox restart | Does not depend on PID files, /tmp symlinks, or long-running processes                                           |
@@ -496,17 +496,17 @@ the main project freely" because:
 #### Level 0: Clone only
 
 ```bash
-git clone --recurse-submodules https://github.com/stsgs1980/Z-ai-platform.git
-```
+git clone --recurse-submodules https://github.com/stsgs1980/Z-ai-governance.git
+```bash
 
 No bootstrap. Parent untouched.
 
 #### Level 1: Default bootstrap (safe)
 
 ```bash
-cd Z-ai-platform
+cd Z-ai-governance
 bash bootstrap.sh
-```
+```bash
 
 Does: `git pull`, `git config core.fileMode false`, run verifiers (warning-only),
 print AGENT_RULES.md summary. Does NOT: symlink skills, install hooks, create any
@@ -516,35 +516,35 @@ file in parent.
 
 ```bash
 bash bootstrap.sh --link-skills
-```
+```bash
 
 Symlink 14 `zai-*` skills into parent. Backups go to
-`Z-ai-platform/.zai/.sandbox-backups/` with registry for idempotency.
+`Z-ai-governance/.zai/.sandbox-backups/` with registry for idempotency.
 
 #### Level 3: Install hooks (opt-in)
 
 ```bash
 bash bootstrap.sh --install-hooks
-```
+```bash
 
-Activate `Z-ai-platform/.husky/pre-commit`. Hooks fire only on commits inside
-`Z-ai-platform/`.
+Activate `Z-ai-governance/.husky/pre-commit`. Hooks fire only on commits inside
+`Z-ai-governance/`.
 
 #### Level 4: Integrate parent (opt-in, high risk)
 
 ```bash
 bash bootstrap.sh --integrate-parent
-```
+```bash
 
 Write `.zai-config.json` in parent root. Install parent `.husky/pre-commit` that
-delegates to Z-ai-platform verifiers. Not recommended in Z.ai sandbox.
+delegates to Z-ai-governance verifiers. Not recommended in Z.ai sandbox.
 
 ### F.4 Refactor Details
 
 Estimated effort: 4-6 hours. Fork into `bootstrap-v2.sh` first. Key changes:
 
 - Flag parsing: `--link-skills`, `--install-hooks`, `--integrate-parent`, `--uninstall`, `--status`
-- Backup registry: `Z-ai-platform/.zai/.sandbox-backups/registry.json`
+- Backup registry: `Z-ai-governance/.zai/.sandbox-backups/registry.json`
 - `--uninstall`: reads registry, restores parent state
 - `--status`: shows installed level, linked skills, daemon state
 - AGENT_RULES.md update: describe levels in onboarding protocol
@@ -717,16 +717,16 @@ lines, 9 `useState` calls).
 
 ---
 
-## 8. Section I — Conceptual Reframing: Z-ai-platform as Soft Agency Regulator
+## 8. Section I — Conceptual Reframing: Z-ai-governance as Soft Agency Regulator
 
 ### I.1 The Question
 
-"Can Z-ai-platform be considered an agent?" The answer determines investment
+"Can Z-ai-governance be considered an agent?" The answer determines investment
 direction: build an LLM agent on top, improve existing reasoning, or something else.
 
 ### I.2 The Evidence
 
-During this session, the reporter (an AI agent) was shaped by Z-ai-platform:
+During this session, the reporter (an AI agent) was shaped by Z-ai-governance:
 
 | Component                | What it said                  | What the reporter did      |
 | ------------------------ | ----------------------------- | -------------------------- |
@@ -740,7 +740,7 @@ This is **active regulation of agent behavior** through readable rules.
 
 ### I.3 The Reframing: Soft Agency Regulator
 
-Z-ai-platform is neither "just a constitution" nor "a full agent." It is a **soft
+Z-ai-governance is neither "just a constitution" nor "a full agent." It is a **soft
 agency regulator** with four mechanisms:
 
 | Mechanism                  | How it works                                       |
@@ -760,7 +760,7 @@ interpretation as enhancement.
 
 | #   | Lesson                                                                                      |
 | --- | ------------------------------------------------------------------------------------------- |
-| 1   | Z-ai-platform already works as soft regulator — frame it as such, not as "incomplete agent" |
+| 1   | Z-ai-governance already works as soft regulator — frame it as such, not as "incomplete agent" |
 | 2   | Soft agency requires agent cooperation — document honestly                                  |
 | 3   | Violations need active tracking, not just history logs                                      |
 | 4   | Skill auto-invocation is the #1 weakness — prioritize it                                    |
@@ -772,7 +772,7 @@ interpretation as enhancement.
 
 ```bash
 # 1. Current state verification
-cd Z-ai-platform
+cd Z-ai-governance
 git rev-parse HEAD           # expect: 243c421
 git submodule status         # expect: standards@f52e9f0
 
@@ -790,7 +790,7 @@ grep '"ids_extracted"' standards/_snapshots/id-graph-baseline.json
 #    - bootstrap.sh idempotency
 #    - compliance scoring
 #    - skill auto-invocation
-```
+```bash
 
 ---
 
@@ -807,7 +807,7 @@ grep '"ids_extracted"' standards/_snapshots/id-graph-baseline.json
 
 ## 11. References
 
-- `Z-ai-platform/AGENT_RULES.md` Sections 1, 3, 8, 10
+- `Z-ai-governance/AGENT_RULES.md` Sections 1, 3, 8, 10
 - `guard/rules/RULE-MONOLITH-002` (Worklog before/after)
 - `guard/rules/RULE-MONOLITH-003` (Read before write)
 - `guard/rules/RULE-MONOLITH-014` (Pre-commit checklist)

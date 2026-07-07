@@ -226,7 +226,7 @@ const config = {
   encoding: 'utf-8',
   strict: true
 };
-```
+```text
 ````
 
 **Правило для Неизвестных Языков:**
@@ -485,7 +485,7 @@ Client          Server          Database
 
 ```bash
 npm install alpha
-```
+```text
 
 ## Components
 
@@ -532,7 +532,7 @@ Built with: Next.js 16 + TypeScript + Tailwind CSS
 
 ```bash
 npm install alpha
-```
+```text
 
 ## Components
 
@@ -545,7 +545,7 @@ npm install alpha
 +-------------------+
 |    Retries        |
 +-------------------+
-```
+```text
 
 ## Notes
 
