@@ -126,18 +126,23 @@ if [[ "$CHECK" == "all" ]] || [[ "$CHECK" == "worklog" ]]; then
         bash "${GUARD_DIR}/scripts/worklog-check.sh" $STAGED_FLAG
 fi
 
-# --- Emoji check (delegate to eslint) ---
+# --- Emoji check (info only — hard enforcement is in pre-commit via lint-staged) ---
 if [[ "$CHECK" == "all" ]] || [[ "$CHECK" == "emoji" ]]; then
-    if command -v npx >/dev/null 2>&1; then
-        run_check "Emoji/Unicode (STD-DOC-003)" \
-            npx eslint --no-warn-ignored --ext .md . 2>/dev/null || true
-        # Note: emoji check is advisory here — hard enforcement is in pre-commit via lint-staged
+    TOTAL=$((TOTAL + 1))
+    if command -v npx >/dev/null 2>&1 && [[ -f "${PLATFORM_DIR}/eslint.config.js" ]] && [[ -d "${PLATFORM_DIR}/node_modules/eslint" ]]; then
+        echo "--- Emoji/Unicode (STD-DOC-003) ---"
+        if npx eslint --no-warn-ignored --ext .md . 2>/dev/null; then
+            echo "[PASS] Emoji/Unicode (STD-DOC-003)"
+            PASSED=$((PASSED + 1))
+        else
+            echo "[FAIL] Emoji/Unicode (STD-DOC-003)"
+            FAILED=$((FAILED + 1))
+        fi
     else
-        TOTAL=$((TOTAL + 1))
-        echo "[SKIP] Emoji/Unicode — npx not found (enforced in pre-commit via lint-staged)"
+        echo "[SKIP] Emoji/Unicode — eslint not configured or npx not found (enforced in pre-commit via lint-staged)"
         SKIPPED=$((SKIPPED + 1))
-        echo ""
     fi
+    echo ""
 fi
 
 # --- Standards verifiers (delegate to standards/) ---
