@@ -247,7 +247,7 @@ module.exports = {
 Scans the raw text of `.md` files (outside code blocks) for emoji characters. This is the Markdown-specific version of the Unicode Policy rule — it operates at level [C] Critical per STD-DOC-002 section 9.1.
 
 ```javascript
-// eslint-rules/no-emoji-in-md.js
+// eslint-rules/unicode-policy.js (emoji check section)
 module.exports = {
   meta: {
     type: "suggestion",
