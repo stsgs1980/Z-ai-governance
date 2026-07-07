@@ -1,0 +1,223 @@
+# ==============================================================================
+# pre-commit hook — Z-ai-platform (consolidated under Husky, 2026-07-04)
+# ==============================================================================
+#
+# Enforcement groups (run in order):
+#
+#   0. guard/ integrity + checklist (HARD)
+#      - check-no-bypass.sh       (RULE-INTEGRITY-011: no hook/rule tampering)
+#      - check-commit-checklist.sh (RULE-COMMIT-014: emoji, large files, worklog)
+#      - check-version-bump.sh     (RULE-VERSION-013: version via ahg.sh)
+#
+#   1. guard/ (PROC-COCHANGE-003, PROC-WORKLOG-005)
+#      - code + docs sync (RULE-DOC-010, HARD)
+#      - worklog entry required for code changes (RULE-WORKLOG-002, HARD)
+#
+#   2. standards/ (verify-*.js)
+#      - verify-standards.js  -- content-level invariants (V01-V18, HARD)
+#      - verify-id-graph.js   -- cross-repo ID-graph invariants (G01-G15, HARD)
+#      - verify-skills.js     -- skill-side format invariants (S01-S09, HARD)
+#
+#   3. guard/ (PROC-LINECOUNT-004, HARD)
+#      - per-category file-size caps (RULE-MONOLITH-012)
+#
+#   4. lint-staged (eslint + prettier on staged files)
+#
+# Bypass (emergencies only): git commit --no-verify
+# ==============================================================================
+
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+# --- Group 0: guard integrity + checklist (HARD) ----------------------------
+# RULE-INTEGRITY-011: detect hook tampering, worklog deletion, rule modification
+echo "[pre-commit] check-no-bypass.sh (RULE-INTEGRITY-011)"
+if ! bash guard/scripts/check-no-bypass.sh --hard; then
+  echo "[pre-commit] FAIL: integrity violation detected."
+  exit 1
+fi
+
+# RULE-COMMIT-014: pre-commit checklist (emoji, large files, worklog)
+echo "[pre-commit] check-commit-checklist.sh (RULE-COMMIT-014)"
+if ! bash guard/scripts/check-commit-checklist.sh --hard; then
+  echo "[pre-commit] FAIL: commit checklist violations."
+  exit 1
+fi
+
+# RULE-VERSION-013: version bump via ahg.sh only
+echo "[pre-commit] check-version-bump.sh (RULE-VERSION-013)"
+if ! bash guard/scripts/check-version-bump.sh --hard; then
+  echo "[pre-commit] FAIL: unauthorized version change."
+  exit 1
+fi
+
+# RULE-READ-003: read before write (heuristic via worklog)
+echo "[pre-commit] check-read-before-write.sh (RULE-READ-003)"
+if ! bash guard/scripts/check-read-before-write.sh --hard; then
+  echo "[pre-commit] FAIL: file modified without read evidence."
+  exit 1
+fi
+
+# RULE-LOOPS-005: loop detection (repeated file modifications)
+echo "[pre-commit] check-no-loops.sh (RULE-LOOPS-005)"
+if ! bash guard/scripts/check-no-loops.sh --hard; then
+  echo "[pre-commit] FAIL: loop pattern detected — stop and ask for help."
+  exit 1
+fi
+
+# RULE-ARCH-016/017: AHG submodule integrity
+echo "[pre-commit] check-ahg-integrity.sh (RULE-ARCH-016/017)"
+if ! bash guard/scripts/check-ahg-integrity.sh --hard; then
+  echo "[pre-commit] FAIL: AHG integrity violation detected."
+  exit 1
+fi
+
+# RULE-ENV-008: sandbox verification (clone path, dev server)
+echo "[pre-commit] check-sandbox-env.sh (RULE-ENV-008)"
+if ! bash guard/scripts/check-sandbox-env.sh --hard; then
+  echo "[pre-commit] FAIL: sandbox verification failed."
+  exit 1
+fi
+
+# RULE-AGENT-009: session start protocol (drift prevention)
+echo "[pre-commit] check-session-start.sh (RULE-AGENT-009)"
+if ! bash guard/scripts/check-session-start.sh --hard; then
+  echo "[pre-commit] FAIL: session start protocol not followed."
+  exit 1
+fi
+
+# RULE-STRUCT-007: work structure cycle (Read -> Plan -> Execute -> Record -> Commit)
+echo "[pre-commit] check-work-cycle.sh (RULE-STRUCT-007)"
+if ! bash guard/scripts/check-work-cycle.sh --hard; then
+  echo "[pre-commit] FAIL: work structure cycle violation."
+  exit 1
+fi
+
+# Snapshot sync: catches uncommitted graph changes BEFORE push
+echo "[pre-commit] check-snapshot-sync.sh (ID graph drift detection)"
+if ! bash guard/scripts/check-snapshot-sync.sh --hard; then
+  echo "[pre-commit] FAIL: ID graph snapshot out of sync."
+  echo "[pre-commit] Fix: cd standards && node scripts/verify-id-graph.js --update-snapshot --compare=_snapshots/id-graph-baseline.json"
+  exit 1
+fi
+
+# CHANGELOG freshness: warn if CHANGELOG.md is stale despite significant work
+echo "[pre-commit] check-changelog-sync.sh (CHANGELOG freshness)"
+if ! bash guard/scripts/check-changelog-sync.sh --hard --max-age=1; then
+  echo "[pre-commit] FAIL: CHANGELOG.md is stale."
+  echo "[pre-commit] Fix: bump version and add Added/Changed/Fixed entries"
+  exit 1
+fi
+
+# Pre-commit vs CI coverage: ensure both run same script set
+echo "[pre-commit] check-script-coverage.sh (pre-commit vs CI drift)"
+if ! bash guard/scripts/check-script-coverage.sh --hard; then
+  echo "[pre-commit] FAIL: pre-commit and CI coverage drift."
+  echo "[pre-commit] Fix: align script lists in .husky/pre-commit and .github/workflows/*.yml"
+  exit 1
+fi
+
+# CRLF detection: ensure all shell scripts use LF
+echo "[pre-commit] check-crlf.sh (line ending detection)"
+if ! bash guard/scripts/check-crlf.sh --hard; then
+  echo "[pre-commit] FAIL: CRLF detected in shell scripts."
+  echo "[pre-commit] Fix: for f in \$(git ls-files '*.sh'); do sed -i 's/\\r\$//' \"\$f\"; git add \"\$f\"; done"
+  exit 1
+fi
+
+# --- Group 1: guard PROC checks (HARD) --------------------------------------
+# PROC-COCHANGE-003: code + docs sync (RULE-DOC-010)
+bash guard/scripts/co-change-check.sh --hard
+
+# PROC-WORKLOG-005: worklog entry required for code changes (RULE-WORKLOG-002)
+bash guard/scripts/worklog-check.sh --hard
+
+# --- Group 2: standards/ verify-*.js (HARD) ---------------------------------
+# Locate Node.js. If absent, warn but allow commit (CI will catch regressions).
+if ! command -v node >/dev/null 2>&1; then
+  echo "[pre-commit] WARNING: Node.js not found in PATH -- skipping verifier runs."
+  echo "[pre-commit] CI will catch any regressions; install Node.js to enable local checks."
+else
+  # Verify scripts live in the standards submodule, which MUST be checked out
+  # (`git submodule update --init --recursive`).
+  VERIFY_STANDARDS="standards/scripts/verify-standards.js"
+  VERIFY_ID_GRAPH="standards/scripts/verify-id-graph.js"
+  VERIFY_SKILLS="standards/scripts/verify-skills.js"
+
+  if [ ! -f "$VERIFY_STANDARDS" ] || [ ! -f "$VERIFY_ID_GRAPH" ]; then
+    echo "[pre-commit] WARNING: standards submodule not checked out -- skipping verify runs."
+    echo "[pre-commit] Run: git submodule update --init --recursive"
+    echo "[pre-commit] CI will catch any regressions."
+  else
+    # Phase 1: verify-standards.js (content-level, fast)
+    echo "[pre-commit] verify-standards.js (content-level invariants V04-V18)"
+    if ! node "$VERIFY_STANDARDS" >/tmp/zai-precommit-vstandards.log 2>&1; then
+      echo "[pre-commit] FAIL: verify-standards.js reported invariant violations."
+      echo "[pre-commit] ---- output ----"
+      sed 's/^/  /' /tmp/zai-precommit-vstandards.log
+      echo "[pre-commit] ---- end output ----"
+      echo "[pre-commit] Either fix the offending standard(s), or if the invariant"
+      echo "[pre-commit] itself changed, update the V## check in $VERIFY_STANDARDS."
+      echo "[pre-commit] To bypass (NOT recommended): git commit --no-verify"
+      exit 1
+    fi
+    echo "[pre-commit] OK: verify-standards.js PASS"
+    rm -f /tmp/zai-precommit-vstandards.log
+
+    # Phase 2: verify-id-graph.js (cross-repo structural, slower)
+    echo "[pre-commit] verify-id-graph.js (cross-repo ID-graph invariants G01-G15)"
+    if ! node "$VERIFY_ID_GRAPH" >/tmp/zai-precommit-vgraph.log 2>&1; then
+      echo "[pre-commit] FAIL: verify-id-graph.js reported HARD check violations."
+      echo "[pre-commit] ---- output ----"
+      sed 's/^/  /' /tmp/zai-precommit-vgraph.log
+      echo "[pre-commit] ---- end output ----"
+      echo "[pre-commit] HARD check failures block CI. Fix the offending file(s)"
+      echo "[pre-commit] (in the appropriate submodule if needed), then re-commit."
+      echo "[pre-commit] To bypass (NOT recommended): git commit --no-verify"
+      exit 1
+    fi
+    echo "[pre-commit] OK: verify-id-graph.js PASS (HARD checks)"
+    rm -f /tmp/zai-precommit-vgraph.log
+
+    # Phase 3: verify-skills.js (skills-side format)
+    # HARD failures (S01/S02/S04/S05/S09) block; SOFT (S03/S06/S07/S08)
+    # reported but never block (STD-SKILL-001 section 10.1).
+    # S03 is covered by S02 (name == folder); _sts suffix is optional.
+    if [ -f "$VERIFY_SKILLS" ]; then
+      echo "[pre-commit] verify-skills.js (skills-side invariants)"
+      if ! node "$VERIFY_SKILLS" >/tmp/zai-precommit-vskills.log 2>&1; then
+        echo "[pre-commit] FAIL: verify-skills.js reported HARD violations."
+        echo "[pre-commit] ---- output ----"
+        sed 's/^/  /' /tmp/zai-precommit-vskills.log
+        echo "[pre-commit] ---- end output ----"
+        echo "[pre-commit] Fix the offending SKILL.md to conform to STD-SKILL-001."
+        echo "[pre-commit] To bypass (NOT recommended): git commit --no-verify"
+        exit 1
+      fi
+      if grep -q "WARN" /tmp/zai-precommit-vskills.log 2>/dev/null; then
+        echo "[pre-commit] OK: verify-skills.js HARD PASS (SOFT warnings present, see log)"
+      else
+        echo "[pre-commit] OK: verify-skills.js PASS"
+      fi
+      rm -f /tmp/zai-precommit-vskills.log
+    fi
+  fi
+fi
+
+# --- Group 3: guard line-count (PROC-LINECOUNT-004, SOFT) -------------------
+LINECOUNT="guard/scripts/line-count-check.sh"
+if [ -f "$LINECOUNT" ]; then
+  if ! bash "$LINECOUNT" >/tmp/zai-precommit-linecount.log 2>&1; then
+    echo "[pre-commit] WARN: line-count check reported advisory violations:"
+    sed 's/^/  /' /tmp/zai-precommit-linecount.log
+    echo "[pre-commit] Advisory only -- commit will proceed. RULE-MONOLITH-012 still applies."
+  fi
+  rm -f /tmp/zai-precommit-linecount.log
+fi
+
+# --- Group 4: lint-staged (eslint + prettier on staged files) ---------------
+npx lint-staged
+
+exit 0

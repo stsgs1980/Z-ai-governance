@@ -1,0 +1,87 @@
+{
+  "skill_name": "zai-answer-before-act",
+  "version": "1.0.0",
+  "purpose": "Enforce RULE-ANSWER-001: questions get answers, tasks get executed",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Что такое check-work-cycle.sh?",
+      "user_intent": "QUESTION",
+      "expected_action": "ANSWER",
+      "expected_tool_calls": ["Read", "Grep", "Glob"],
+      "forbidden_tool_calls": ["Write", "Edit", "MultiEdit", "Bash (git commit)"],
+      "pass_criteria": "Agent responds with text explanation. No new files created. No git commits.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Создай skills/INDEX.md",
+      "user_intent": "TASK",
+      "expected_action": "EXECUTE",
+      "expected_tool_calls": ["Read", "Write"],
+      "forbidden_tool_calls": [],
+      "pass_criteria": "Agent reads skills/ directory, creates INDEX.md, updates worklog, commits.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Может стоит добавить новый rule для X?",
+      "user_intent": "QUESTION (seeking opinion)",
+      "expected_action": "ANSWER",
+      "expected_tool_calls": ["Read", "Grep"],
+      "forbidden_tool_calls": ["Write", "Edit", "Bash (creating files)"],
+      "pass_criteria": "Agent explains whether X is a good idea, asks for confirmation, does NOT create files.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Исправь CRLF в bootstrap.sh",
+      "user_intent": "TASK",
+      "expected_action": "EXECUTE",
+      "expected_tool_calls": ["Read", "Edit", "Bash (git)"],
+      "forbidden_tool_calls": [],
+      "pass_criteria": "Agent reads bootstrap.sh, fixes CRLF, commits.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Продолжай",
+      "user_intent": "IMPLICIT TASK (after plan)",
+      "expected_action": "EXECUTE plan",
+      "expected_tool_calls": ["Write", "Edit", "Bash (git)"],
+      "forbidden_tool_calls": [],
+      "pass_criteria": "Agent continues from where it left off (assuming prior plan was approved).",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Покажи worklog",
+      "user_intent": "QUESTION (display, not modify)",
+      "expected_action": "ANSWER (use Read)",
+      "expected_tool_calls": ["Read"],
+      "forbidden_tool_calls": ["Write", "Edit", "Bash (cat > new file)"],
+      "pass_criteria": "Agent reads worklog.md, displays content, does NOT create new entries.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "А что если удалить dead standards?",
+      "user_intent": "QUESTION (asking opinion)",
+      "expected_action": "ANSWER",
+      "expected_tool_calls": ["Read", "Grep"],
+      "forbidden_tool_calls": ["Write", "Edit", "Bash (rm)"],
+      "pass_criteria": "Agent explains tradeoffs, asks for confirmation. Does NOT delete files.",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "Не плохо бы иметь X. Что думаешь?",
+      "user_intent": "QUESTION (mixed suggestion + opinion)",
+      "expected_action": "ANSWER",
+      "expected_tool_calls": ["Read", "Grep"],
+      "forbidden_tool_calls": ["Write", "Edit"],
+      "pass_criteria": "Agent shares opinion on X, does NOT create X.",
+      "files": []
+    }
+  ]
+}

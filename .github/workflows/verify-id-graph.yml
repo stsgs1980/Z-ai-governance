@@ -1,0 +1,408 @@
+# Cross-repo ID graph verification + content-level standards verification
+#
+# Triggers:
+#   - Push to main in Z-ai-platform (covers submodule pointer bumps)
+#   - Pull request to main (catches breakage before merge)
+#   - Nightly schedule (catches drift even if no pushes happen)
+#   - Manual dispatch (workflow_dispatch)
+#
+# This workflow lives in Z-ai-platform (the orchestrator) because only
+# the orchestrator has all three submodules checked out together.
+#
+# Two verifiers run in sequence:
+#   1. verify-standards.js  — content-level invariants (V04-V10)
+#   2. verify-id-graph.js   — cross-repo ID-graph invariants (G01-G15)
+# Both must PASS for the workflow to succeed.
+
+name: Verify ID Graph
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # 03:00 UTC nightly = 06:00 Europe/Moscow
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write # needed to commit graph JSON back to repo on push to main
+
+# Cancel in-progress runs of the same workflow when a new commit lands.
+# Without this, two pushes in quick succession (e.g. fix-up commit right
+# after the original) run in parallel — wasting runner minutes, especially
+# on cache-miss runs where each one downloads chrome-headless-shell (~7m).
+#
+# Behavior:
+#   - On push to main:     newer run cancels older in-progress run
+#   - On PR:               same — newer push to the same PR cancels older
+#   - On schedule/dispatch: runs standalone (no concurrent group to cancel)
+#
+# Note: cancelled runs are marked "cancelled", not "failure" — they do NOT
+# block PR merge or trigger failure notifications.
+concurrency:
+  group: verify-id-graph-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: verify-id-graph.js + verify-standards.js (all HARD PASS)
+    runs-on: ubuntu-latest
+    # 15 minutes — generous enough for cache-miss runs (chrome download
+    # ~7m + slow apt mirror ~3m + actual work ~30s). On cache hit, the
+    # whole workflow finishes in ~1m.
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Z-ai-platform (with submodules)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Submodule status
+        run: git submodule status
+
+      - name: Shell script syntax check
+        run: |
+          echo "Checking shell script syntax..."
+          for f in bootstrap.sh scripts/save-work.sh scripts/status.sh scripts/push-and-check.sh .husky/pre-commit .husky/pre-push .husky/commit-msg guard/scripts/*.sh standards/scripts/*.sh scripts/*.sh; do
+            if [ -f "$f" ]; then
+              if bash -n "$f" 2>&1; then
+                echo "  OK: $f"
+              else
+                echo "  FAIL: $f"
+                exit 1
+              fi
+            fi
+          done
+          echo "All shell scripts pass syntax check."
+
+      - name: Governance enforcement (guard scripts)
+        run: |
+          echo "Running governance enforcement scripts..."
+          FAIL=0
+          for script in guard/scripts/check-no-bypass.sh guard/scripts/check-ahg-integrity.sh guard/scripts/check-sandbox-env.sh guard/scripts/check-session-start.sh guard/scripts/check-work-cycle.sh guard/scripts/check-snapshot-sync.sh guard/scripts/check-changelog-sync.sh guard/scripts/check-commit-checklist.sh guard/scripts/check-no-loops.sh guard/scripts/check-read-before-write.sh guard/scripts/check-version-bump.sh guard/scripts/check-script-coverage.sh guard/scripts/check-crlf.sh; do
+            if [ -f "$script" ]; then
+              echo "--- Running $script ---"
+              if bash "$script" --hard 2>&1; then
+                echo "  PASS: $script"
+              else
+                echo "  FAIL: $script"
+                FAIL=1
+              fi
+            fi
+          done
+          if [ $FAIL -eq 1 ]; then
+            echo "Governance enforcement FAILED"
+            exit 1
+          fi
+          echo "All governance checks passed."
+
+      - name: Build skills registry
+        run: |
+          echo "Building skills-registry.json..."
+          node scripts/build-skills-registry.cjs
+
+      - name: Validate skills registry and connections
+        run: |
+          echo "Validating skills registry..."
+          if ! node scripts/validate-skills.cjs; then
+            echo "Skills validation FAILED"
+            exit 1
+          fi
+          echo "Skills validation passed."
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "20"
+
+      - name: Run verify-standards.js
+        id: verify-standards
+        run: |
+          set +e
+          output=$(node standards/scripts/verify-standards.js 2>&1)
+          exit_code=$?
+          echo "$output"
+          {
+            echo "## verify-standards.js output"
+            echo '```'
+            echo "$output"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+          exit $exit_code
+
+      - name: Run verify-id-graph.js
+        id: verify-id-graph
+        run: |
+          set +e
+          output=$(node standards/scripts/verify-id-graph.js 2>&1)
+          exit_code=$?
+          echo "$output"
+          {
+            echo "## verify-id-graph.js output"
+            echo '```'
+            echo "$output"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+          exit $exit_code
+
+      # -------------------------------------------------------------------
+      # Snapshot compare (§9.2.1 in standards/docs/CI-AND-TESTING.md).
+      # The graph produced by verify-id-graph.js is deterministic: same
+      # input must produce same JSON output. The baseline file lives at
+      # standards/_snapshots/id-graph-baseline.json (committed to the
+      # standards submodule). If the current graph differs from the
+      # baseline, this step FAILs and the PR author must either:
+      #   (a) revert the unintended graph change, OR
+      #   (b) run `node verify-id-graph.js --update-snapshot
+      #       --compare=standards/_snapshots/id-graph-baseline.json`
+      #       locally and commit the updated baseline (with PR review).
+      # -------------------------------------------------------------------
+      - name: Snapshot compare (verify-id-graph.js)
+        run: |
+          set +e
+          output=$(node standards/scripts/verify-id-graph.js \
+            --compare=standards/_snapshots/id-graph-baseline.json 2>&1)
+          exit_code=$?
+          echo "$output"
+          {
+            echo "## Snapshot compare output"
+            echo '```'
+            echo "$output"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ $exit_code -ne 0 ]; then
+            echo ""
+            echo "::warning::Graph snapshot mismatch. If this change is intentional, run:"
+            echo "::warning::  node standards/scripts/verify-id-graph.js --update-snapshot --compare=standards/_snapshots/id-graph-baseline.json"
+            echo "::warning::Then commit the updated baseline to the standards submodule."
+          fi
+          exit $exit_code
+
+      # -------------------------------------------------------------------
+      # verify-skills.js (§9.2.2 in standards/docs/CI-AND-TESTING.md).
+      # Skills-side format verifier. Runs in --strict mode after the
+      # §9.2.2 remediation closed all 15 pre-existing violations on
+      # 2026-06-21. All HARD checks (S01/S02/S03/S04/S05/S09) now
+      # block CI; SOFT checks S06/S07/S08 are reported but never fail.
+      # -------------------------------------------------------------------
+      - name: Run verify-skills.js (skills-side format, --strict)
+        run: |
+          set +e
+          output=$(node standards/scripts/verify-skills.js --strict 2>&1)
+          exit_code=$?
+          echo "$output"
+          {
+            echo "## verify-skills.js output (--strict)"
+            echo '```'
+            echo "$output"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $exit_code
+
+      # -------------------------------------------------------------------
+      # Anti-monolith enforcement (RULE-MONOLITH-012, PROC-LINECOUNT-004).
+      # Runs line-count-check.sh in --hard mode: fails CI if any platform
+      # source code file exceeds §4.18.1 hard cap (250 for .js/.py/.sh/.ts).
+      # Submodule files (standards/, guard/, skills/) are excluded per
+      # RULE-ARCH-017 (upstream write protection).
+      # -------------------------------------------------------------------
+      - name: Anti-monolith check (PROC-LINECOUNT-004, --hard)
+        run: bash guard/scripts/line-count-check.sh --hard
+
+      # -------------------------------------------------------------------
+      # Graph generation — runs ALWAYS (even if verifiers failed, so the
+      # graph artifact is available for debugging the failure).
+      # Output: id-graph.svg, id-graph.png, id-graph.dot (uploaded as
+      # artifact, 30-day retention — longer than the failure-only 7 days
+      # because the graph is useful for review even on green builds).
+      # -------------------------------------------------------------------
+      - name: Install graphviz
+        run: |
+          # Try apt first (fast if mirror is healthy). Fall back to conda
+          # if apt is slow/broken — conda-forge serves graphviz from CDN,
+          # independent of Ubuntu mirror health.
+          #
+          # History: 2026-06-19 — apt-get update timed out at 10m on
+          # GitHub runner due to mirror degradation. Conda fallback added.
+
+          if sudo apt-get install -y -qq graphviz 2>/dev/null && command -v dot >/dev/null 2>&1; then
+            echo "[install] graphviz via apt (cache hit on package list)"
+          else
+            echo "[install] apt unavailable/slow, falling back to conda-forge"
+            # micromamba is preinstalled on ubuntu-latest runners
+            micromamba install -y -n base -c conda-forge graphviz 2>/dev/null \
+              || mamba install -y -n base -c conda-forge graphviz 2>/dev/null \
+              || conda install -y -n base -c conda-forge graphviz
+            # Make sure conda's bin is on PATH for subsequent steps
+            echo "$HOME/micromamba/envs/base/bin" >> "$GITHUB_PATH"
+            echo "$HOME/miniconda3/bin" >> "$GITHUB_PATH"
+          fi
+          dot -V
+
+      # -------------------------------------------------------------------
+      # Cache puppeteer Chrome binary.
+      # The chrome-headless-shell download (~150 MB) is the CI bottleneck
+      # — it takes 7+ minutes on a fresh run. With cache, the same binary
+      # is reused across runs as long as the puppeteer version doesn't
+      # change. Cache key includes the puppeteer major version so a bump
+      # of @mermaid-js/mermaid-cli (which pins puppeteer-core) invalidates
+      # the cache automatically.
+      #
+      # Expected savings: 7m 11s  ->  ~5s on cache hit.
+      # -------------------------------------------------------------------
+      - name: Detect puppeteer version
+        id: puppeteer-version
+        run: |
+          # Resolve the puppeteer-core version that mermaid-cli will pull in.
+          # We use npm view to get the latest mermaid-cli, then extract its
+          # puppeteer-core dependency. This runs BEFORE npm install so we can
+          # form the cache key.
+          MMD_VERSION=$(npm view @mermaid-js/mermaid-cli version 2>/dev/null | tr -d '[:space:]')
+          PUP_VERSION=$(npm view "@mermaid-js/mermaid-cli@${MMD_VERSION}" dependencies.puppeteer-core 2>/dev/null | tr -d '"[:space:]')
+          echo "mmd_version=${MMD_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "pup_version=${PUP_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Detected mermaid-cli=${MMD_VERSION}, puppeteer-core=${PUP_VERSION}"
+
+      - name: Cache puppeteer Chrome binary
+        id: cache-chrome
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/puppeteer
+          key: puppeteer-chrome-linux-mmd${{ steps.puppeteer-version.outputs.mmd_version }}-pup${{ steps.puppeteer-version.outputs.pup_version }}
+          restore-keys: |
+            puppeteer-chrome-linux-mmd${{ steps.puppeteer-version.outputs.mmd_version }}-
+
+      - name: Install mermaid CLI + Chrome
+        env:
+          CACHE_HIT: ${{ steps.cache-chrome.outputs.cache-hit }}
+        run: |
+          # Always install mmdc (small, ~22s) — this is the CLI wrapper.
+          npm install -g @mermaid-js/mermaid-cli
+          mmdc --version
+
+          # Only fetch chrome-headless-shell on cache miss.
+          if [ "$CACHE_HIT" = "true" ]; then
+            echo "[install] Cache HIT — skipping chrome download"
+            # Verify the cached binary is actually present
+            find ~/.cache/puppeteer -name 'chrome-headless-shell' -type f -executable | head -3
+          else
+            echo "[install] Cache MISS — fetching chrome-headless-shell"
+            npx -y puppeteer browsers install chrome-headless-shell
+          fi
+
+      - name: Generate ID dependency graph
+        id: graph
+        run: |
+          mkdir -p docs/_graph
+          bash -x standards/scripts/graph-deps.sh --out=docs/_graph 2>&1 || {
+            echo "graph-deps.sh FAILED, exit code $?"
+            echo "--- debugging ---"
+            which dot 2>&1 || echo "dot not found"
+            which node 2>&1 || echo "node not found"
+            ls -la docs/_graph/ 2>&1 || echo "docs/_graph/ does not exist"
+            exit 1
+          }
+          ls -la docs/_graph/
+
+      # -------------------------------------------------------------------------
+      # Export ID graph as JSON for Z-ai-graph-viewer consumption.
+      # This is the "source of truth" data that external tools (graph-viewer,
+      # dashboards, audit scripts) read. The JSON is deterministic: same input
+      # -> same output. Updated on every push to main.
+      #
+      # URL: https://raw.githubusercontent.com/stsgs1980/Z-ai-platform/main/graph/id-graph.json
+      # Format: see graph/README.md
+      #
+      # Layout:
+      #   docs/_graph/   — visual artifacts (SVG, PNG, DOT) for documentation
+      #   graph/         — machine-consumable exports (JSON) for API consumers
+      # -------------------------------------------------------------------------
+      - name: Export ID graph as JSON (for graph-viewer)
+        id: graph-json
+        run: |
+          mkdir -p graph
+          node standards/scripts/verify-id-graph.js --json > graph/id-graph.json
+          # Also export summary for quick inspection
+          node -e "
+            const j = require('./graph/id-graph.json');
+            console.log(JSON.stringify(j.summary, null, 2));
+          " > graph/id-graph-summary.json
+          # Update timestamp
+          node -e "
+            const fs = require('fs');
+            const j = JSON.parse(fs.readFileSync('graph/id-graph.json'));
+            j.exported_at = new Date().toISOString();
+            fs.writeFileSync('graph/id-graph.json', JSON.stringify(j, null, 2));
+          "
+          echo "ID graph JSON exported:"
+          ls -la graph/
+
+      - name: Commit graph JSON back to repo
+        id: commit-json
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add graph/id-graph.json graph/id-graph-summary.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: export ID graph JSON for graph-viewer (auto-update)"
+            git push
+            echo "ID graph JSON committed and pushed"
+          fi
+
+      - name: Upload graph artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: id-graph
+          path: |
+            docs/_graph/
+          retention-days: 30
+
+      - name: Upload verifier output (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: verifier-output
+          path: |
+            standards/
+            guard/
+            skills/
+          retention-days: 7
+
+      - name: Comment on PR (on failure)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const failed = [];
+            if (${{ steps.verify-standards.outputs.exit_code }} !== 0) failed.push('verify-standards.js (V04-V10 content-level invariants)');
+            if (${{ steps.verify-id-graph.outputs.exit_code }} !== 0) failed.push('verify-id-graph.js (G01-G15 cross-repo ID graph)');
+            const body = [
+              '## Verification FAILED',
+              '',
+              'The following verifier(s) reported HARD check failures:',
+              '',
+              ...failed.map(f => `- **${f}**`),
+              '',
+              'Run the verifiers locally to see details:',
+              '```bash',
+              'node standards/scripts/verify-standards.js',
+              'node standards/scripts/verify-id-graph.js',
+              '```',
+              '',
+              'See also: standards/standards/META-001-standard-id-system.md §10 for the G01-G15 check catalogue.',
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });

@@ -1,0 +1,119 @@
+# ==============================================================================
+# commit-msg hook — Z-ai-platform (commit-work contract G4/G5/G6)
+# ==============================================================================
+#
+# Purpose:
+#   Validate the commit message against Conventional Commits v1.0
+#   (per STD-GIT-001 §1.1-1.4 and RULE-COMMIT-004).
+#
+#   Migrated from .githooks/commit-msg (2026-07-04) when the project
+#   consolidated to a single hooks system under Husky. The .githooks/
+#   copy has been removed; this is now the only commit-msg hook.
+#
+# Checks:
+#   G4: Subject line matches Conventional Commits format
+#       ^(type)(scope)?!?: description$
+#   G5: Subject line <= 72 characters
+#   G6: Body lines wrap at 72 characters (WARN, not BLOCK -- URLs and
+#       tables may legitimately exceed)
+#
+# Bypass:
+#   git commit --no-verify  (skips BOTH pre-commit AND commit-msg)
+#
+# Install: automatic via Husky (npm install runs `husky` via `prepare`).
+# ==============================================================================
+
+set -euo pipefail
+
+# The commit message file path is passed as $1 by git
+COMMIT_MSG_FILE="$1"
+
+if [ ! -f "$COMMIT_MSG_FILE" ]; then
+  echo "[commit-msg] ERROR: commit message file not found: $COMMIT_MSG_FILE"
+  exit 1
+fi
+
+# Read the message
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# Skip merge commits (git generates their messages automatically)
+if [ -f ".git/MERGE_MSG" ]; then
+  exit 0
+fi
+
+# Skip revert commits (git generates "Revert ..." messages)
+if printf '%s' "$COMMIT_MSG" | head -1 | grep -q "^Revert \""; then
+  exit 0
+fi
+
+# Skip squash commits (git generates "squash!" messages)
+if printf '%s' "$COMMIT_MSG" | head -1 | grep -q "^squash! "; then
+  exit 0
+fi
+
+# Skip fixup commits (git generates "fixup!" messages)
+if printf '%s' "$COMMIT_MSG" | head -1 | grep -q "^fixup! "; then
+  exit 0
+fi
+
+# --- Extract subject (first non-comment line) -------------------------------
+
+# Strip comment lines (lines starting with #)
+SUBJECT=$(grep -v '^#' "$COMMIT_MSG_FILE" | head -1)
+
+# --- G4: Conventional Commits format ----------------------------------------
+
+CC_REGEX='^(feat|fix|refactor|docs|style|test|chore|perf|ci|build|revert)(\([a-z0-9_-]+\))?!?: .+$'
+
+if ! printf '%s' "$SUBJECT" | grep -qE "$CC_REGEX"; then
+  echo "[commit-msg] FAIL (G4): subject does NOT follow Conventional Commits format."
+  echo "[commit-msg] ---- subject ----"
+  echo "[commit-msg]   $SUBJECT"
+  echo "[commit-msg] ---- end subject ----"
+  echo "[commit-msg] Expected format: <type>(<scope>)?: <description>"
+  echo "[commit-msg] Allowed types: feat|fix|refactor|docs|style|test|chore|perf|ci|build|revert"
+  echo "[commit-msg] Examples:"
+  echo "[commit-msg]   feat(api): add user profile endpoint"
+  echo "[commit-msg]   fix(tabs): correct aria-selected on rerender"
+  echo "[commit-msg]   docs(standards): add WCAG 2.1 AA compliance"
+  echo "[commit-msg]   refactor!: split design-system into 3 standards (BREAKING)"
+  echo "[commit-msg]"
+  echo "[commit-msg] Per STD-GIT-001 §1.1 (Conventional Commits required)"
+  echo "[commit-msg] and RULE-COMMIT-004 (one logical block -- one commit)."
+  echo "[commit-msg]"
+  echo "[commit-msg] To bypass (NOT recommended): git commit --no-verify"
+  exit 1
+fi
+
+# --- G5: Subject length <= 72 ------------------------------------------------
+
+SUBJECT_LEN=${#SUBJECT}
+if [ "$SUBJECT_LEN" -gt 72 ]; then
+  echo "[commit-msg] FAIL (G5): subject length $SUBJECT_LEN exceeds 72 chars."
+  echo "[commit-msg] ---- subject ----"
+  echo "[commit-msg]   $SUBJECT"
+  echo "[commit-msg] ---- end subject ----"
+  echo "[commit-msg] Trim the subject. If it cannot be trimmed, the commit may"
+  echo "[commit-msg] be too broad -- consider splitting per RULE-COMMIT-004."
+  echo "[commit-msg]"
+  echo "[commit-msg] To bypass (NOT recommended): git commit --no-verify"
+  exit 1
+fi
+
+# --- G6: Body line wrap (WARN only) -----------------------------------------
+
+# Get body (everything after first non-comment line + blank line separator)
+BODY=$(grep -v '^#' "$COMMIT_MSG_FILE" | tail -n +2)
+LONG_LINES=$(printf '%s\n' "$BODY" | awk 'length > 72 && !/^(https?:\/\/|www\.|[[:space:]]*\||[[:space:]]*[0-9]+\.|[[:space:]]*-|[[:space:]]*`)/ {print NR": "$0}')
+
+if [ -n "$LONG_LINES" ]; then
+  echo "[commit-msg] WARN (G6): some body lines exceed 72 chars (advisory -- not blocking):"
+  printf '%s\n' "$LONG_LINES" | head -3 | sed 's/^/[commit-msg]   /'
+  echo "[commit-msg] (URLs, tables, code blocks, and list items are exempt)"
+  echo "[commit-msg]"
+fi
+
+# --- Success ----------------------------------------------------------------
+
+echo "[commit-msg] OK: subject follows Conventional Commits (G4), length $SUBJECT_LEN/72 (G5)"
+exit 0

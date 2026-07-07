@@ -1,0 +1,14 @@
+{
+  "name": "z-ai-guard",
+  "version": "0.1.0",
+  "description": "Z.ai guard submodule — rules, registry, and verification scripts",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.4"
+  }
+}

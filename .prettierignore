@@ -1,0 +1,9 @@
+node_modules/
+dist/
+build/
+skills/
+upload/
+Dense-graph/
+Z-ai-platform/
+*.min.js
+package-lock.json

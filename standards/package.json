@@ -1,0 +1,22 @@
+{
+  "name": "z-ai-standards",
+  "version": "0.1.0",
+  "description": "Z.ai standards submodule — verifiers and standard documents",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8"
+  },
+  "lint-staged": {
+    "*.md": [
+      "eslint --max-warnings=0"
+    ]
+  }
+}

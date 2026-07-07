@@ -1,0 +1,244 @@
+# End-to-end test: modify standard → verify → CI
+#
+# Triggers:
+#   - workflow_dispatch (manual, on any branch)
+#   - pull_request (runs on PRs to main, but only validates e2e logic
+#     — does NOT push to main or create releases)
+#
+# Purpose (§9.2.3 in standards/docs/CI-AND-TESTING.md):
+#   The manual test scenarios in CI-AND-TESTING.md §6 should be automated
+#   to catch regressions before they reach production. This workflow:
+#     1. Creates a temporary standard file with a deliberate V11 violation
+#        (file > 1000 lines).
+#     2. Runs verify-standards.js — expects FAIL with V11 in the output.
+#     3. Removes the temporary file.
+#     4. Runs verify-standards.js again — expects PASS.
+#     5. Creates a temporary SKILL.md with a deliberate S02 violation
+#        (frontmatter name does not match folder name).
+#     6. Runs verify-skills.js --strict — expects FAIL with S02.
+#     7. Removes the temporary skill folder.
+#     8. Runs verify-skills.js again — expects PASS.
+#
+# This workflow does NOT push, create releases, or modify protected
+# branches. It only validates that the verifiers behave correctly on
+# well-formed and ill-formed input.
+#
+# Companion: .github/workflows/verify-id-graph.yml (the production
+# verifier run on every push/PR).
+
+name: E2E Verifier Tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - "standards/scripts/**"
+      - ".github/workflows/e2e-verifiers.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-verifiers-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: E2E — verifier behavior on deliberate violations
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Z-ai-platform (with submodules)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "20"
+
+      # -------------------------------------------------------------------
+      # Test 1: verify-standards.js detects V11 (>1000 line file).
+      # Creates a 1004-line .md file in standards/ (V11's scope), runs the
+      # verifier, expects exit 1 with "V11" mentioned in output.
+      # -------------------------------------------------------------------
+      - name: Test 1 — verify-standards.js catches V11 (>1000 lines)
+        run: |
+          set -e
+          # Create a 1004-line file in standards/ (V11 scope)
+          {
+            echo "---"
+            echo "id: STD-E2E-TEST-001"
+            echo "version: 1.0.0"
+            echo "level: '[B] Recommended'"
+            echo "---"
+            echo ""
+            echo "# E2E Test Standard (temporary, do not commit)"
+            echo ""
+            for i in $(seq 1 1000); do
+              echo "Line $i of filler content for V11 violation test."
+            done
+          } > standards/standards/_e2e_test_v11.md
+
+          # Run verifier — expect FAIL (exit 1)
+          set +e
+          output=$(node standards/scripts/verify-standards.js 2>&1)
+          exit_code=$?
+          set -e
+
+          echo "$output"
+          if [ $exit_code -ne 1 ]; then
+            echo "::error::Test 1 FAILED: expected verify-standards.js to exit 1, got $exit_code"
+            rm -f standards/standards/_e2e_test_v11.md
+            exit 1
+          fi
+          if ! echo "$output" | grep -q "V11"; then
+            echo "::error::Test 1 FAILED: V11 not mentioned in output"
+            rm -f standards/standards/_e2e_test_v11.md
+            exit 1
+          fi
+          echo "Test 1 PASS: verify-standards.js correctly detected V11 violation"
+
+          # Cleanup
+          rm -f standards/standards/_e2e_test_v11.md
+
+      # -------------------------------------------------------------------
+      # Test 2: verify-standards.js PASSES after cleanup.
+      # -------------------------------------------------------------------
+      - name: Test 2 — verify-standards.js PASSes after cleanup
+        run: |
+          set -e
+          node standards/scripts/verify-standards.js
+          echo "Test 2 PASS: verify-standards.js PASS after cleanup"
+
+      # -------------------------------------------------------------------
+      # Test 3: verify-skills.js --strict catches S02 (name/folder mismatch).
+      # Creates a skill folder with a SKILL.md where frontmatter `name`
+      # does not match folder name. Runs in --strict mode, expects exit 1
+      # with "S02" in output.
+      # -------------------------------------------------------------------
+      - name: Test 3 — verify-skills.js --strict catches S02
+        run: |
+          set -e
+          mkdir -p skills/_e2e-test-skill
+          cat > skills/_e2e-test-skill/SKILL.md <<'EOF'
+          ---
+          name: wrong-name
+          description: "E2E test skill with deliberately wrong name field."
+          version: 1.0
+          ---
+          # E2E Test Skill
+          This is a temporary skill for testing verify-skills.js S02 check.
+          EOF
+
+          # Run verifier in --strict mode — expect FAIL (exit 1)
+          set +e
+          output=$(node standards/scripts/verify-skills.js --strict 2>&1)
+          exit_code=$?
+          set -e
+
+          echo "$output"
+          if [ $exit_code -ne 1 ]; then
+            echo "::error::Test 3 FAILED: expected verify-skills.js --strict to exit 1, got $exit_code"
+            rm -rf skills/_e2e-test-skill
+            exit 1
+          fi
+          if ! echo "$output" | grep -q "S02"; then
+            echo "::error::Test 3 FAILED: S02 not mentioned in output"
+            rm -rf skills/_e2e-test-skill
+            exit 1
+          fi
+          echo "Test 3 PASS: verify-skills.js --strict correctly detected S02 violation"
+
+          # Cleanup
+          rm -rf skills/_e2e-test-skill
+
+      # -------------------------------------------------------------------
+      # Test 4: verify-skills.js PASSES after cleanup.
+      # -------------------------------------------------------------------
+      - name: Test 4 — verify-skills.js PASSes after cleanup
+        run: |
+          set -e
+          node standards/scripts/verify-skills.js
+          echo "Test 4 PASS: verify-skills.js PASS after cleanup"
+
+      # -------------------------------------------------------------------
+      # Test 5: verify-id-graph.js snapshot compare catches graph change.
+      # Modifies the baseline file in-memory (does NOT commit), runs
+      # compare, expects exit 1. Then restores baseline and re-runs,
+      # expects exit 0.
+      # -------------------------------------------------------------------
+      - name: Test 5 — snapshot compare catches baseline mismatch
+        run: |
+          set -e
+          BASELINE="standards/_snapshots/id-graph-baseline.json"
+
+          if [ ! -f "$BASELINE" ]; then
+            echo "::warning::Baseline file $BASELINE not found — skipping Test 5"
+            exit 0
+          fi
+
+          # Backup baseline
+          cp "$BASELINE" /tmp/baseline-backup.json
+
+          # Modify baseline: flip hard_pass from 13 to 12 (simulated regression)
+          python3 -c "
+          import json
+          with open('$BASELINE') as f:
+            d = json.load(f)
+          d['summary']['hard_pass'] = d['summary']['hard_pass'] - 1
+          d['summary']['hard_fail'] = d['summary']['hard_fail'] + 1
+          with open('$BASELINE', 'w') as f:
+            json.dump(d, f, indent=2)
+          "
+
+          # Run compare — expect FAIL (exit 1)
+          set +e
+          output=$(node standards/scripts/verify-id-graph.js --compare="$BASELINE" 2>&1)
+          exit_code=$?
+          set -e
+
+          echo "$output"
+          if [ $exit_code -ne 1 ]; then
+            echo "::error::Test 5 FAILED: expected snapshot compare to exit 1, got $exit_code"
+            cp /tmp/baseline-backup.json "$BASELINE"
+            exit 1
+          fi
+          if ! echo "$output" | grep -q "MISMATCH"; then
+            echo "::error::Test 5 FAILED: MISMATCH not mentioned in output"
+            cp /tmp/baseline-backup.json "$BASELINE"
+            exit 1
+          fi
+          echo "Test 5 PASS: snapshot compare correctly detected baseline mismatch"
+
+          # Restore baseline
+          cp /tmp/baseline-backup.json "$BASELINE"
+          rm -f /tmp/baseline-backup.json
+
+          # Re-run — expect PASS (exit 0)
+          node standards/scripts/verify-id-graph.js --compare="$BASELINE" >/dev/null 2>&1
+          echo "Test 5b PASS: snapshot compare PASS after baseline restore"
+
+      # -------------------------------------------------------------------
+      # Summary
+      # -------------------------------------------------------------------
+      - name: E2E summary
+        if: always()
+        run: |
+          {
+            echo "## E2E Verifier Tests — Summary"
+            echo ""
+            echo "All 5 tests must PASS for this workflow to succeed."
+            echo ""
+            echo "- Test 1: verify-standards.js catches V11 (>1000 lines)"
+            echo "- Test 2: verify-standards.js PASSes after cleanup"
+            echo "- Test 3: verify-skills.js --strict catches S02 (name mismatch)"
+            echo "- Test 4: verify-skills.js PASSes after cleanup"
+            echo "- Test 5: snapshot compare catches baseline mismatch"
+            echo ""
+            echo "See job logs above for per-test output."
+          } >> "$GITHUB_STEP_SUMMARY"

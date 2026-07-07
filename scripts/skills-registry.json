@@ -1,0 +1,248 @@
+{
+  "generated_at": "2026-07-07T07:52:17.446Z",
+  "platform_version": "v2.7.0",
+  "counts": {
+    "ZAI": 14,
+    "ZAI_with_id": 14,
+    "ZAI_with_related": 14,
+    "ZAI_with_implements": 1,
+    "ZAI_with_supports": 14
+  },
+  "ids": [
+    {
+      "id": "ZAI-DEV-006",
+      "name": "zai-answer-before-act",
+      "version": "1.0.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-answer-before-act/SKILL.md",
+      "related": [
+        "STD-META-001",
+        "RULE-ANSWER-001"
+      ],
+      "implements": [
+        "RULE-ANSWER-001"
+      ],
+      "supports": [
+        "STD-META-001"
+      ]
+    },
+    {
+      "id": "ZAI-ARCH-002",
+      "name": "zai-anti-monolith",
+      "version": "1.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-anti-monolith/SKILL.md",
+      "related": [
+        "STD-SKILL-001",
+        "ZAI-ARCH-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-SKILL-001"
+      ],
+      "other_relations": [
+        "ZAI-ARCH-001"
+      ]
+    },
+    {
+      "id": "ZAI-DEV-004",
+      "name": "zai-debugging",
+      "version": "1.0.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-debugging/SKILL.md",
+      "related": [
+        "STD-ERR-001",
+        "STD-META-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-ERR-001",
+        "STD-META-001"
+      ]
+    },
+    {
+      "id": "ZAI-DEV-003",
+      "name": "zai-frontend-styling-expert",
+      "version": "1.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-frontend-styling-expert/SKILL.md",
+      "related": [
+        "STD-SKILL-001",
+        "STD-FE-001",
+        "STD-DESIGN-001",
+        "STD-A11Y-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-SKILL-001",
+        "STD-FE-001",
+        "STD-DESIGN-001",
+        "STD-A11Y-001"
+      ]
+    },
+    {
+      "id": "ZAI-DOC-001",
+      "name": "zai-md-std",
+      "version": "1.0.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-md-std/SKILL.md",
+      "related": [
+        "STD-DOC-002",
+        "STD-DOC-003",
+        "STD-META-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-DOC-002",
+        "STD-DOC-003",
+        "STD-META-001"
+      ]
+    },
+    {
+      "id": "ZAI-ARCH-001",
+      "name": "zai-mermaid-diagrams",
+      "version": "1.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-mermaid-diagrams/SKILL.md",
+      "related": [
+        "STD-SKILL-001",
+        "STD-DOC-002",
+        "STD-ARCH-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-SKILL-001",
+        "STD-DOC-002",
+        "STD-ARCH-001"
+      ]
+    },
+    {
+      "id": "ZAI-DEV-002",
+      "name": "zai-performance-code-generator",
+      "version": "1.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-performance-code-generator/SKILL.md",
+      "related": [
+        "STD-SKILL-001",
+        "STD-FE-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-SKILL-001",
+        "STD-FE-001"
+      ]
+    },
+    {
+      "id": "ZAI-ARCH-003",
+      "name": "zai-phi-layout",
+      "version": "3.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-phi-layout/SKILL.md",
+      "related": [
+        "STD-SKILL-001",
+        "STD-FE-001",
+        "STD-DESIGN-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-SKILL-001",
+        "STD-FE-001",
+        "STD-DESIGN-001"
+      ]
+    },
+    {
+      "id": "ZAI-DEV-001",
+      "name": "zai-project-clone",
+      "version": "1.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-project-clone/SKILL.md",
+      "related": [
+        "STD-SKILL-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-SKILL-001"
+      ]
+    },
+    {
+      "id": "ZAI-META-003",
+      "name": "zai-prompt-engineering",
+      "version": "1.1",
+      "status": "ACTIVE",
+      "file": "skills/zai-prompt-engineering/SKILL.md",
+      "related": [
+        "STD-SKILL-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-SKILL-001"
+      ]
+    },
+    {
+      "id": "ZAI-DEV-005",
+      "name": "zai-sandbox-rules",
+      "version": "\"1.5.0\"",
+      "status": "ACTIVE",
+      "file": "skills/zai-sandbox-rules/SKILL.md",
+      "related": [
+        "STD-ENV-001",
+        "STD-ENV-002",
+        "STD-META-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-ENV-001",
+        "STD-ENV-002",
+        "STD-META-001"
+      ]
+    },
+    {
+      "id": "ZAI-DEVTOOLS-001",
+      "name": "zai-skill-creator",
+      "version": "1.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-skill-creator/SKILL.md",
+      "related": [
+        "STD-SKILL-001",
+        "STD-META-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-SKILL-001",
+        "STD-META-001"
+      ]
+    },
+    {
+      "id": "ZAI-ARCH-004",
+      "name": "zai-ui-composer",
+      "version": "1.1.2",
+      "status": "ACTIVE",
+      "file": "skills/zai-ui-composer/SKILL.md",
+      "related": [
+        "STD-SKILL-001",
+        "ZAI-META-005"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-SKILL-001"
+      ],
+      "other_relations": [
+        "ZAI-META-005"
+      ]
+    },
+    {
+      "id": "ZAI-META-005",
+      "name": "zai-workflow-discipline",
+      "version": "2.0",
+      "status": "ACTIVE",
+      "file": "skills/zai-workflow-discipline/SKILL.md",
+      "related": [
+        "STD-SKILL-001"
+      ],
+      "implements": [],
+      "supports": [
+        "STD-SKILL-001"
+      ]
+    }
+  ]
+}

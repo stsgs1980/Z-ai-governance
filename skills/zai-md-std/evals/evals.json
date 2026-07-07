@@ -1,0 +1,29 @@
+{
+  "skill_name": "md-std",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a README.md file for a new Next.js project called 'TaskFlow' -- a task management app with TypeScript and Tailwind CSS. Include sections: Project Description, Features, Getting Started, API Reference, and Contributing. Add shields.io badges for version 1.0.0 and MIT license.",
+      "expected_output": "A README.md file with one H1 at top, shields.io badges after H1, five H2 sections, no emoji, no Unicode icons, all code blocks with language tags, unordered lists using - marker, and a stack signature at the bottom (---\\nBuilt with: Next.js 16 + TypeScript + Tailwind CSS).",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write a technical specification document (ARCH-010-database-migration.md) for migrating from PostgreSQL to a new schema. Include: Purpose, Current State, Target State with a table comparing old vs new columns, Migration Steps as a numbered list, Rollback Plan, and a sequence diagram showing the migration flow.",
+      "expected_output": "A .md file with no emoji, no Unicode icons, Markdown pipe table for column comparison, numbered list for migration steps, ASCII sequence diagram wrapped in a ```text code block, headings with no typographic symbols, no stack signature (this is a standard/spec doc, not an application repo README).",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Create a CHANGELOG.md for version 2.3.0 of an npm package. Document these changes: added user authentication with JWT, fixed a memory leak in the cache module (issue #142), deprecated the old REST API endpoints in favor of GraphQL, and updated dependencies. Mark each entry with the appropriate status.",
+      "expected_output": "A CHANGELOG.md with H1 'Changelog' or 'CHANGELOG', version heading as H2, entries using - list marker, status text tags like [OK], [DONE], [DEPRECATED] instead of Unicode icons, code blocks with language tags for any code examples, no emoji.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "сделай worklog проекта",
+      "expected_output": "A worklog .md file with H1 at top, entries structured with date headings (H2) and bullet items using - marker, status text tags like [OK] [TODO] [BLOCKED], no emoji, no Unicode icons, all code blocks with language tags, no stack signature (worklog is not an application README).",
+      "files": []
+    }
+  ]
+}

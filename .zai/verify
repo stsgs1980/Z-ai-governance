@@ -1,0 +1,186 @@
+#!/usr/bin/env bash
+# .zai/verify — governance verify orchestrator (v6 — unified)
+# Usage: bash .zai/verify [--check CHECK_NAME] [--all] [--staged] [--help]
+#   --check NAME   run specific check (line-count, worklog, emoji, standards, id-graph, skills)
+#   --all          run all checks (default)
+#   --staged       check only staged files (for pre-commit dry-run)
+#   --help         show this help
+# Exit: 0 = all pass, 1 = any fail
+#
+# Governance architecture: this script delegates to canonical implementations:
+#   line-count  -> guard/scripts/line-count-check.sh (delegates to verify-standards.js + verify-skills.js)
+#   worklog     -> guard/scripts/worklog-check.sh (PROC-WORKLOG-005)
+#   emoji       -> root eslint-rules/unicode-policy.js via npx eslint (STD-DOC-003)
+#   standards   -> standards/scripts/verify-standards.js (V01-V18)
+#   id-graph    -> standards/scripts/verify-id-graph.js (G01-G15)
+#   skills      -> standards/scripts/verify-skills.js (S01-S10)
+#
+# Config: .zai/config.json (single source of truth for thresholds)
+
+set -uo pipefail
+
+show_help() {
+    cat << 'HELP'
+Z.ai Governance Verify (unified)
+
+Usage: bash .zai/verify [OPTIONS]
+
+Options:
+  --check NAME    Run specific check: line-count, worklog, emoji, standards, id-graph, skills
+  --all           Run all checks (default)
+  --staged        Check only staged .md files (pre-commit dry-run)
+  --help          Show this help
+
+Checks (all delegate to canonical implementations):
+  line-count      guard/scripts/line-count-check.sh -> verify-standards.js + verify-skills.js
+  worklog         guard/scripts/worklog-check.sh (PROC-WORKLOG-005, min 3 lines)
+  emoji           root eslint-rules/unicode-policy.js via lint-staged (STD-DOC-003)
+  standards       standards/scripts/verify-standards.js (V01-V18)
+  id-graph        standards/scripts/verify-id-graph.js (G01-G15)
+  skills          standards/scripts/verify-skills.js (S01-S10)
+
+Config: .zai/config.json
+HELP
+    exit 0
+}
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PLATFORM_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+GUARD_DIR="${PLATFORM_DIR}/guard"
+STANDARDS_DIR="${PLATFORM_DIR}/standards"
+
+echo "=== Z.ai Governance Verify (unified) ==="
+echo ""
+
+CHECK="all"
+STAGED_FLAG=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --check)  CHECK="$2"; shift 2 ;;
+        --all)    CHECK="all"; shift ;;
+        --staged) STAGED_FLAG="--staged"; shift ;;
+        --help)   show_help ;;
+        *)        echo "Unknown option: $1. Use --help for usage."; exit 2 ;;
+    esac
+done
+
+TOTAL=0
+PASSED=0
+FAILED=0
+SKIPPED=0
+
+run_check() {
+    local name="$1"
+    shift
+
+    TOTAL=$((TOTAL + 1))
+
+    echo "--- $name ---"
+    if "$@"; then
+        echo "[PASS] $name"
+        PASSED=$((PASSED + 1))
+    else
+        echo "[FAIL] $name"
+        FAILED=$((FAILED + 1))
+    fi
+    echo ""
+}
+
+run_check_optional() {
+    local name="$1"
+    local script="$2"
+    shift 2
+
+    TOTAL=$((TOTAL + 1))
+
+    if [[ ! -f "$script" ]]; then
+        echo "[SKIP] $name — $script not found"
+        SKIPPED=$((SKIPPED + 1))
+        echo ""
+        return
+    fi
+
+    echo "--- $name ---"
+    if "$@"; then
+        echo "[PASS] $name"
+        PASSED=$((PASSED + 1))
+    else
+        echo "[FAIL] $name"
+        FAILED=$((FAILED + 1))
+    fi
+    echo ""
+}
+
+# --- Line-count check (delegate to guard) ---
+if [[ "$CHECK" == "all" ]] || [[ "$CHECK" == "line-count" ]]; then
+    run_check_optional "Line Count (PROC-LINECOUNT-004)" \
+        "${GUARD_DIR}/scripts/line-count-check.sh" \
+        bash "${GUARD_DIR}/scripts/line-count-check.sh" $STAGED_FLAG
+fi
+
+# --- Worklog check (delegate to guard) ---
+if [[ "$CHECK" == "all" ]] || [[ "$CHECK" == "worklog" ]]; then
+    run_check_optional "Worklog (PROC-WORKLOG-005)" \
+        "${GUARD_DIR}/scripts/worklog-check.sh" \
+        bash "${GUARD_DIR}/scripts/worklog-check.sh" $STAGED_FLAG
+fi
+
+# --- Emoji check (delegate to eslint) ---
+if [[ "$CHECK" == "all" ]] || [[ "$CHECK" == "emoji" ]]; then
+    if command -v npx >/dev/null 2>&1; then
+        run_check "Emoji/Unicode (STD-DOC-003)" \
+            npx eslint --no-warn-ignored --ext .md . 2>/dev/null || true
+        # Note: emoji check is advisory here — hard enforcement is in pre-commit via lint-staged
+    else
+        TOTAL=$((TOTAL + 1))
+        echo "[SKIP] Emoji/Unicode — npx not found (enforced in pre-commit via lint-staged)"
+        SKIPPED=$((SKIPPED + 1))
+        echo ""
+    fi
+fi
+
+# --- Standards verifiers (delegate to standards/) ---
+if [[ "$CHECK" == "all" ]] || [[ "$CHECK" == "standards" ]]; then
+    run_check_optional "verify-standards (V01-V18)" \
+        "${STANDARDS_DIR}/scripts/verify-standards.js" \
+        node "${STANDARDS_DIR}/scripts/verify-standards.js"
+fi
+
+if [[ "$CHECK" == "all" ]] || [[ "$CHECK" == "id-graph" ]]; then
+    run_check_optional "verify-id-graph (G01-G15)" \
+        "${STANDARDS_DIR}/scripts/verify-id-graph.js" \
+        node "${STANDARDS_DIR}/scripts/verify-id-graph.js"
+fi
+
+if [[ "$CHECK" == "all" ]] || [[ "$CHECK" == "skills" ]]; then
+    run_check_optional "verify-skills (S01-S10)" \
+        "${STANDARDS_DIR}/scripts/verify-skills.js" \
+        node "${STANDARDS_DIR}/scripts/verify-skills.js"
+fi
+
+# --- Skills count ---
+SKILLS_DIR="${PLATFORM_DIR}/skills"
+if [[ -d "$SKILLS_DIR" ]]; then
+    SKILL_COUNT=$(ls -d "${SKILLS_DIR}"/*/ 2>/dev/null | wc -l)
+    echo "[INFO] Skills available: ${SKILL_COUNT}"
+else
+    echo "[INFO] Skills directory not found"
+fi
+
+# --- Summary ---
+echo ""
+echo "=== Summary ==="
+echo "  Total:   ${TOTAL}"
+echo "  Passed:  ${PASSED}"
+echo "  Failed:  ${FAILED}"
+echo "  Skipped: ${SKIPPED}"
+echo ""
+
+if [[ "$FAILED" -gt 0 ]]; then
+    echo "RESULT: SOME CHECKS FAILED"
+    exit 1
+else
+    echo "RESULT: ALL CHECKS PASSED"
+    exit 0
+fi

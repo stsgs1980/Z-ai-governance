@@ -1,0 +1,10 @@
+# This directory contains the ID graph data for Z-ai-graph-viewer consumption.
+# See README.md for the API contract and endpoint URLs.
+#
+# Files in this directory:
+# - id-graph.json          : full graph data (committed to repo on every push)
+# - id-graph-summary.json  : summary only (for quick dashboards)
+# - README.md              : API contract documentation
+#
+# Visual graphs (SVG/PNG/DOT) are generated to docs/_graph/ instead, since
+# they are larger and only needed for static rendering.

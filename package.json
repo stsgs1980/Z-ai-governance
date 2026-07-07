@@ -1,0 +1,44 @@
+{
+  "name": "z-ai-platform",
+  "version": "0.1.0",
+  "description": "Z.ai platform of modular skills, standards, and guard rules — NOT a web application",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "check:md": "bash standards/scripts/check-md.sh",
+    "check:graph": "node standards/scripts/verify-id-graph.js",
+    "validate": "npm run lint && npm run typecheck && npm run test",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.62.1",
+    "@typescript-eslint/parser": "^8.62.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-markdown": "^5.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
+    "prettier": "^3.9.4",
+    "typescript": "^5.9.3",
+    "vitest": "^2.1.9"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --max-warnings=0"
+    ],
+    "*.md": [
+      "eslint --plugin markdown --max-warnings=0 --no-warn-ignored"
+    ]
+  },
+  "engines": {
+    "node": ">=20.12.0"
+  }
+}

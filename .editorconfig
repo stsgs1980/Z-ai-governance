@@ -1,0 +1,22 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+charset = utf-8
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.sh]
+end_of_line = lf
+
+[.husky/*]
+end_of_line = lf
+
+[*.{json,yml,yaml,toml}]
+end_of_line = lf
+
+[*.{cmd,bat,ps1}]
+end_of_line = crlf

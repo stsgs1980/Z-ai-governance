@@ -1,0 +1,20 @@
+node_modules/
+.env
+.env.local
+db/
+dist/
+build/
+
+__pycache__/
+
+# Z.ai sandbox runtime artifacts (excluded from version control)
+.zscripts/
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# CI-generated graph artifacts
+docs/_graph/
+.zai/.verifier-daemon.lock
+.zai/.verifier-daemon.log
+.zai/.verifier-daemon.pid

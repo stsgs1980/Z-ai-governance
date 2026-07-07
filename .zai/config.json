@@ -1,0 +1,19 @@
+{
+  "version": "1.1.0",
+  "line_count": {
+    "limit": 1000,
+    "note": "Per-category limits in STD-META-001 S4.18.1: SKILL.md=800, CONTRACT.md=500, README.md=400. Guard/standards verify scripts enforce these.",
+    "extensions": [".md", ".ts", ".js", ".py", ".sh"]
+  },
+  "worklog": {
+    "paths": ["worklog.md"],
+    "min_lines": 3,
+    "note": "Enforced by guard/scripts/worklog-check.sh (PROC-WORKLOG-005)"
+  },
+  "emoji": {
+    "enabled": true,
+    "extensions": [".md"],
+    "note": "Enforced by root eslint-rules/unicode-policy.js via lint-staged (STD-DOC-003). .zai/lib/check-emoji.sh removed — was duplicate."
+  },
+  "exclude_dirs": [".git", "node_modules", ".next", "skills", "guard", "standards"]
+}
