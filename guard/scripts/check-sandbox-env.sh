@@ -48,7 +48,15 @@ else
 fi
 
 # 2. Verify dev server is managed by sandbox (not manually started)
-if pgrep -f ".zscripts/dev.sh" >/dev/null 2>&1; then
+# Skip entirely if this repo is not a Next.js project (no next dependency).
+IS_NEXT_PROJECT=0
+if [ -f "$PLATFORM_DIR/package.json" ] && grep -q '"next"' "$PLATFORM_DIR/package.json" 2>/dev/null; then
+    IS_NEXT_PROJECT=1
+fi
+
+if [ "$IS_NEXT_PROJECT" -eq 0 ]; then
+    echo "  [INFO] not a Next.js project — dev server check skipped"
+elif pgrep -f ".zscripts/dev.sh" >/dev/null 2>&1; then
     emit_pass "dev server managed by sandbox (.zscripts/dev.sh running)"
 elif pgrep -f "next dev" >/dev/null 2>&1; then
     emit_fail "detected manual 'next dev' — sandbox manages dev server via .zscripts/dev.sh (RULE-ENV-008)"
