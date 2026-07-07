@@ -55,7 +55,7 @@ Applies to:
   │   ─────     │  <- internal symbol (checkmark) vs fill
   │             │     (NOT subject to 3:1 — only needs to be perceivable)
   └─────────────┘
-```
+```None
 
 **Exception:** When the internal symbol carries information that is not duplicated by text or another non-text cue (e.g., a status icon in a table cell with no adjacent text label), the internal symbol IS subject to the 3:1 rule against its immediate background.
 
@@ -145,7 +145,7 @@ Every focusable element MUST have a visible focus indicator.
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
-```
+```text
 
 - Focus indicator MUST have >= 3:1 contrast against background
 - NEVER use `outline: none` without providing alternative focus style
@@ -214,7 +214,7 @@ Page MUST have `lang` attribute on `<html>`.
 ```tsx
 // layout.tsx
 <html lang="ru">  // or "en" based on content
-```
+```None
 
 ### 3.2 Error Identification (3.3.1 — A)
 
@@ -282,7 +282,7 @@ Status messages MUST be announced to screen readers without taking focus.
 
 // Critical alerts
 <div role="alert">{errorMessage}</div>
-```
+```text
 
 ---
 
@@ -313,7 +313,7 @@ const prefersReducedMotion = usePrefersReducedMotion();
 
 // Conditional animation
 <motion.div animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }} />;
-```
+```text
 
 ---
 

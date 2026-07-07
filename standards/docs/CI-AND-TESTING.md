@@ -22,7 +22,7 @@ The 4-repo architecture is documented in `README.md` and
 
 Z-ai-platform is an orchestrator repo with 3 submodules:
 
-```
+```text
 Z-ai-platform/                  (orchestrator)
 ├── .github/workflows/          (CI pipelines)
 ├── .githooks/                  (pre-commit, commit-msg)
@@ -87,7 +87,7 @@ block commits; they are reported but exit 0.
 ```bash
 cd /home/z/my-project/Z-ai-platform
 ./install-hooks.sh
-```
+```None
 
 This sets `core.hooksPath = .githooks` (git config, local to this
 clone). The same script must be re-run after any fresh clone.
@@ -147,7 +147,7 @@ skills/skills/commit-work/scripts/run-contract.sh --commit 'feat(scope): descrip
 
 # Help
 skills/skills/commit-work/scripts/run-contract.sh --help
-```
+```text
 
 The runtime implements the 5-tuple contract from
 `skills/skills/commit-work/CONTRACT.md`:
@@ -217,7 +217,7 @@ merge.
 ```yaml
 permissions:
   contents: read
-```
+```text
 
 The workflow has read-only content access by default. The PR comment
 step uses the implicit `GITHUB_TOKEN` with `pull-requests: write`
@@ -259,7 +259,7 @@ head -10 skills/skills/<skill-name>/SKILL.md
 
 # 3. Optional: re-run catalog to confirm classification
 python /home/z/my-project/scripts/catalog_skills.py
-```
+```text
 
 Phase D1 (planned in O-017 cascade) will produce
 `verify-skills.js` — a skills-side verifier analogous to
@@ -329,7 +329,7 @@ node standards/scripts/verify-id-graph.js
 
 # 4. Revert MIGRATIONS.md change
 git checkout standards/MIGRATIONS.md
-```
+```text
 
 This verifies that migration deadlines are actually enforced, not
 just documented.
@@ -569,7 +569,7 @@ found" rather than "symlink broken").
 
 ```bash
 find skills -type l ! -exec test -e {} \; -print | wc -l   # expect 0
-```
+```text
 
 If count != 0, fail the workflow with a list of broken links.
 
@@ -653,7 +653,7 @@ day 1. See `META-001 §4.18.7` for the full rationale.
 
 **Verification (post-S10c implementation, 2026-06-22):**
 
-```
+```bash
 verify-skills.js --strict: 9/9 HARD PASS (incl. S10a + S10b + S10c)
   S10a: all 36 SKILL.md files <= 800 lines
   S10b: all 2 CONTRACT.md files <= 500 lines
@@ -691,7 +691,7 @@ contributors can discover usage without reading the full doc:
 node standards/scripts/verify-standards.js --help
 # Usage: node verify-standards.js [mode]
 #   mode: 'strict' (default) | 'permissive' | 'ci'
-```
+```None
 
 Low effort, high UX. **Owner:** @backend. **Target:** Q1 2027.
 
@@ -727,7 +727,7 @@ Root-cause fix in this iteration:
 
 **Verification:**
 
-```
+```text
 verify-standards.js: 8/8 PASS
 verify-id-graph.js: 13/13 HARD + 0 warnings + snapshot OK
   (was: 13/13 HARD + 11 warnings before W13 fix)
@@ -785,7 +785,7 @@ grep -P '[\x{1F600}-\x{1F64F}\x{2600}-\x{27BF}]' file.md
 
 # WRONG (POSIX ERE — matches literal '\u{1F600}' characters)
 grep -E '[\u{1F600}-\x{1F64F}\u{2600}-\x{27BF}]' file.md
-```
+```None
 
 ### 10.5.1 W13 false positive on cross-submodule references
 
@@ -869,7 +869,7 @@ if [[ "$1" != "--force" ]]; then
   echo "[ERROR] Destructive operations require --force flag." >&2
   exit 1
 fi
-```
+```text
 
 The two layers are independent and complementary:
 

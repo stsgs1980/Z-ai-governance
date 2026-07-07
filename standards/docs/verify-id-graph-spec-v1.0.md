@@ -34,7 +34,7 @@ Z-ai-platform  (meta — no IDs declared, scanned for references only)
 Z-ai-standards (L1: STD-*)
 Z-ai-guard     (L2: RULE-*, PROC-*, TOOL-*)
 Z-ai-skills    (L3: ZAI-*)
-```
+```text
 
 It builds a directed graph of `<ID> -> <ID>` edges from the `Related:`
 fields of every artifact's header, plus an undirected graph of
@@ -86,7 +86,7 @@ node standards/scripts/verify-id-graph.js --only=standards,guard
 
 # Fail on warnings too:
 node standards/scripts/verify-id-graph.js --fail-on-warnings
-```
+```None
 
 ### 2.3. Exit Codes
 
@@ -175,7 +175,7 @@ trigger: keyword1, keyword2
 > Version: 1.0
 > Related: STD-FE-001, STD-DESIGN-001
 > Aligned_with: STD-FE-001, STD-DESIGN-001
-```
+```text
 
 Extractor reads:
 - Frontmatter: `id`, `version`, `compatibility`, `trigger`, `author`
@@ -199,7 +199,7 @@ Extractor reads:
 
 ```markdown
 <!-- ID: RULE-ENV-008 | ver:1.0 | Level: C | Related: STD-ENV-001,STD-ENV-002 | Aligned_with: -->
-```
+```None
 
 ### 4.2. Phase 1 Output: Declaration Records
 
@@ -340,7 +340,7 @@ G14: ZAI-DEV-001 (compatibility=sandbox) depends on ZAI-STS-005 (compatibility=b
 
 G14: ZAI-STS-005 (compatibility=both) depends on ZAI-DEV-001 (compatibility=sandbox)
   -> FAIL (both may only depend on both)
-```
+```text
 
 The compatibility DAG is independent of the layer DAG. A ZAI skill may
 pass G04–G10 (layer matrix) but fail G14 (compatibility matrix). Both
@@ -535,7 +535,7 @@ Result: PASS (13/13 hard checks, 5 warnings)
   ],
   "failures": []
 }
-```
+```text
 
 ---
 
@@ -568,7 +568,7 @@ The `--ci` flag skips network-dependent checks (e.g. fetching latest
     # then runs the graph checker.
     node ../standards/scripts/verify-id-graph.js --ci --json > result.json
     # Upload result.json as artifact for cross-repo CI to consume.
-```
+```None
 
 ### 7.3. Cross-Repo CI (in Z-ai-governance `.github/workflows/cross-repo.yml`)
 

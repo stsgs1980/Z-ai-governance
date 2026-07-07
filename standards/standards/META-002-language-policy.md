@@ -58,7 +58,7 @@ All documentation files (`.md`) MUST be written in English.
 [FAIL] ## Установка
 [OK]   Run `npm install` to get started.
 [FAIL] Запустите `npm install` для начала.
-```
+```None
 
 ### 3.2 Commit Messages
 
@@ -82,7 +82,7 @@ All branch names MUST be in English (per GIT-001 section 2.1).
 [FAIL] feat/проверка-контраста
 [OK]   fix/tabs-keyboard-nav
 [FAIL] fix/фикс-клавиатура
-```
+```None
 
 ### 3.4 User Communication
 
@@ -123,7 +123,7 @@ Variable and function names MUST be in English.
 ```text
 [OK]   calculateDiscount, getUserById, isValid
 [FAIL] skidka, poluchitPolzovatelya, yavlyaetsyaValidnym
-```
+```None
 
 ### 3.7 Error Messages
 
@@ -169,7 +169,7 @@ A project MAY declare a different language policy for internal artifacts (code c
 
 This project uses Russian for code comments and commit messages
 (internal team only). Documentation remains in English per STD-META-002.
-```
+```None
 
 **Scope:** Project-specific overrides apply ONLY to the project that declares them. They do not propagate to other projects in the ecosystem.
 

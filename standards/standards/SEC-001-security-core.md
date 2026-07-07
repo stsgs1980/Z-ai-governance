@@ -62,7 +62,7 @@ function validateSecrets() {
     throw new Error('JWT_SECRET must be at least 32 characters');
   }
 }
-```
+```None
 
 ### 2.2 .env File Handling
 
@@ -88,7 +88,7 @@ API_KEY=sk-live-real-key
 *.pem
 *.key
 credentials.json
-```
+```None
 
 ### 2.3 Secret Rotation Schedule
 
@@ -152,7 +152,7 @@ const UserRegistrationSchema = z.object({
 function validateUserRegistration(data: unknown) {
   return UserRegistrationSchema.safeParse(data);
 }
-```
+```None
 
 ### 3.2 SQL Injection Prevention
 
@@ -189,7 +189,7 @@ import { escape } from 'html-escaper';
 function renderUserContent(content: string): string {
   return escape(content); // & < > " '
 }
-```
+```text
 
 ---
 
@@ -258,7 +258,7 @@ app.use((req, res, next) => {
 
   next();
 });
-```
+```text
 
 ---
 
@@ -290,7 +290,7 @@ jobs:
       - run: npm audit --audit-level=moderate
       - uses: dependabot/fetch-metadata@v1
       # Auto-merge security updates
-```
+```text
 
 ---
 
@@ -373,7 +373,7 @@ This section documents discovered inconsistencies, missing content, and proposed
 ```typescript
 name: z.string()
   .regex(/^[\p{L}\s'-]+$/u, 'Invalid characters')
-```
+```text
 
 The `\p{L}` Unicode property escape requires the `u` flag, which is correctly applied here. However, the same regex pattern appears in other standards and project code without the `u` flag — copying this regex without the flag will silently break Unicode name validation (the `\p{L}` will be interpreted as a literal `p` followed by `{L}`).
 
@@ -402,7 +402,7 @@ The variable `app` is not declared in the example. A reader unfamiliar with Expr
 
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/db
-```
+```text
 
 But the Note in §2.2 says: "For Z.ai sandbox projects using SQLite, DATABASE_URL uses file: protocol. Example: DATABASE_URL=\"file:./dev.db\"". The example and the note contradict each other — the example shows PostgreSQL, the note says SQLite for sandbox. A reader landing on §2.2 will be confused about which to use.
 

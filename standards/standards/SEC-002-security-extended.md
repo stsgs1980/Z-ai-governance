@@ -69,7 +69,7 @@ async function validatePasswordAsync(password: string): Promise<ValidationResult
 
   return { valid: true };
 }
-```
+```None
 
 ### 2.2 Password Hashing
 
@@ -131,7 +131,7 @@ async function login(req: Request, user: User) {
   req.session.ip = req.ip;
   req.session.userAgent = req.get('user-agent');
 }
-```
+```None
 
 ### 2.4 JWT Best Practices
 
@@ -213,7 +213,7 @@ function verifyMFA(secret: string, token: string): boolean {
     window: 1, // Allow 1 step drift
   });
 }
-```
+```text
 
 ---
 
@@ -295,7 +295,7 @@ async function getDocument(req: Request, res: Response) {
 
   return document;
 }
-```
+```None
 
 ### 3.3 Principle of Least Privilege
 
@@ -344,7 +344,7 @@ fetch('/api/users', {
   },
   body: JSON.stringify(data),
 });
-```
+```text
 
 ---
 
@@ -391,7 +391,7 @@ const speedLimiter = slowDown({
 });
 
 app.use('/api/', speedLimiter);
-```
+```text
 
 ---
 
@@ -452,7 +452,7 @@ interface SecurityLog {
   result: 'success' | 'failure';
   requestId: string;
 }
-```
+```text
 
 ---
 
@@ -512,7 +512,7 @@ const securityConfig = {
 3. ERADICATE -> Remove the threat
 4. RECOVER -> Restore services
 5. LEARN -> Post-mortem and improve
-```
+```None
 
 ### 8.2 Immediate Actions
 
@@ -576,7 +576,7 @@ Is this project in Z.ai sandbox (prototype/MVP)?
                           |
                           +-- YES --> Apply Core (STD-SEC-001)
                                       Add RBAC if multi-user
-```
+```text
 
 ---
 
@@ -660,7 +660,7 @@ Callers that need only synchronous validation (e.g., client-side form validation
 
 ```typescript
 keyGenerator: (req) => req.ip || req.user?.id,
-```
+```text
 
 For unauthenticated requests, `req.user` is undefined, so `req.user?.id` is `undefined`, and the fallback is `req.ip`. This is correct, but the `keyGenerator` returns `undefined` for unauthenticated requests where `req.ip` is also unavailable (e.g., when behind a proxy that does not set `X-Forwarded-For`). All such requests would share the same `undefined` key, defeating the rate limit.
 

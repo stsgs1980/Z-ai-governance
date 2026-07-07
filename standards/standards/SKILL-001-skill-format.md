@@ -68,7 +68,7 @@ from external artifacts.
 │  -> Validated by verify-id-graph.js           │
 │    (only when id is present)                 │
 └──────────────────────────────────────────────┘
-```
+```text
 
 ---
 
@@ -112,7 +112,7 @@ license: MIT
 > Last Updated: <YYYY-MM>
 > Related: <comma-separated IDs> (optional)
 > Aligned_with: <comma-separated IDs> (optional)
-```
+```None
 
 ### 3.3. Field Requirements
 
@@ -283,7 +283,7 @@ user requests against it. Pattern:
 ```text
 description: "Use this skill when user asks for X, mentions Y, or needs Z.
 Also activate on: 'keyword1', 'keyword2', 'phrase example'."
-```
+```None
 
 ### 7.2. Trigger Field (Optional Supplement)
 
@@ -343,7 +343,7 @@ skill-name/
 │   └── helper-script.py
 └── assets/            (optional — templates, images, etc.)
     └── templates/
-```
+```None
 
 ### 8.2. Size Guidelines
 
@@ -492,7 +492,7 @@ skill that references it is invoked.
 ```yaml
 id: ZAI-META-001
 version: 1.1
-```
+```text
 
 But the actual file at `Z-ai-skills/skills/skill-id-system/SKILL.md`
 (as of 2026-06-18) is still at v1.0 — the migration window described in

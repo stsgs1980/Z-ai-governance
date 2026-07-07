@@ -63,7 +63,7 @@ Section number preserved verbatim.
     <span className="text-code font-mono">ls ~/documents</span>
   </div>
 </TerminalFrame>
-```
+```None
 
 ### 19.2. Content Card
 
@@ -112,7 +112,7 @@ The Stat Card uses a semi-transparent muted background. This is implemented via 
 .dark {
   --muted-alpha: color-mix(in oklch, var(--muted) 50%, transparent);
 }
-```
+```None
 
 ```tsx
 // [OK] Stat card (Pattern A: Theme Extension)
@@ -144,7 +144,7 @@ The Stat Card uses a semi-transparent muted background. This is implemented via 
   /* Modern definition -- overrides fallback when supported */
   --muted-alpha: color-mix(in oklch, var(--muted) 50%, transparent);
 }
-```
+```None
 
 CSS custom properties follow the cascade: browsers that support `color-mix()` will use the second declaration; older browsers will fall back to the first. The static fallback value must be visually verified by the design team and documented in the Profile.
 
@@ -201,7 +201,7 @@ This archetype is for components where the primary visual output is not prose or
 <div className="border-solid p-3">
   <span>$</span> ls
 </div>
-```
+```bash
 
 Note: These rules are specific to the Terminal Dashboard Profile. A different Profile may define entirely different archetype constraints (e.g., an immersive Profile might require glass backgrounds for feature cards and no borders on any card type).
 

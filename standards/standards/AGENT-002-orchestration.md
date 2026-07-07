@@ -34,7 +34,7 @@ Main Agent
   +-- Task 3 (Code)  <------+  (uses Result 2)
                              |
   +-- Commit + Push  <------+
-```
+```text
 
 **When to use:** Tasks have strict dependencies; each task needs the output of the previous one.
 
@@ -77,7 +77,7 @@ Main Agent
   +-- Reduce Phase (sequential)
         +-- Main agent combines all results
         +-- Commit + push final output
-```
+```text
 
 **When to use:** A large task can be divided into independent chunks that are processed in parallel, then combined.
 
@@ -121,7 +121,7 @@ Task 2:  Depends on Task 1
 Task 3-a: Depends on Task 2
 Task 3-b: Depends on Task 2 (parallel with 3-a)
 Task 4:  Depends on Task 3-a AND Task 3-b
-```
+```None
 
 ### 3.2 Dependency Validation
 
@@ -164,7 +164,7 @@ PENDING --> IN_PROGRESS --> COMPLETED
    |              +--> FAILED
    |
    +--> CANCELLED
-```
+```text
 
 | State | Meaning | Next Action |
 |-------|---------|-------------|
@@ -275,7 +275,7 @@ Phase 3: Implementation (sequential, depends on Phase 2)
 Phase 4: Verification (sequential, depends on Phase 3)
   Task 4: Explore subagent verifies implementation
   Commit + push (if fixes needed)
-```
+```None
 
 ### 7.2 Audit and Restructuring Workflow
 
@@ -311,7 +311,7 @@ Phase 2: Refactoring (map-reduce)
 Phase 3: Integration Testing
   Task 3: Verify refactored code compiles and tests pass
   Commit + push
-```
+```text
 
 ---
 

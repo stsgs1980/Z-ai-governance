@@ -73,7 +73,7 @@ What agents must never do:
 - Never push to upstream repos without approval
 - Never modify standards without PR
 - Never skip pre-commit checks
-```
+```text
 
 ---
 
@@ -138,7 +138,7 @@ Priority 3: docs/ (detailed documentation)
 - Never commit directly to main
 - Never skip tests
 - Never expose secrets
-```
+```text
 
 ---
 

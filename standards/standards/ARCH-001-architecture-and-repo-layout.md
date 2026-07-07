@@ -132,7 +132,7 @@ The orchestrator pins the three submodules via `.gitmodules`:
 [submodule "skills"]
     path = skills
     url = https://github.com/stsgs1980/Z-ai-skills.git
-```
+```text
 
 The submodule names (`standards`, `guard`, `skills`) MUST match the
 `path` field. The `path` field MUST be a top-level directory in the
@@ -455,7 +455,7 @@ constraints declared in **STD-ENV-001**.
 
 This procedure implements `guard/rules/RULE-ENV-008.md` by enforcing
 the sandbox constraints declared in `standards/ENV-001-reproducibility.md`.
-```
+```None
 
 ### 7.3. Cross-Repo Paths in Scripts
 
@@ -521,7 +521,7 @@ inconsistencies that CI will catch, but recovery is annoying.
    git checkout main
    git pull origin main
    cd ..
-   ```
+   ```bash
 2. **Run the verifier locally to confirm the new state is consistent.**
    ```bash
    node standards/scripts/verify-id-graph.js
@@ -531,7 +531,7 @@ inconsistencies that CI will catch, but recovery is annoying.
 3. **Stage the submodule pointer.**
    ```bash
    git add standards  # or guard/, or skills/
-   ```
+   ```bash
 4. **Commit with a descriptive message.** The message MUST mention the
    submodule name, the new SHA (short form), and the reason.
    ```bash
@@ -540,7 +540,7 @@ inconsistencies that CI will catch, but recovery is annoying.
 5. **Push the orchestrator.**
    ```bash
    git push origin main
-   ```
+   ```None
 6. **Verify CI passes.** The push triggers `.github/workflows/verify-id-graph.yml`,
    which re-runs the verifier against the new pointer. If CI fails,
    see §9.1 (recovery).

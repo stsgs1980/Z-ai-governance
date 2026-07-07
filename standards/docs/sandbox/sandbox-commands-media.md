@@ -195,7 +195,7 @@ bun add <package>
 
 # Fast Python installation (uv - faster than pip)
 uv pip install <package>
-```
+```None
 
 ### Quick Reference
 

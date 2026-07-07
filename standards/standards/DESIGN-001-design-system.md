@@ -90,7 +90,7 @@ Core (Sections 3-13 of this document)
   +-- Profile A: [name] (Sections P1-P11, any project)
   +-- Profile B: [name] (Sections P1-P11, any project)
   +-- Profile N: ... (each project creates its own)
-```
+```text
 
 Each Profile must satisfy all Core constraints. If a Core rule says "you must have at least 2 font roles", the Profile defines which 2. If a Core rule says "color tokens must have light and dark variants", the Profile provides those variants. A project must have exactly one active Profile; the Core alone is incomplete for implementation because it contains no concrete values.
 
@@ -194,7 +194,7 @@ export default {
 <div className="p-md gap-sm">
   <h1 className="text-2xl font-bold font-sans">Title</h1>
 </div>
-```
+```text
 
 This pattern keeps all styling in the utility layer, avoids `style={{}}` in JSX, and works correctly with SSR. It applies to projects using Tailwind CSS v3+, UnoCSS, or any utility-first CSS framework with theme extension support. The pattern is framework-agnostic: replace `tailwind.config.ts` with the equivalent configuration file for your utility framework (e.g., `uno.config.ts` for UnoCSS, `windi.config.ts` for Windi CSS). The principle remains the same: register CSS custom properties as theme values, consume via utility classes.
 
@@ -227,7 +227,7 @@ import styles from './Dashboard.module.css';
 <div className={styles.container}>
   <h1 className={styles.heading}>Title</h1>
 </div>
-```
+```text
 
 This pattern is the natural choice for projects using CSS Modules, CSS-in-JS libraries that support custom properties (Styled Components, Emotion), or any framework without utility-first conventions.
 
@@ -270,7 +270,7 @@ const Container = styled.div`
   padding: var(--space-md);
   gap: var(--space-sm);
 `
-```
+```None
 
 ```typescript
 // Emotion example
@@ -500,7 +500,7 @@ jobs:
           echo "|----------|-----------|" >> $GITHUB_STEP_SUMMARY
           echo "| Spacing  | $SPACING_DEBT |" >> $GITHUB_STEP_SUMMARY
           echo "| Typography | $TYPO_DEBT |" >> $GITHUB_STEP_SUMMARY
-```
+```text
 
 This workflow produces a persistent count in the PR summary. The team sees debt trending up or down each week. The exact grep patterns must be adapted to the Profile's token names and prohibited patterns (P8).
 
@@ -686,7 +686,7 @@ Example:
 | Terminal | --text-label, --text-badge, --text-section, --text-code | --terminal-accent, --neuro-brand, --semantic-violet | --space-xs, --space-sm, --space-md |
 | Content | --text-h1, --text-h2, --text-h3, --text-body, --text-body-sm | foreground, muted-foreground, --star-color | --space-md, --space-lg, --space-xl |
 | Stat | --text-code, --text-badge | foreground, muted-foreground | --space-sm, --space-md |
-```
+```text
 
 **Level 2: Element Mapping (optional).** Maps individual UI elements to specific tokens. This is useful for large projects with dedicated platform teams, but impractical for small teams because it grows linearly with the number of UI elements and requires continuous maintenance. If maintained manually, Level 2 maps often become stale within weeks.
 

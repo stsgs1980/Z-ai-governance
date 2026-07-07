@@ -97,7 +97,7 @@ npx eslint . --max-warnings=0                    # 0 errors, 0 warnings
 node scripts/verify-standards.js                 # 8/8 PASS
 node scripts/verify-id-graph.js                  # 13/13 PASS, 0 warnings
 node scripts/verify-id-graph.js --compare=_snapshots/id-graph-baseline.json  # OK
-```
+```text
 
 **Commits this session:**
 - `f9c8676` feat: add META-002, rename unicode-policy, add pre-commit hooks

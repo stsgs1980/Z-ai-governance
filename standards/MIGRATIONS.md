@@ -49,7 +49,7 @@ notes: |
   window so trigger phrases ('skill id', 'create skill') continue to
   resolve. After Z-ai-skills v2.0.0, the file is deleted and references
   to ZAI-META-001 produce hard error G05.
-```
+```text
 
 **Status**: Migration window OPEN. References to ZAI-META-001 produce W01
 warning. File remains resolvable.
@@ -114,7 +114,7 @@ created. This entry is a placeholder until AHG is migrated.
    │                      │  <- References produce G05 hard error
    │  old_id: REMOVED     │  <- new_id: ACTIVE
    └──────────────────────┘
-```
+```text
 
 ---
 

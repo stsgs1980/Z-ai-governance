@@ -79,7 +79,7 @@ Every subagent invocation MUST include:
 3. WORKLOG instruction (read previous + append own entry)
 4. Subagent type (from registry in Section 2.1)
 5. Any file paths or data needed (no references to conversation context)
-```
+```None
 
 **Critical Rule:** Subagents do NOT have access to the full conversation context. They only receive the prompt passed to them. Therefore, all necessary information MUST be included in the prompt explicitly.
 
@@ -117,7 +117,7 @@ If a subagent cannot complete its task:
 3. EXECUTE   Subagent performs the assigned task
 4. REPORT    Subagent returns result + appends WORKLOG entry
 5. COMPLETE  Main agent receives result and integrates into workflow
-```
+```None
 
 ### 4.2 Statelessness
 
@@ -169,7 +169,7 @@ Subagents MUST NOT access files outside the project directory:
 ```text
 ALLOWED:   /home/z/my-project/**/*
 FORBIDDEN: /etc/**, /root/**, /home/<other-user>/**, ~/.ssh/**
-```
+```None
 
 ### 5.4 Network Access
 

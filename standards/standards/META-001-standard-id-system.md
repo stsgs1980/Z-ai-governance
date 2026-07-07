@@ -77,7 +77,7 @@ The ID solves five problems:
 
 ```text
 <PREFIX>-<DOMAIN>-<NUMBER>
-```
+```text
 
 | Component  | Description                                            |
 | ---------- | ------------------------------------------------------ |
@@ -359,7 +359,7 @@ Every normative artifact MUST carry a machine-readable header. v2.0 accepts
 
 ```markdown
 <!-- ID: RULE-<DOMAIN>-<NUMBER> | ver:<version> | Level: <C|W|I> | Related: <comma-separated IDs> | Aligned_with: <comma-separated IDs> -->
-```
+```text
 
 The HTML-comment style is used inside `AGENT_RULES.md` and similar files
 where the rule text needs to render as prose without a header blockquote
@@ -550,7 +550,7 @@ pass.
 ```markdown
 This procedure implements **RULE-ENV-008** by enforcing the sandbox
 constraints declared in **STD-ENV-001** and **STD-ENV-002**.
-```
+```None
 
 ### 7.2. In Code (procedure/tool scripts)
 
@@ -565,7 +565,7 @@ constraints declared in **STD-ENV-001** and **STD-ENV-002**.
 Follow RULE-ENV-008 for sandbox verification.
 Apply STD-FE-001 limits for component size.
 Invoke ZAI-ARCH-002 for the anti-monolith decomposition.
-```
+```None
 
 ### 7.4. In Hooks
 
@@ -587,7 +587,7 @@ Invoke ZAI-ARCH-002 for the anti-monolith decomposition.
 # In ZAI-ARCH-002 (anti-monolith skill), frontmatter:
 
 > Aligned_with: STD-FE-001, STD-DESIGN-001
-```
+```None
 
 ### 7.6. Reference Syntax
 
@@ -680,7 +680,7 @@ verbatim (with format adaptation) to
 ### Superseded
 
 - ZAI-META-001 content -> STD-SKILL-001 (skill -> standard; skill file remains as thin pointer for backward-compat trigger matching)
-```
+```text
 
 The migration window is Z-ai-skills v1.x -> v2.0.0. References to
 `ZAI-META-001` in standards/rules/skills produce warning W01 during v1.x,

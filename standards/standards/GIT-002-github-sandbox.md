@@ -43,7 +43,7 @@ git status -> merge conflict -> exit code != 0
 -> tool pre-check fails -> tool blocked
 -> cannot fix merge -> git status still fails
 -> DEADLOCK
-```
+```None
 
 ### 2.2 Signs of Standard Violation
 
@@ -79,7 +79,7 @@ git commit -m "chore: session checkpoint"
 
 # Push always
 git push --force-with-lease origin main
-```
+```text
 
 ---
 
@@ -121,7 +121,7 @@ git push origin main
 # 4. Re-check
 git status
 # Expected: "nothing to commit, working tree clean"
-```
+```None
 
 ### 4.3 Rule 3: Dirty Working Tree = No Stop
 
@@ -149,7 +149,7 @@ rm -f .git/MERGE_HEAD .git/MERGE_MSG .git/MERGE_MODE
 git reset --hard HEAD
 git status  # check if clean
 git push origin main --force  # if needed to sync with remote
-```
+```text
 
 **Level 2 - Sandbox Restart:**
 - All code is on GitHub (if push rules were followed)
@@ -195,7 +195,7 @@ git status
 
 # 6. Push if needed
 git push --force-with-lease origin main
-```
+```text
 
 ---
 
@@ -257,7 +257,7 @@ rm -f .git/refs/**/*.lock
 
 # Verify no git processes running
 ps aux | grep git
-```
+```None
 
 **Rule:** Only remove `.lock` files when NO other git process is running.
 
@@ -302,7 +302,7 @@ git push origin main
 
 # If push fails with "non-fast-forward":
 git push --force-with-lease origin main
-```
+```None
 
 **Scenario B: Fetch/Pull interrupted**
 
@@ -329,7 +329,7 @@ git reset --hard origin/main
 cd ..
 rm -rf <repo-name>
 git clone <url>
-```
+```None
 
 **Scenario D: Merge interrupted by network (during pull)**
 
@@ -363,7 +363,7 @@ git config --global http.postBuffer 524288000
 #     ConnectTimeout 10
 #     ServerAliveInterval 5
 #     ServerAliveCountMax 3
-```
+```None
 
 ### 6.7 Offline Work Protocol
 
@@ -393,7 +393,7 @@ git push origin main
 [ ] SSH config has timeouts set
 [ ] Working on feature branch (not main) for risky operations
 [ ] Recovery tag created before large operations
-```
+```text
 
 ---
 
@@ -440,7 +440,7 @@ These operations are **ABSOLUTELY FORBIDDEN** in Z.ai sandbox:
 **When in doubt, the safe path is ALWAYS:**
 ```bash
 git push --force-with-lease origin main
-```
+```None
 
 ### 7.3 Pre-Command Checklist (MUST run before any git operation)
 
@@ -499,7 +499,7 @@ Is this YOUR project (solo work)?
                 |
                 +-- NO --> git push --force-with-lease origin main
                            (your work overrides)
-```
+```None
 
 ### 7.5 Auto-Generated Files Conflict Prevention
 
@@ -529,7 +529,7 @@ git checkout --ours dev.log
 git add dev.log
 git commit -m "fix: resolve log file conflict"
 git push origin main
-```
+```None
 
 ### 7.6 Stash Safety in Sandbox
 
@@ -578,7 +578,7 @@ git pull origin main
 # 4. Merge or reapply work
 git merge rescue-branch
 # OR manually reapply
-```
+```None
 
 ### 7.8 Git Hooks Interference
 
@@ -612,7 +612,7 @@ git config --global commit.gpgsign false
 # Or configure GPG properly
 git config --global gpg.program gpg2
 git config --global user.signingkey <key-id>
-```
+```None
 
 ### 7.10 Comprehensive Pre-Operation Checklist
 
@@ -678,7 +678,7 @@ CORRECT (clean replacement):
   +-- .git/                                  <- clean git
   +-- src/
   +-- package.json
-```
+```text
 
 **Why nested projects fail:**
 - Dev server won't find correct paths
@@ -719,7 +719,7 @@ bun install
 cp .env.example .env
 bun run db:push  # if applicable
 npx next dev -p 3000
-```
+```None
 
 ### 8.3 The Critical Difference
 
@@ -750,7 +750,7 @@ git clone https://github.com/user/repo.git /home/z/my-project
 [ ] package.json is at correct level
 [ ] bun install runs successfully
 [ ] npx next dev -p 3000 starts on correct port
-```
+```text
 
 ---
 
@@ -807,7 +807,7 @@ git init
 git remote add origin <remote-url>
 git fetch origin
 git reset origin/main
-```
+```text
 
 This procedure discards ALL local state — including unpushed commits — and replaces it with the remote state. The section does not explicitly warn that any unpushed work will be lost. A user following Level 3 as their first recovery attempt (without trying Level 1 or Level 2 first) could lose data permanently.
 

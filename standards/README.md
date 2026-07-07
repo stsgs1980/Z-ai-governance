@@ -47,7 +47,7 @@ Normative standards, templates, and guides for the Z-ai ecosystem. Standards des
 ```bash
 git clone https://github.com/stsgs1980/Z-ai-standards.git
 cd Z-ai-standards
-```
+```None
 
 ### Run
 
@@ -156,7 +156,7 @@ Every PR that touches a `.md` file MUST pass:
 ```bash
 node scripts/verify-standards.js   # V04-V10 per-repo invariants
 node scripts/verify-id-graph.js    # G01-G15 cross-repo invariants
-```
+```None
 
 The pre-commit hook (`.husky/pre-commit` in repo root) runs all three verify-*.js scripts in Group 2.
 

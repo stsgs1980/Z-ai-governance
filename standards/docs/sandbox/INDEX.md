@@ -112,7 +112,7 @@ legend right
   Dotted = indirect relationship
 endlegend
 @enduml
-```
+```text
 
 ---
 

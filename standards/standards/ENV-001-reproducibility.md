@@ -52,7 +52,7 @@ fetch("http://localhost:3000/api/documents");
 
 // REQUIRED -- relative path
 fetch("/api/documents");
-```
+```None
 
 For cross-port services -- only `XTransformPort`:
 
@@ -81,7 +81,7 @@ Rules that ensure the project runs without machine-specific dependencies.
 ```typescript
 const dbPath = resolve(process.cwd(), rawUrl.replace(/^file:/, ""));
 if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-```
+```None
 
 ### 2.2 Database Permissions
 

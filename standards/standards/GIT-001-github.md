@@ -20,7 +20,7 @@ All commit messages MUST follow [Conventional Commits v1.0](https://www.conventi
 [optional body]
 
 [optional footer]
-```
+```None
 
 ### 1.2 Types
 
@@ -69,7 +69,7 @@ fixed bug
 Added new component
 feat: add feature.  # no period
 feat(ui): This component does X and Y and Z...  # too long
-```
+```text
 
 ---
 
@@ -138,7 +138,7 @@ cp -r packages/ /tmp/stsgs-backup/
 
 # Step 3: Save git log reference
 git log --oneline -20 > /tmp/git-log-backup.txt
-```
+```None
 
 ### 4.1 Recovery from Git Lockup
 
@@ -186,7 +186,7 @@ Push after every significant change. Do not accumulate half-finished work locall
 
 ```text
 work -> commit -> push -> peace of mind
-```
+```None
 
 ### 5.2 Checkpoint System
 
@@ -235,7 +235,7 @@ git push origin checkpoint-2a-before-refactor
 # If something goes wrong, rollback
 git reset --hard checkpoint-2a-before-refactor
 git push --force-with-lease origin main
-```
+```text
 
 **Tag naming convention:**
 
@@ -262,7 +262,7 @@ All releases MUST follow [SemVer 2.0](https://semver.org/):
 
 ```text
 MAJOR.MINOR.PATCH
-```
+```text
 
 | Change | Bump | Example |
 |--------|------|---------|
@@ -300,7 +300,7 @@ Every release MUST update `CHANGELOG.md` with:
 
 ### Changed
 - Consolidated docs into docs/ directory
-```
+```text
 
 ---
 
@@ -373,7 +373,7 @@ These MUST be committed:
 .env.example        # Safe defaults, no real secrets
 .eslintrc.*         # Linting configuration
 .prettierrc         # Formatting configuration
-```
+```text
 
 ---
 
@@ -463,7 +463,7 @@ This section documents discovered inconsistencies, missing content, and proposed
 ```bash
 git reset --hard checkpoint-2a-before-refactor
 git push --force-with-lease origin main
-```
+```text
 
 However, §3.1 (CRITICAL: Never Do This) lists `git reset --hard` without backup as a forbidden operation. The §5.3 example does not explicitly state that the checkpoint tag itself serves as the backup, which could be misread as a violation of §3.1. The §4.1 "Recovery from Git Lockup" section explicitly notes that `git reset --hard` in deadlock recovery is the only exception to §3.1 — §5.3 has no such note.
 

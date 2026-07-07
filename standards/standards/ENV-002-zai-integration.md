@@ -96,7 +96,7 @@ Before any git operation that rewrites history (rebase, merge, pull, reset --har
 git stash push -m "pre-op-backup"
 cp -r src/ /tmp/src-backup/
 git log --oneline -20 > /tmp/git-log-backup.txt
-```
+```None
 
 ### 4.2 Force Push Over Rebase
 
@@ -127,7 +127,7 @@ sleep 1
 cd /home/z/my-project && npx next dev -p 3000 </dev/null >/tmp/zdev.log 2>&1 & disown
 sleep 6
 curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/
-```
+```None
 
 ### 5.2 Rules
 

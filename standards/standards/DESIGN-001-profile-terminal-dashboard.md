@@ -155,7 +155,7 @@ A project using a different CSS framework must map these tokens to the framework
 
 // [FAIL] Arbitrary font size not in scale
 <span className="text-[9px]">Label</span>
-```
+```None
 
 ### 15.5. Alternative Implementation: CSS Modules (Pattern B)
 
@@ -200,7 +200,7 @@ import typo from './typography.module.css';
 
 <h1 className={typo.h1}>Page Title</h1>
 <span className={typo.label}>$</span>
-```
+```text
 
 The token values (size, weight, family) are the same regardless of integration pattern. Only the consumption mechanism changes.
 
@@ -285,7 +285,7 @@ These are optional at the Core level, but strongly recommended for any project t
 
 // [OK] Semantic token via theme extension (Pattern A, Section 4.5)
 <button className="bg-semantic-search">Search</button>
-```
+```text
 
 ---
 
@@ -344,7 +344,7 @@ Eight tokens for code block syntax coloring in the terminal aesthetic.
 /* [FAIL] Prism theme with hardcoded values */
 .token.comment { color: #6b7280; }
 .token.keyword { color: #16a34a; }
-```
+```text
 
 A project may use an alternative syntax highlighter (Shiki, Highlight.js, etc.) provided it maps token classes to the same `--syntax-*` custom properties.
 
@@ -481,7 +481,7 @@ This map is specific to the Terminal Dashboard layout (sidebar + header + footer
 <span className="text-badge font-mono text-accent-primary">
   &gt;
 </span>
-```
+```text
 
 ---
 
@@ -629,7 +629,7 @@ module.exports = {
     };
   }
 };
-```
+```None
 
 ### CI Pipeline Integration
 
@@ -698,7 +698,7 @@ Compressed design system context derived from this Profile for use in AI agent s
 - Cards: Terminal=border-dashed+TerminalFrame | Content=border-solid+Card | Stat=--muted-alpha
 - Syntax highlighting: use --syntax-* tokens, never hardcoded colors
 - No text-X dark:text-Y pairs; use semantic tokens with auto light/dark
-```
+```text
 
 **Compressed variant (short-code mapping):**
 
@@ -787,7 +787,7 @@ export const easing = {
   out: [0, 0, 0.2, 1] as const,
   spring: [0.175, 0.885, 0.32, 1.275] as const,
 } as const
-```
+```None
 
 This dual registration (CSS custom properties for CSS transitions, JS constants for JS animations) is the recommended pattern. It satisfies the single source of truth principle: the canonical values live in `tokens/animations.ts`, and the CSS custom properties in `:root` are derived from the same source.
 
@@ -846,7 +846,7 @@ export default {
     }
   }
 }
-```
+```None
 
 **Approach 2 -- CSS preprocessor (Pattern B/C):** Use SASS/SCSS variables or PostCSS custom media to keep breakpoint values in sync:
 
@@ -880,7 +880,7 @@ function useIsDesktop() {
   }, [])
   return isDesktop
 }
-```
+```None
 
 ### 26.3. Profile-Specific Rules
 

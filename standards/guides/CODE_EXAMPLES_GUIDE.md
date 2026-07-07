@@ -31,7 +31,7 @@
 def greet(name):
     # This is a comment
     return f"Hello, {name}!"
-```
+```text
 ````
 
 **Why important:** Without highlighting, code blends into a gray mass, eyes get tired.
@@ -47,7 +47,7 @@ def greet(name):
 **Bad:**
 ```python
 def add(x,y):return x+y
-```
+```text
 
 **Good:**
 ```python
@@ -71,7 +71,7 @@ def add(x, y):
 **Bad:**
 ```python
 def CalculateSum( A, B ): return A+B
-```
+```text
 
 **Good:**
 ```python
@@ -91,7 +91,7 @@ def calculate_sum(a, b):
 ```python
 5: def hello():
 6:     print("Hi")
-```
+```text
 
 ```bash
 $ pip install requests
@@ -102,7 +102,7 @@ $ python script.py
 ```python
 def hello():
     print("Hi")
-```
+```text
 
 ```bash
 pip install requests
@@ -118,7 +118,7 @@ python script.py
 **Bad (depends on missing variable):**
 ```python
 result = process(data)  # where is data?
-```
+```bash
 
 **Good (self-contained):**
 ```python
@@ -141,7 +141,7 @@ print(result)  # [2, 4, 6, 8, 10]
 ```python
 import time
 print(time.time())  # different each time
-```
+```text
 
 **Good (predictable result):**
 ```python
@@ -162,7 +162,7 @@ def multiply(a, b):
     12
     """
     return a * b
-```
+```text
 
 **Why cool:** Example never becomes outdated — test will fail when code changes.
 
@@ -194,7 +194,7 @@ Green (`+`) — added, red (`-`) — removed.
 >>> squares = [x**2 for x in range(5)]
 >>> squares
 [0, 1, 4, 9, 16]
-```
+```text
 
 **Important for copying:** User should copy only lines **without `>>>`**! Better to provide code and output separately:
 
@@ -206,10 +206,10 @@ print(squares)
 ```
 
 **Output:**
-```
+```json
 [0, 1, 4, 9, 16]
 ```
-````
+````text
 
 ---
 
@@ -246,7 +246,7 @@ def process(user_data):
 ```python
 # (red text) change this line
 api_key = "key"
-```
+```None
 
 **Good (text explanation):**
 ```python
@@ -274,7 +274,7 @@ x = 42  # this variable not needed for example
 def main():
     print("Hello")
     # ... 50 lines of code ...
-```
+```bash
 
 **Good (essence only):**
 ```python
@@ -292,7 +292,7 @@ print(result)  # 6
 **Bad (wrong case):**
 ```python
 Print("Hello")   # NameError: name 'Print' is not defined
-```
+```text
 
 **Good:**
 ```python
@@ -310,7 +310,7 @@ When you need to show **the same algorithm** in multiple languages:
 ````markdown
 ```python
 print("Hello, world!")
-```
+```text
 
 ```javascript
 console.log("Hello, world!");
@@ -318,7 +318,7 @@ console.log("Hello, world!");
 
 ```bash
 echo "Hello, world!"
-```
+```text
 ````
 
 **Rule:** Specify language for each block, even if repeated.
@@ -337,7 +337,7 @@ Example may work in Python 3.11 but not in 3.7.
 match value:
     case 1:
         print("One")
-```
+```text
 ````
 
 ---
@@ -362,7 +362,7 @@ def hello():
 
 if __name__ == '__main__':
     app.run()
-```
+```text
 </details>
 ````
 
@@ -378,7 +378,7 @@ if __name__ == '__main__':
 ```bash
 # WARNING: This will delete the temp folder!
 rm -rf ./temp_folder
-```
+```text
 
 ```sql
 -- DANGEROUS in production: deletes all data
@@ -420,7 +420,7 @@ import CodeBlock from '@theme/CodeBlock';
 <CodeBlock language="jsx" title="/src/App.js">
   {require('!!raw-loader!../examples/App.js').default}
 </CodeBlock>
-```
+```text
 
 **Sphinx (Python):**
 ```rst
@@ -449,7 +449,7 @@ When you take someone else's code for an educational document:
 ```python
 import requests
 response = requests.get('https://api.github.com')
-```
+```text
 ````
 
 ---
@@ -462,7 +462,7 @@ On websites there is often a "Copy" button. For it to work correctly:
 
 ```html
 <pre><code class="language-python" data-copyable>print("Hello")</code></pre>
-```
+```text
 
 In Markdown this is not always supported, but the principle: **code block should be clean** (no line numbers, no `>>>`, no arrows).
 
@@ -514,12 +514,12 @@ def add(x, y):
 # Usage example
 result = add(5, 3)
 print(result)  # 8
-```
+```text
 
 **Output:**
 ```
 8
-```
+```text
 ````
 
 ---
@@ -607,7 +607,7 @@ Original (broken):
 import requests
 response = requests.get('https://api.github.com')
 ```text
-```
+```text
 ````
 
 The `markdown` outer fence used only 3 backticks while the inner `python` block also used 3 backticks — making the inner block's opening fence close the outer block prematurely. The ` ```text ` line then opened a new block that was never closed.
@@ -620,7 +620,7 @@ The `markdown` outer fence used only 3 backticks while the inner `python` block 
 ```python
 import requests
 response = requests.get('https://api.github.com')
-```
+```text
 ````
 
 The outer 4-backtick `markdown` fence wraps the entire example; the inner 3-backtick `python` fence is now properly nested and closed.

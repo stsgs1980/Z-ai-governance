@@ -100,7 +100,7 @@ META-001 (1)
               │     └── SEC-002 (17)
               └── AGENT-001 (18)  <- needs ENV-001, META-002, GIT-001
                     └── AGENT-002 (19)  <- needs AGENT-001, ERR-001
-```
+```text
 
 ---
 
@@ -336,7 +336,7 @@ grep -q ".env" .gitignore || echo "WARNING: .env not in .gitignore"
 
 # 5. Scan file sizes
 find src/ -name "*.tsx" -exec wc -l {} \; | sort -rn | head -10
-```
+```None
 
 ### Adapted Sequence for Existing Projects
 

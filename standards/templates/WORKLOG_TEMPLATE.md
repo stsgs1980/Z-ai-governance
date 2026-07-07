@@ -46,7 +46,7 @@ Outcome of the action.
 ### Follow-up (if any)
 
 Next steps or TODOs.
-```
+```text
 
 ---
 
