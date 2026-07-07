@@ -59,10 +59,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Shell script syntax check
         run: |
           echo "Checking shell script syntax..."
-          for f in bootstrap.sh scripts/save-work.sh scripts/status.sh scripts/push-and-check.sh .husky/pre-commit .husky/pre-push .husky/commit-msg guard/scripts/*.sh standards/scripts/*.sh scripts/*.sh; do
+          for f in bootstrap.sh scripts/save-work.sh scripts/status.sh .husky/pre-commit .husky/pre-push .husky/commit-msg guard/scripts/*.sh standards/scripts/*.sh scripts/*.sh; do
             if [ -f "$f" ]; then
               if bash -n "$f" 2>&1; then
                 echo "  OK: $f"
@@ -108,11 +113,6 @@ jobs:
             exit 1
           fi
           echo "Skills validation passed."
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
 
       - name: Run verify-standards.js
         id: verify-standards
