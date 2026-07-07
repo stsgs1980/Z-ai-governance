@@ -20,9 +20,7 @@ and `CHANGELOG.md` (versioned releases). Key milestones:
   graph-deps.sh path bugs, daemon false VIOLATION logging, vitest PostCSS bleed
 - **2026-07-04:** Restructure — removed zai-skill-registry and STS domain,
   assigned 13 IDs (ZAI-ARCH-001 through ZAI-DEVTOOLS-001)
-- **2026-07-04:** Hooks consolidation — migrated `.githooks/` → `.husky/`
 - **2026-07-04:** Tests — added sandbox integration suite (20 tests)
-- **2026-07-05:** Skills conversion — submodule → inline monorepo (commit a3d358b)
 - **2026-07-05:** zai-skill-registry removal + ID distribution
 
 Stats at end of period: 42 IDs, 92 edges, 2/17 rules enforced, 14 skills, 13/13 HARD PASS.
@@ -86,7 +84,7 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
 1. Finalize Z-ai-governance governance (current status: ready)
 2. Test in sandbox (current status: passed)
 3. Create zai-governance-template repository
-4. Add to npm or use as git submodule
+4. Add to npm or use as git template
 5. Document integration for other projects
 
 ## 2026-07-06 (13)
@@ -263,7 +261,6 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
   - Created 1.2.0 entry with Added/Changed/Removed/Fixed sections
   - Added statistics table (rules enforced 2->16, warnings 36->0, etc.)
   - Recorded breaking changes: none
-  - Documented submodule updates
 
 ## 2026-07-06 (26)
 
@@ -334,7 +331,6 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
   - Documented Z-ai-governance = develop/test bed role
   - Documented zai-governance-template = distribute role
   - 7 tasks for automation:
-    - 7.1: Git submodule setup (30m)
     - 7.2: sync.sh script for cherry-pick (1h)
     - 7.3: CI on template repo (30m)
     - 7.4: promote.sh for version bumps (1h)
@@ -365,25 +361,6 @@ Verification: Only RULE-MONOLITH-012 references remain (unchanged per task spec)
     - Anti-patterns section
     - Refresh timeline (~3 min from push to visible)
   - User manually updates Z-ai-graph-viewer with the documented pattern
-
-## 2026-07-06 (32)
-
-- Status: Done
-- Task: Fix CI failure + move JSON to graph/ directory
-- Details:
-  - read .github/workflows/verify-id-graph.yml
-  - CI #202 failed: fatal: Pathspec 'standards/_graph/id-graph.json' is in submodule 'standards'
-  - Root cause: standards/_graph/ is in submodule, git add refuses from main repo
-  - Decision: move JSON to graph/ (top-level, not in docs/ or submodule)
-  - Reasoning:
-    - standards/_graph/ = submodule path (forbidden)
-    - docs/_graph/ = mixed semantics (visual + API)
-    - graph/ = clean separation: graph/ = API, docs/_graph/ = visual
-  - Updated workflow: generate + commit JSON to graph/
-  - Created graph/README.md: API contract (endpoints, refresh, examples, stability)
-  - Updated standards/_graph/README.md: URLs now point to graph/ (not standards/_graph/)
-  - Refresh timeline: ~3 min from push to visible
-  - Total: 3 repos affected (Z-ai-governance main, standards submodule, graph-viewer)
 
 ## 2026-07-06 (33)
 
@@ -500,8 +477,8 @@ Z-ai-governance is governance-complete. Remaining work is split into tiers.
 | --- | --------------------------------- | -------- | ------------------------------------------------------------------------------------------------ |
 | 4.1 | Create GOVERNANCE.md (defect #11) | 1h       | Escalation paths, decision process, conflict resolution, who owns what. Currently no formal doc. |
 | 4.2 | Create CONTRIBUTING.md            | 30m      | Already exists (5.9KB). Verify it covers current workflow.                                       |
-| 4.3 | Create DEPENDENCY-GUIDE.md        | 1h       | How projects should depend on Z-ai-governance. Submodule vs npm vs direct copy.                    |
-| 4.4 | Create MIGRATIONS.md (template)   | 1h       | Per-version migration guide template for projects using this governance.                         |
+| 4.3 | Create DEPENDENCY-GUIDE.md        | 1h       | How projects should depend on Z-ai-governance. npm package vs direct copy.                    |
+| 4.4 | Create CHANGELOG_TEMPLATE.md        | 1h       | Per-version changelog template for projects using this governance.                           |
 | 4.5 | Create tests/coverage-report.md   | 30m      | Script-by-script coverage report. What each script catches, when to extend.                      |
 
 ### Tier 5: Tooling (low priority, future)
@@ -571,7 +548,7 @@ Z-ai-governance (live)              zai-governance-template (dist)
        │  4. Validate (verifiers clean)        │
        │                                       │
        │  5. Port to template ───────────────> │
-       │     (via submodule pull OR sync.sh)    │
+       │     (via sync.sh)                      │
        │                                       │
        │  6. Bump template version             │
        │  7. Update template CHANGELOG          │
@@ -584,59 +561,12 @@ Z-ai-governance (live)              zai-governance-template (dist)
 
 | #   | Task                                                | Estimate | Notes                                                                                                                  |
 | --- | --------------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
-| 7.1 | Set up git submodule for template                   | 30m      | Other projects can do `git submodule update` to get latest governance. Tested in zai-governance-template repo.         |
 | 7.2 | Create `sync.sh` script for cherry-pick             | 1h       | Semi-automatic script: detects governance changes in Z-ai-governance, prompts to port to template. Logs what was synced. |
 | 7.3 | Add CI on template repo                             | 30m      | Template must also pass 13 governance scripts + verifiers. Otherwise template is "broken" example.                     |
-| 7.4 | Create `promote.sh` for version bumps               | 1h       | Auto-bump template version, update template CHANGELOG, generate MIGRATIONS.md section.                                 |
+| 7.4 | Create `promote.sh` for version bumps               | 1h       | Auto-bump template version, update template CHANGELOG.                                        |
 | 7.5 | Document the maintenance workflow                   | 30m      | Add `MAINTENANCE.md` to template with: when to sync, how to sync, who maintains what.                                  |
 | 7.6 | Quarterly review automation                         | 2h       | Cron job that runs governance scripts on Z-ai-governance, reports drift, suggests actions.                               |
 | 7.7 | Webhook: Z-ai-governance push → auto-port to template | 4h       | GitHub Action on Z-ai-governance that opens PR on template with cherry-picked changes. Reviewer approves or rejects.     |
-
-### Submodule + sync.sh detail
-
-**Submodule approach** (simpler):
-
-```bash
-# In zai-governance-template, add Z-ai-governance as submodule
-cd zai-governance-template
-git submodule add https://github.com/stsgs1980/Z-ai-governance.git reference
-# Reference doc: standards/, guard/, skills/ extracted from reference/
-
-# In other project:
-git submodule add https://github.com/stsgs1980/zai-governance-template.git
-# Auto-updates: git submodule update --remote
-```
-
-**sync.sh approach** (more control):
-
-```bash
-#!/bin/bash
-# sync.sh — Port governance changes from Z-ai-governance to template
-PLATFORM_DIR="$HOME/my-project/Z-ai-governance"
-TEMPLATE_DIR="$HOME/my-project/zai-governance-template"
-
-# Detect changed governance files
-cd "$PLATFORM_DIR"
-CHANGED=$(git diff main..HEAD --name-only -- standards/ guard/ skills/ .husky/ .github/ bootstrap.sh)
-
-if [ -z "$CHANGED" ]; then
-  echo "No governance changes to sync"
-  exit 0
-fi
-
-echo "Changed governance files:"
-echo "$CHANGED"
-read -p "Port these to template? [y/N] " -n 1 -r
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-  cd "$TEMPLATE_DIR"
-  for f in $CHANGED; do
-    cp "$PLATFORM_DIR/$f" "$TEMPLATE_DIR/$f"
-  done
-  echo "Synced. Run 'git status' and commit."
-fi
-```
-
-### Tier 7 total estimate: ~10 hours
 
 ---
 
@@ -651,7 +581,7 @@ fi
   - Updated HANDBOOK.md script table
   - Updated TEST-REPORT.md line ending table
   - Updated sandbox-integration-test.sh script paths
-  - Updated guard submodule (check-crlf.sh, setup-001.sh paths)
+  - Updated guard/ paths (check-crlf.sh, setup-001.sh)
   - Updated id-graph baseline snapshot (54 IDs, 116 edges, 2 warnings)
   - Fixed validate-skills.cjs regex for A11Y-001 (digits in prefix)
 
@@ -664,37 +594,6 @@ fi
   - Added git alias: git push-and-check
   - Updated CI workflow shell syntax check
   - Usage: bash scripts/push-and-check.sh [--wait]
-
-## 2026-07-07 (39)
-
-- Status: Done
-- Task: Full document audit — delete standards/_graph/, fix stale submodule/standard refs, dead links
-- Details:
-  - Deleted standards/_graph/ (dead directory from submodule era, already staged)
-  - Audited ~100 .md files: dead links, stale refs to .gitmodules/standards/_graph/guard-eslint-rules/standards-eslint-rules/STD-ERR-002/STD-TEST-001, wrong submodule language
-  - Fixed 30+ stale submodule references across 25+ files
-  - Added DEPRECATED notices on ARCH-001, CI-AND-TESTING, RULE-ARCH-016, RULE-ARCH-017
-  - Deprecation-annotated RULE-ARCH-016/017 in META-001 id-registry
-  - Removed STD-TEST-001 from AGENT_RULES.md Tier 3 list
-  - Removed .gitmodules ref from CONTRIBUTING.md
-  - Fixed guard/README.md: "submodule immutability" → "architecture immutability"
-  - Fixed ARCH-002 table: ARCH-001 description "4-repo split, submodule topology" → "repo layout, flat architecture"
-  - Fixed ENV-002: "clone Z-ai-governance with submodules" → "clone Z-ai-governance"
-  - Fixed verify-id-graph-spec: "From Z-ai-governance root (4 submodules)" → "From Z-ai-governance root"
-  - Fixed sandbox-guide: removed --recurse-submodules, updated URL to Z-ai-governance, added flat-repo note to §11
-  - Fixed sandbox/INDEX: removed submodule from descriptions
-  - Fixed DOC-002-markdown-standard: "Orchestrator/meta-repos pin submodules" → "Governance repos define standards"
-  - Fixed 8 dead links (LICENSE, CONTRIBUTING.md path, placeholder url/path/to/icon.svg in skills and templates)
-  - Fixed README_TEMPLATE: dead link docs/architecture.md → "project documentation", CONTRIBUTING.md → ../../CONTRIBUTING.md
-  - Fixed A11Y-001: removed STD-TEST-001 cross-ref row, closed overlap note
-  - Fixed skills/zai-answer-before-act: STD-ERR-002 example → STD-ARCH-001
-  - Removed forbidden STD→RULE Related: edges from CHANGELOG_TEMPLATE and WORKLOG_TEMPLATE (fixed G02/G04/G07)
-  - Regenerated id-graph-baseline.json (54→24 IDs, reflects flat repo)
-  - Fixed graph/README.md: standards/_graph/ row → "Removed (was empty stub from submodule era)"
-  - Fixed guard/instructions/PROC-UPDATE-002.md: "guard submodule" → "guard/ files"
-  - Fixed standards/README.md: LICENSE dead links → MIT text / opensource.org URL
-  - All verifiers green: verify-id-graph 13/13 PASS, verify-standards 15/15 PASS, 13/13 guard check-*.sh PASS
-  - Commits: 465945a (docs audit), 10853ee (graph fixes + snapshot)
 
 ---
 

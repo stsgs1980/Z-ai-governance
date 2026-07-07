@@ -33,7 +33,7 @@
 ```bash
 # Step 1: Initialize the sandbox (ALWAYS the first command)
 curl https://z-cdn.chatglm.cn/fullstack/init-fullstack_1775040338514.sh | bash
-```text
+```
 
 This command:
 
@@ -56,7 +56,7 @@ bun add three @react-three/fiber @react-three/drei
 # Step 3: Verify everything works
 cat /home/z/my-project/.zscripts/dev.log | tail -20
 # Expected: "GET / 200 in ..."
-```None
+```
 
 ### What NOT to do
 
@@ -99,7 +99,7 @@ git clone https://github.com/stsgs1980/Z-ai-governance.git /home/z/my-project/Z-
 cd /home/z/my-project/Z-ai-governance
 git config core.fileMode false
 # Skills are already integrated — no symlink needed
-```text
+```
 
 **Why this works:**
 
@@ -168,7 +168,7 @@ The agent will typically find and execute the necessary commands on its own when
    export default function Home() {
      return <div className="min-h-screen">{/* Your UI */}</div>;
    }
-   ```js
+   ```
 
 2. **Use shadcn/ui components**
 
@@ -186,7 +186,7 @@ The agent will typically find and execute the necessary commands on its own when
      my-components/
        Chart.tsx
        Data.tsx
-   ```json
+   ```
 
 4. **Use `'use client'` for interactive components**
 
@@ -199,7 +199,7 @@ The agent will typically find and execute the necessary commands on its own when
 5. **Check logs on errors**
    ```bash
    cat /home/z/my-project/.zscripts/dev.log | tail -30
-   ```None
+   ```
 
 ### [FAIL] DO NOT
 
@@ -218,7 +218,7 @@ The agent will typically find and execute the necessary commands on its own when
    # [FAIL] DO NOT DO THIS
    src/app/about/page.tsx
    src/app/api/route.ts
-   ```None
+   ```
 
 3. **Do NOT use external URLs for preview**
 
@@ -234,7 +234,7 @@ The agent will typically find and execute the necessary commands on its own when
    ```bash
    # [FAIL] DO NOT DO THIS
    npx create-next-app
-   ```None
+   ```
 
 5. **Do NOT clone repositories into separate folders**
    ```bash
@@ -251,7 +251,7 @@ The agent will typically find and execute the necessary commands on its own when
 
 ```bash
 cd /home/z/my-project && bun add <package>
-```None
+```
 
 ### Common Dependencies
 
@@ -280,7 +280,7 @@ cd /home/z/my-project && bun add <package>
 
    ```bash
    bun run db:push
-   ```js
+   ```
 
 3. Use in code:
    ```tsx
@@ -299,7 +299,7 @@ bunx prisma db push
 
 # Generate client
 bunx prisma generate
-```text
+```
 
 ---
 
@@ -331,7 +331,7 @@ Browser (chatglm.site / IM)
 
    ```bash
    cat /home/z/my-project/.zscripts/dev.log | tail -30
-   ```bash
+   ```
 
 2. **Check linter:**
 
@@ -342,7 +342,7 @@ Browser (chatglm.site / IM)
 3. **Restart via reinitialization:**
    ```bash
    curl https://z-cdn.chatglm.cn/fullstack/init-fullstack_1775040338514.sh | bash
-   ```None
+   ```
 
 ### Other Reasons Preview is Not Working
 
@@ -369,7 +369,7 @@ Where `<container-id>` can be found with:
 echo $FC_CONTAINER_ID
 # or
 hostname
-```text
+```
 
 ---
 
@@ -405,7 +405,7 @@ cat /home/z/my-project/.zscripts/dev.log | tail -20
 cd /home/z/my-project
 git clone https://github.com/user/project.git my-project
 cd my-project && npm install && npm run dev  # Will break the sandbox!
-```text
+```
 
 > **Why it doesn't work:** The sandbox dev server starts in `/home/z/my-project/` and expects the code there. If the code is in a subfolder - the preview shows the default placeholder, not your project.
 
@@ -439,7 +439,7 @@ sleep 15
 
 # Step 5: Verify
 cat /home/z/my-project/.zscripts/dev.log | tail -20
-```None
+```
 
 ### If Reinitialization Doesn't Help
 
@@ -461,7 +461,7 @@ curl https://z-cdn.chatglm.cn/fullstack/init-fullstack_1775040338514.sh | bash
 
 ```text
 Error: listen EADDRINUSE: address already in use :::3000
-```None
+```
 
 This means: the dev server is already running (possibly manually started in a previous session).
 
@@ -488,7 +488,7 @@ curl https://z-cdn.chatglm.cn/fullstack/init-fullstack_1775040338514.sh | bash
 
 ```text
 GET / 500 in 942ms (compile: 852ms, render: 90ms)
-```None
+```
 
 ### Cause
 
@@ -520,7 +520,7 @@ cat /home/z/my-project/.zscripts/dev.log | tail -10
 
 ```text
 Module not found: Can't resolve '@/lib/guided-tour/src'
-```None
+```
 
 ### Causes and Solutions
 
@@ -577,7 +577,7 @@ ls src/lib/guided-tour/
 
 # Step 5: Reinitialize sandbox (HMR may crash)
 curl https://z-cdn.chatglm.cn/fullstack/init-fullstack_1775040338514.sh | bash
-```None
+```
 
 ### If Submodule Won't Push (Protected Branch)
 
@@ -594,7 +594,7 @@ git push origin feature/my-changes
 ```bash
 # Quick update
 git submodule update --remote src/lib/guided-tour
-```None
+```
 
 **Full cycle (update + commit):**
 
@@ -617,7 +617,7 @@ curl https://z-cdn.chatglm.cn/fullstack/init-fullstack_1775040338514.sh | bash
 
 ```bash
 git submodule status src/lib/guided-tour
-```bash
+```
 
 **What's new since last update:**
 
@@ -633,7 +633,7 @@ git checkout <commit-hash>
 cd ..
 git add src/lib/guided-tour
 git commit -m "chore: pin GuidedTour to <commit-hash>"
-```text
+```
 
 ---
 
@@ -680,7 +680,7 @@ cd /home/z/my-project && bun run lint
 
 # TypeScript errors
 bunx tsc --noEmit
-```None
+```
 
 ### Database (Prisma)
 
@@ -707,7 +707,7 @@ curl https://z-cdn.chatglm.cn/fullstack/init-fullstack_1775040338514.sh | bash
 pkill -f "next dev"
 rm -rf /home/z/my-project/.next
 curl https://z-cdn.chatglm.cn/fullstack/init-fullstack_1775040338514.sh | bash
-```None
+```
 
 ### Preview URL
 
@@ -738,7 +738,7 @@ cat /home/z/my-project/.zscripts/dev.log | tail -20
 
 # Database (if used)
 bun run db:push
-```text
+```
 
 ---
 
@@ -829,7 +829,7 @@ User's browser (chatglm.site / IM)
               +----> Port 3000 (Next.js dev server)
                         |
                         +----> .zscripts/dev.sh (automatic startup)
-```None
+```
 
 When Next.js on port 3000 dies, the proxy on port 81 cannot forward the request and returns a **"sandbox is inactive"** error.
 
@@ -868,7 +868,7 @@ To avoid idle time during long work sessions:
 ```bash
 # Simple ping script (run in background)
 while true; do curl -s http://localhost:3000 > /dev/null; sleep 60; done &
-```None
+```
 
 #### How to Distinguish Infrastructure from Code Problems
 
@@ -931,7 +931,7 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-```text
+```
 
 > **Important:**
 >

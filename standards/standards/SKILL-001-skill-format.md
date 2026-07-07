@@ -169,7 +169,7 @@ A skill **MUST** have an `id` field when ANY of the following is true:
 | Referenced by ID from a standard                  | `STD-FE-001 §7: "Use ZAI-ARCH-002 for threshold enforcement"` |
 | Referenced by ID from a rule                      | `RULE-MONOLITH-012 enforced_by: ZAI-ARCH-002`                 |
 | Referenced by ID from another skill's `Related:`  | `> Related: ZAI-ARCH-002, ZAI-QA-001`                         |
-| Listed in `MIGRATIONS.md` (deprecated/superseded) | `ZAI-MEM-001 -> ZAI-MEM-101 (renamed)`                        |
+| Listed in change history (deprecated/superseded) | `ZAI-MEM-001 -> ZAI-MEM-101 (renamed)`                        |
 | Published to shared registries                   | Multi-author teams, public skill packs                        |
 
 A skill **MAY** have an `id` field when none of the above apply, but
@@ -443,7 +443,7 @@ but actual practice has diverged. As of 2026-06-18:
   their `related:` edges as a YAML list in frontmatter (e.g.
   `RULE-ANSWER-001` has `related: [RULE-HONEST-006, RULE-STRUCT-007]`
   in YAML, no `> Related:` blockquote line at all).
-- All 24 ZAI skills in `skills/skills/<name>/SKILL.md` declare their
+- All 24 ZAI skills in `skills/<name>/SKILL.md` declare their
   `related:` edges as a YAML list in frontmatter. The blockquote header
   carries `> ID:`, `> Version:`, `> Last Updated:` but typically omits
   `> Related:`.
@@ -487,19 +487,19 @@ skill that references it is invoked.
 ### SKILL-001-003 `[OPEN]` — Appendix B template shows ZAI-META-001 v1.1 but actual skill-id-system/SKILL.md is at v1.0
 
 **Problem:** Appendix B (line 654) shows the target state of
-`skills/skills/skill-id-system/SKILL.md` after migration to v1.1:
+`skills/skill-id-system/SKILL.md` after migration to v1.1:
 
 ```yaml
 id: ZAI-META-001
 version: 1.1
 ```
 
-But the actual file at `skills/skills/skill-id-system/SKILL.md`
+But the actual file at `skills/skill-id-system/SKILL.md`
 (as of 2026-06-18) is still at v1.0 — the migration window described in
 §12.4 has not started. Readers who copy the template expecting it to
 match the current file will find a version mismatch.
 
-**Proposed solution:** Either (a) bump `skills/skills/skill-id-system/SKILL.md`
+**Proposed solution:** Either (a) bump `skills/skill-id-system/SKILL.md`
 to v1.1 to match the template (preferred — closes the migration window's
 first phase), or (b) add a note to Appendix B clarifying that the template
 shows the target state, not the current state. Option (a) requires a PR
@@ -549,9 +549,9 @@ personal skills do not need an ID.
 
 | Content                        | Stays in                              | Why                                                     |
 | ------------------------------ | ------------------------------------- | ------------------------------------------------------- |
-| `skill-id-system` folder       | `skills/skills/skill-id-system/` | Trigger phrases need to resolve during migration window |
+| `skill-id-system` folder       | `skills/skill-id-system/` | Trigger phrases need to resolve during migration window |
 | `ZAI-META-001` ID              | Registry (Appendix A)                 | Marked `SUPERSEDED`                                     |
-| `skill-creator` (ZAI-META-002) | `skills/skills/skill-creator/`   | Updated to read this standard                           |
+| `skill-creator` (ZAI-META-002) | `skills/skill-creator/`   | Updated to read this standard                           |
 
 ### 12.3. ZAI-META-001 After Migration
 
@@ -598,7 +598,7 @@ change. Just update Appendix A via PR.
 
 A: Only if nothing references it. Check `verify-id-graph.js` G02 first.
 If references exist, mark the ID `[DEPRECATED]` in Appendix A with a
-migration entry in `MIGRATIONS.md` instead of removing it.
+migration entry in change history instead of removing it.
 
 ### Q: Why is `skill-creator` different in sandbox vs toolkit?
 
@@ -632,7 +632,7 @@ They may declare an `Aligned_with:` edge if drift becomes a problem.
 
 **Minimum (no ID):**
 
-- [ ] Skill folder created at `skills/skills/<name>/`
+- [ ] Skill folder created at `skills/<name>/`
 - [ ] `SKILL.md` present with YAML frontmatter + H1 + blockquote per §3.1
 - [ ] Required fields present: `name`, `description`, `version`
 - [ ] `name` matches folder name
@@ -730,7 +730,7 @@ They may declare an `Aligned_with:` edge if drift becomes a problem.
 
 ## Appendix B: ZAI-META-001 Thin Pointer Template
 
-After migration, `skills/skills/skill-id-system/SKILL.md` becomes:
+After migration, `skills/skill-id-system/SKILL.md` becomes:
 
 ```markdown
 ---

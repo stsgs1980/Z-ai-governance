@@ -109,7 +109,7 @@ describe("z-ai-platform infrastructure", () => {
     it("references correct skill catalog path (skills/INDEX.md)", () => {
       const content = readFileSync("AGENT_RULES.md", "utf-8");
       expect(content).toContain("skills/INDEX.md");
-      // Must NOT contain the old double-nested path from submodule era
+      // Must NOT contain the old double-nested path
       expect(content).not.toContain("skills/skills/INDEX.md");
     });
   });
@@ -168,12 +168,8 @@ describe("z-ai-platform infrastructure", () => {
       expect(existsSync(".husky/pre-commit")).toBe(true);
     });
 
-    it("has commit-msg hook (migrated from .githooks/)", () => {
+    it("has commit-msg hook", () => {
       expect(existsSync(".husky/commit-msg")).toBe(true);
-    });
-
-    it("does NOT keep the old .githooks/ directory", () => {
-      expect(existsSync(".githooks/pre-commit")).toBe(false);
     });
   });
 

@@ -161,22 +161,9 @@ else
   check "Prisma schema не найдена" "INFO"
 fi
 
-# ─── 10. submodule ─────────────────────────────────────────────────
+# ─── 10. Hooks: useChat dependency ─────────────────────────────────
 echo ""
-echo "--- 10. Git submodule ---"
-
-if [ -f "$PROJECT/.gitmodules" ]; then
-  SUB_COUNT=$(grep -c "\[submodule" "$PROJECT/.gitmodules" 2>/dev/null || echo 0)
-  check "Submodules: $SUB_COUNT" "PASS"
-  SUB_INIT=$(cd "$PROJECT" && git submodule status 2>&1 | head -5)
-  check "Submodule status: $SUB_INIT" "PASS"
-else
-  check ".gitmodules не найден" "INFO"
-fi
-
-# ─── 11. Hooks: useChat dependency ─────────────────────────────────
-echo ""
-echo "--- 11. Hooks code quality ---"
+echo "--- 10. Hooks code quality ---"
 
 if [ -f "$PROJECT/src/hooks/useChat.ts" ]; then
   HAS_MSG_DEP=$(grep -A2 "useCallback" "$PROJECT/src/hooks/useChat.ts" 2>/dev/null | grep -c "messages")

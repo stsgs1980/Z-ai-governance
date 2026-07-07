@@ -69,7 +69,7 @@ Super Z (orchestrator)
     +----> full-stack-developer (Next.js + Prisma + API)
     |
     +----> frontend-styling-expert (CSS, responsiveness, UI/UX)
-```None
+```
 
 ### 2.2. Execution Flow
 
@@ -174,7 +174,7 @@ Super Z plan:
 1. [Explore] -> analyze file structure
 2. [Plan] -> create splitting plan
 3. [full-stack] -> perform refactoring
-```None
+```
 
 ### 6.3. Simple Question (Without Subagents)
 

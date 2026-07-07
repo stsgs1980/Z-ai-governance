@@ -37,7 +37,7 @@ Manages local component state:
 
 ```typescript
 const [value, setValue] = useState<T>(initialValue);
-```None
+```
 
 ### useEffect
 
@@ -61,7 +61,7 @@ Memoizes functions to prevent unnecessary re-renders:
 const memoizedCallback = useCallback(() => {
   doSomething(a, b);
 }, [a, b]);
-```None
+```
 
 ### useMemo
 
@@ -78,7 +78,7 @@ Preserves mutable values without re-rendering:
 ```typescript
 const containerRef = useRef<HTMLDivElement>(null);
 const previousValue = useRef<T>(value);
-```text
+```
 
 ---
 

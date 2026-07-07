@@ -114,7 +114,7 @@ export default function ChatPage() {
     </div>
   );
 }
-```None
+```
 
 ### Case 2: Content Generator
 
@@ -229,7 +229,7 @@ const { save } = useAutoSave(data);
 
 // [FAIL] Bad
 const { data, save, loading, error, ... } = useEverything();
-```None
+```
 
 ### 2. Correct Dependencies in useCallback/useMemo
 
@@ -267,7 +267,7 @@ const handleGenerate = async () => {
 const handleGenerate = async () => {
   const result = await generate(prompt); // May throw
 };
-```None
+```
 
 ### 4. Request Cancellation
 
@@ -319,7 +319,7 @@ function useUser(id: string): {
 function useUser(id: string): any {
   // ...
 }
-```text
+```
 
 ---
 

@@ -25,7 +25,6 @@ Normative standards, templates, and guides for the Z-ai ecosystem. Standards des
 - verify-id-graph.js enforcing G01-G15 cross-repo ID graph integrity
 - Cross-domain navigation map linking related standards across domains
 - Non-normative templates (README_TEMPLATE.md) and guides (CODE_EXAMPLES_GUIDE.md)
-- Migration tracking via MIGRATIONS.md (M001 through M004)
 - Structured standard headers with ID, Version, Level, Status, verified_by, and Related fields
 
 ## Tech Stack
@@ -74,7 +73,6 @@ node scripts/verify-id-graph.js
 - `guides/` - Non-normative code examples guide (STD-DOC-005)
 - `scripts/` - verify-standards.js (V01-V18), verify-id-graph.js (G01-G15), verify-skills.js (S01-S10)
 - `docs/` - Tool specifications
-- `MIGRATIONS.md` - ID migration log
 
 ## Installation Order
 
@@ -155,7 +153,7 @@ Every PR that touches a `.md` file MUST pass:
 ```bash
 node scripts/verify-standards.js   # V04-V10 per-repo invariants
 node scripts/verify-id-graph.js    # G01-G15 cross-repo invariants
-```None
+```
 
 The pre-commit hook (`.husky/pre-commit` in repo root) runs all three verify-*.js scripts in Group 2.
 
@@ -173,12 +171,7 @@ To add a new standard:
 
 ## Status
 
-Active migrations tracked in MIGRATIONS.md:
-
-- **M001**: ZAI-META-001 to STD-SKILL-001 (superseded) -- window open until migration complete
-- **M002**: RULE-001..RULE-017 to RULE-<DOMAIN>-NNN (renamed) -- window NOT YET OPEN
-- **M003**: legacy/ flat layout to standards/ flat layout with <DOMAIN>-<NNN>-<name>.md naming -- completed 2026-06-18
-- **M004**: ARCH-002-implementation-order.md (was STD-ARCH-001) to new ID STD-ARCH-002 -- completed 2026-06-18
+All migrations complete. No active migration windows.
 
 | Version | Date | Change |
 |---|---|---|

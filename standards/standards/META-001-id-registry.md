@@ -59,14 +59,6 @@ verbatim (no renumbering) to keep all existing references stable.
 | RULE-VERSION-013   | Use verify-docs bump                  | 1.1     | [C]   | ACTIVE | guard/AGENT_RULES.md             |
 | RULE-COMMIT-014    | Pre-commit checklist                  | 1.1     | [C]   | ACTIVE | guard/AGENT_RULES.md             |
 | RULE-DOC-015       | No Unicode graphics                   | 1.0     | [W]   | ACTIVE | guard/AGENT_RULES.md             |
-| RULE-ARCH-016      | Architecture immutability              | 1.0     | [C]   | DEPRECATED (v1.3.0: redundant) | guard/rules/RULE-ARCH-016.md |
-| RULE-ARCH-017      | Upstream write protection             | 1.0     | [C]   | DEPRECATED (v1.3.0: redundant) | guard/rules/RULE-ARCH-017.md |
-
-> The RULE-<DOMAIN>-NNN format replaces the legacy RULE-001..RULE-017
-> numbering from AHG v2.5.0. Legacy numbers are migrated per §8. The
-> legacy numbering is preserved as an alias for one release cycle
-> (v3.0.0 -> v3.1.0), then removed in v3.1.0.
-
 ### 4.14. Procedures (PROC-)
 
 | ID                        | File                                   | Version | Level | Status                                                                                                   |
@@ -75,29 +67,16 @@ verbatim (no renumbering) to keep all existing references stable.
 | PROC-UPDATE-002           | guard/update.sh                   | 2.1     | [C]   | ACTIVE (planned) — file not yet created                                                                  |
 | PROC-COCHANGE-003         | guard/scripts/co-change-check.sh  | 1.0     | [C]   | ACTIVE — file created 2026-06-22 (implements RULE-DOC-010)                                               |
 | PROC-LINECOUNT-004        | guard/scripts/line-count-check.sh | 1.0     | [C]   | ACTIVE — file created 2026-06-22 (implements RULE-MONOLITH-012, delegates to TOOL-VERIFY-002/004)        |
-| PROC-PLATFORM-INSTALL-005 | install.sh               | 1.0     | [C]   | RETIRED 2026-06-19 (superseded by `bootstrap.sh` — single entry point covers install + update + restore) |
+| PROC-PLATFORM-INSTALL-005 | install.sh               | 1.0     | [C]   | RETIRED 2026-06-19 (functions covered by `bootstrap.sh`) |
 | PROC-PLATFORM-UPDATE-006  | update.sh                | 1.0     | [C]   | RETIRED 2026-06-19 (superseded by `bootstrap.sh`)                                                        |
-| PROC-PLATFORM-DOCTOR-007  | doctor.sh                | 1.0     | [C]   | RETIRED 2026-06-19 (superseded by `status.sh` — diagnostic-only entry point)                             |
+| PROC-PLATFORM-DOCTOR-007  | doctor.sh                | 1.0     | [C]   | RETIRED 2026-06-19 (functions covered by `status.sh`) |
 
-> **Phantom-ID fix (META v2.0.2, 2026-06-19):** Rows previously marked
-> `ACTIVE` for PROC-SETUP-001, PROC-UPDATE-002, PROC-COCHANGE-003,
-> PROC-LINECOUNT-004 referenced files that did not exist in guard/.
-> Status was `ACTIVE (planned)` to reflect reality.
->
-> **M003 partial completion (2026-06-22):** PROC-COCHANGE-003 and
-> PROC-LINECOUNT-004 are now `ACTIVE` — files created in `guard/scripts/`
-> with companion instruction docs in `guard/instructions/`.
-> PROC-SETUP-001 and PROC-UPDATE-002 remain `ACTIVE (planned)` pending
-> implementation; they are guard-side install/update procedures not yet
-> scoped (see M003 in `standards/MIGRATIONS.md`).
->
-> **PROC-PLATFORM-005/006/007 retirement (META v2.0.2, 2026-06-19):**
-> Three platform-side procedures were planned in v2.0.0 but never
-> implemented. The functions they would have provided are covered by
-> `bootstrap.sh` (install + update + restore in one entry
-> point) and `status.sh` (diagnostic). The three IDs are
-> RETIRED with supersession notes; they will not be re-used (per §9.2
-> no-reassignment rule).
+> **PROC-PLATFORM-005/006/007 retirement (2026-06-19):**
+> Three platform-side procedures were planned but never implemented. The
+> functions they would have provided are covered by `bootstrap.sh` (install
+> + update + restore in one entry point) and `status.sh` (diagnostic).
+> The three IDs are RETIRED with supersession notes; they will not be
+> re-used (per §9.2 no-reassignment rule).
 
 ### 4.15. Tools (TOOL-)
 
@@ -113,8 +92,7 @@ verbatim (no renumbering) to keep all existing references stable.
 > **Phantom-ID fix (META v2.0.2, 2026-06-19):** Rows previously marked
 > `ACTIVE` for TOOL-VERIFY-001 and TOOL-BUMP-005 referenced files that do
 > not exist in guard/. Status is now `ACTIVE (planned)` to reflect
-> reality. The two tools are pending migration M004 (see
-> `standards/MIGRATIONS.md`).
+> reality.
 
 ### 4.16. Skills (ZAI-)
 
@@ -207,7 +185,7 @@ below is informational; the canonical list is maintained in STD-SKILL-001
 | ------------- | ------------------------ | ------- | ----- | -------------------- |
 | STD-SKILL-001 | Skill ID System Standard | 1.0.0   | [C]   | ACTIVE (new in v2.0) |
 
-> New standard hosted at `standards/standards/SKILL_ID_SYSTEM_STANDARD.md`.
+> New standard hosted at `standards/standards/SKILL-001-skill-format.md`.
 > Supersedes the content of ZAI-META-001 (which becomes a thin pointer).
 > See §8 for the migration map.
 

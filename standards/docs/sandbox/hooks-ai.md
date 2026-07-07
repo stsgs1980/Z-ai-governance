@@ -77,7 +77,7 @@ export function useAI(options: UseAIOptions = {}): UseAIReturn {
 
   return { generate, loading, error, response, reset };
 }
-```None
+```
 
 ### useImageGeneration - Image Generation Hook
 
@@ -248,7 +248,7 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
 
   return { messages, send, loading, error, cancel, clear, regenerate };
 }
-```None
+```
 
 ### useAutoSave - Auto-Save Hook
 
@@ -354,7 +354,7 @@ export function useDebounce<T>(value: T, delay: number = 500): T {
 //     searchAPI(debouncedSearch);
 //   }
 // }, [debouncedSearch]);
-```text
+```
 
 ---
 

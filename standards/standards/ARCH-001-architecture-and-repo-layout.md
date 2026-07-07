@@ -125,9 +125,9 @@ Each top-level directory MUST expose a predictable internal layout so that
 
 | Directory     | Required paths                                                       | Notes                                                                                                                                                          |
 | ------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `standards/`  | `standards/*.md`, `scripts/verify-*.js`, `MIGRATIONS.md`             | All `STD-*` files live in `standards/standards/`                                                                                                               |
+| `standards/`  | `standards/*.md`, `scripts/verify-*.js`                 | All `STD-*` files live in `standards/standards/`                                                                                                               |
 | `guard/`      | `rules/*.md`, `INDEX.md`                                             | All `RULE-*` files live in `guard/rules/`                                                                                                                      |
-| `skills/`     | `skills/<skill-name>/SKILL.md`, `skills/INDEX.md`                    | All `ZAI-*` skills live one level under `skills/skills/` (the doubled `skills/` is preserved for backward compatibility with skill-creator conventions)       |
+| `skills/`     | `skills/<skill-name>/SKILL.md`, `skills/INDEX.md`                    | All `ZAI-*` skills live one level under `skills/`                                                                                                              |
 
 ### 4.4. No Inlined Copies
 
@@ -163,10 +163,10 @@ STD-META-001 §2.1:
 | `RULE-`   | L2    | `guard/`            | `guard/rules/*.md`                                                                                                      |
 | `PROC-`   | L2    | `guard/`            | `guard/procedures/*.md` (currently inline in `rules/` per existing convention)                                          |
 | `TOOL-`   | L2    | `guard/`            | `guard/tools/*` and `standards/scripts/verify-*.js`                                                                     |
-| `ZAI-`    | L3    | `skills/`           | `skills/skills/<skill-name>/SKILL.md`                                                                                   |
+| `ZAI-`    | L3    | `skills/`           | `skills/<skill-name>/SKILL.md`                                                                                     |
 
-An artifact MUST NOT be moved between layers without a migration entry
-in `MIGRATIONS.md` of the losing directory. Migrations follow the
+An artifact MUST NOT be moved between layers without recording the
+change in the document's change history. Cross-layer moves follow the
 protocol in STD-META-001 §8.
 
 ### 5.2. Layer Exclusivity
@@ -451,4 +451,4 @@ These references are intentional -- they describe the target state of the cascad
 | 1.1.0   | 2026-06-18 | Added §5A Cascade State and Propagation Direction (cascade diagram, 6 direction rules C-1..C-6, 4 anti-patterns, worked example for STD-ENV-002 v1.2 -> v1.3 bump). Added §8 Known Issues (ARCH-001-001 resolved, ARCH-001-002/003 open). Closes W12 warning on this file.                                                                                                                                                   |
 | 1.1.1   | 2026-06-18 | Added ARCH-001-004 Known Issue (§5A references to planned artifacts documented, W13 whitelist in verify-id-graph.js v1.1.2 covers them).                                                                                                                                                                                                                                                                                       |
 | 1.1.2   | 2026-06-18 | Retired dead scripts. Dropped `verify-cascade.js` from §4.1 L1 verifier list (TOOL-VERIFY-003 RETIRED in META-001 §4.15). Dropped `scripts/*.js` from §5 L0 layout (parent `scripts/` directory removed -- was empty after `cross-validator-test.js` deletion). Replaced §6.2 reference to `cross-validator-test.js` with the actual live verifiers (`verify-standards.js` + `verify-id-graph.js` run by pre-commit hook + CI). |
-| 1.2.0   | 2026-07-06 | Rewrote for flat single-repo architecture. Removed all submodule, multi-repo, pointer-bump, and `.gitmodules` references. Removed §8 (Pointer Update Protocol) and §9 (Submodule Recovery). Renumbered remaining sections. Updated definitions, directory layout, and validation matrix for flat structure. Replaced PlantUML cascade diagram with Mermaid. Updated all repo-name references to directory paths.     |
+| 1.2.0   | 2026-07-06 | Rewrote for flat single-repo architecture. Updated definitions, directory layout, and validation matrix. Replaced PlantUML cascade diagram with Mermaid.     |

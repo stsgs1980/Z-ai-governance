@@ -554,7 +554,7 @@ npm install alpha
 +-------------------+
 |    Retries        |
 +-------------------+
-```None
+```
 
 ## Notes
 

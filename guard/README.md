@@ -84,18 +84,18 @@ Canonical source: root eslint-rules/unicode-policy.js via lint-staged (STD-DOC-0
 
 ## Project Structure
 
-- `rules/` - 17 RULE- rule files + INDEX.md catalog
-  - RULE-ANSWER-001 through 017 covering: answer before act, worklog, read before write, commit structure, no loops, honest reporting, work structure, sandbox verification, session start, documentation sync, integrity protection, anti-monolith, version bumping, pre-commit checklist, no Unicode graphics, architecture immutability, upstream write protection
+- `rules/` - 15 RULE- rule files + INDEX.md catalog
+  - 15 active rules (RULE-ANSWER-001 through RULE-DOC-015) covering: answer before act, worklog, read before write, commit structure, no loops, honest reporting, work structure, sandbox verification, session start, documentation sync, integrity protection, anti-monolith, version bumping, pre-commit checklist, no Unicode graphics
 - `instructions/` - 4 PROC-*.md spec files (SETUP-001, UPDATE-002, COCHANGE-003, LINECOUNT-004)
 - `scripts/` - 18 shell scripts: 13 check-*.sh (integrity, commit, version, env), co-change-check.sh, worklog-check.sh, line-count-check.sh, setup-001.sh, update-002.sh; plus build-registry.py
 - `tools/` - verify-docs.sh (TOOL-VERIFY-001), bump.sh (TOOL-BUMP-005)
-- `registry.json` - Auto-generated registry of all 23 enforcement IDs
+- `registry.json` - Auto-generated registry of enforcement IDs (RULE/PROC/TOOL)
 
 ## Migration Plan
 
-Per STD-META-001 s11.2 and `standards/MIGRATIONS.md`:
+Per STD-META-001 §11.2:
 
-### M002 - RULE-001..RULE-017 to RULE-ANSWER-001..RULE-ARCH-017 (COMPLETE)
+### M002 - RULE-001..RULE-015 to RULE-ANSWER-001..RULE-DOC-015 (COMPLETE)
 
 | Legacy   | New ID             | Rule Name                    |
 | -------- | ------------------ | ---------------------------- |
@@ -114,10 +114,6 @@ Per STD-META-001 s11.2 and `standards/MIGRATIONS.md`:
 | RULE-013 | RULE-VERSION-013   | Use verify-docs bump         |
 | RULE-014 | RULE-COMMIT-014    | Pre-commit checklist         |
 | RULE-015 | RULE-DOC-015       | No Unicode graphics          |
-| RULE-016 | RULE-ARCH-016      | Architecture immutability       |
-| RULE-017 | RULE-ARCH-017      | Upstream write protection    |
-
-Migration window documented as "NOT YET OPEN" in `standards/MIGRATIONS.md` because legacy IDs do not exist in the current ID graph.
 
 ### M003 - AHG PROC-XXX to PROC-MONOLITH-XXX (COMPLETE 2026-06-25)
 

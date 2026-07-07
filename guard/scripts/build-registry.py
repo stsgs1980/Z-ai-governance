@@ -39,7 +39,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-PLATFORM = Path("/home/z/my-project/Z-ai-governance")
+PLATFORM = Path("/home/z/my-project/Z-ai-platform-unified")
 RULES_INDEX = PLATFORM / "guard/rules/INDEX.md"
 ID_REGISTRY = PLATFORM / "standards/standards/META-001-id-registry.md"
 OUTPUT = PLATFORM / "guard/registry.json"

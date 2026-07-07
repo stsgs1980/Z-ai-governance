@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-```None
+```
 
 ### Image Generation API Route
 
@@ -153,7 +153,7 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-```text
+```
 
 ---
 
@@ -218,7 +218,7 @@ export function checkRateLimit(
   record.count++;
   return { allowed: true, remaining: limit - record.count, resetTime: record.resetTime };
 }
-```text
+```
 
 ---
 

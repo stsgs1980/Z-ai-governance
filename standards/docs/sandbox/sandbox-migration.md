@@ -44,7 +44,7 @@ if [ -d "/home/z/my-project" ]; then
 else
   echo "Directory not found. Skipping deletion."
 fi
-```None
+```
 
 ### Step 2. Clone Repository
 
@@ -80,7 +80,7 @@ npm --version
 
 # 5. Install dependencies
 npm install --legacy-peer-deps
-```None
+```
 
 ### Step 4. Configure Git
 
@@ -99,7 +99,7 @@ Run the build to check that the project compiles without errors. This detects br
 ```bash
 # 7. Verify build
 npm run build
-```None
+```
 
 ### Step 6. Restore Worklog
 
@@ -145,7 +145,7 @@ git clone https://x-access-token:YOUR_GITHUB_TOKEN@github.com/stsgs1980/stanisla
 cd /home/z/my-project && npm run build
 
 # Then restore worklog (paste saved content).
-```text
+```
 
 > Replace `YOUR_GITHUB_TOKEN` with the actual token before sending.
 > After pasting worklog, verify: `cat /home/z/my-project/worklog.md`

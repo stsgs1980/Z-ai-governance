@@ -13,7 +13,7 @@ Three locations were considered:
 
 | Location                | Why rejected                                                                                                          |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `standards/_graph/`     | Removed (was an empty stub from the submodule era). Graph data lives exclusively in this `graph/` directory.          |
+| `standards/_graph/`     | Not used — graph data lives exclusively in this `graph/` directory. |
 | `docs/_graph/`          | Directory does not exist in this repo.                                                                                |
 | **`graph/` (this dir)** | Canonical location for all graph data — both machine-consumable JSON exports and any future visual artifacts.          |
 

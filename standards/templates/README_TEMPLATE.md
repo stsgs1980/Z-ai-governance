@@ -126,7 +126,7 @@ Brief description of the project (1-2 sentences). What it does and why it exists
 git clone https://github.com/owner/repo.git
 cd repo
 bun install
-```None
+```
 
 ### Run
 
@@ -173,7 +173,7 @@ See `.env.example`:
 
 ```env
 DATABASE_URL="file:./db/dev.db"
-```None
+```
 
 ## Status
 
