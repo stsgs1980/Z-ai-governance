@@ -403,7 +403,7 @@ to create new skills. The skill-creator will:
 | `CONTRACT.md` <= 500 lines (META-001 §4.18.1, CONTRACT.md row) | `verify-skills.js`    | V12b     | **HARD** (all skills with CONTRACT.md) — added 2026-06-21 (O-017 Phase D2)                              |
 | `README.md` <= 400 lines (META-001 §4.18.1, README.md row)     | `verify-skills.js`    | V12c     | **HARD** (all skills with README.md) — added 2026-06-22 (S10c activation, gepetto+react-dev remediated) |
 
-### 10.2. Cross-Repo Checks (in Z-ai-platform CI)
+### 10.2. Cross-Repo Checks (in Z-ai-governance CI)
 
 | Check                              | Tool                 | Check ID | Strictness                                  |
 | ---------------------------------- | -------------------- | -------- | ------------------------------------------- |
@@ -479,7 +479,7 @@ path that does not exist.
 
 **Proposed solution:** Add `$STANDARDS_ROOT` to ENV-001 §3 (environment
 variables) with the definition:
-`STANDARDS_ROOT=/home/z/my-project/Z-ai-platform/standards` (or the
+`STANDARDS_ROOT=/home/z/my-project/Z-ai-governance/standards` (or the
 equivalent path in non-sandbox deployments). Document that the variable
 MUST be set by the bootstrap procedure (ENV-002 §3.0 step 4) before any
 skill that references it is invoked.

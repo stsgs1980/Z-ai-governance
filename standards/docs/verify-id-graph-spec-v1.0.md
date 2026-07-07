@@ -122,7 +122,7 @@ If discovery fails, exit 2 with a diagnostic.
 | Z-ai-standards | `standards/**/*.md`, `STANDARDS.md`, `*.md` (root) | All `STD-*` IDs + headers |
 | Z-ai-guard | `AGENT_RULES.md`, `rules/**/*.md`, `instructions/**/*.md`, `scripts/**/*.{sh,js,ts}`, `tools/**/*.{md,ts,js}` | All `RULE-*`, `PROC-*`, `TOOL-*` IDs |
 | Z-ai-skills | `skills/**/SKILL.md`, `skills/**/*.md` | All `ZAI-*` IDs (from YAML frontmatter + blockquote) |
-| Z-ai-platform | `*.md`, `docs/**/*.md`, `templates/**/*.md` | No IDs declared (platform is meta); scanned for **references** only |
+| Z-ai-governance | `*.md`, `docs/**/*.md`, `templates/**/*.md` | No IDs declared (platform is meta); scanned for **references** only |
 
 ### 3.3. Migrations File
 
@@ -451,7 +451,7 @@ This means:
 
 ```text
 verify-id-graph.js v1.0.0
-Platform root: /home/user/Z-ai-platform
+Platform root: /home/user/Z-ai-governance
 Repos scanned: 4 (standards, guard, skills, platform)
 IDs extracted: 73 (20 STD, 17 RULE, 7 PROC, 6 TOOL, 24 ZAI [incl. 1 SUPERSEDED])
 Related: edges: 142
@@ -498,7 +498,7 @@ Result: PASS (13/13 hard checks, 5 warnings)
 ```json
 {
   "version": "1.0.0",
-  "platform_root": "/home/user/Z-ai-platform",
+  "platform_root": "/home/user/Z-ai-governance",
   "repos_scanned": ["standards", "guard", "skills", "platform"],
   "summary": {
     "ids_extracted": 73,
@@ -541,9 +541,9 @@ Result: PASS (13/13 hard checks, 5 warnings)
 
 ## 7. Integration Points
 
-### 7.1. pre-commit Hook (in Z-ai-platform)
+### 7.1. pre-commit Hook (in Z-ai-governance)
 
-`Z-ai-platform/install-hooks.sh` installs a pre-commit hook that runs:
+`Z-ai-governance/install-hooks.sh` installs a pre-commit hook that runs:
 
 ```bash
 # Fast checks first (per-repo):
@@ -570,7 +570,7 @@ The `--ci` flag skips network-dependent checks (e.g. fetching latest
     # Upload result.json as artifact for cross-repo CI to consume.
 ```
 
-### 7.3. Cross-Repo CI (in Z-ai-platform `.github/workflows/cross-repo.yml`)
+### 7.3. Cross-Repo CI (in Z-ai-governance `.github/workflows/cross-repo.yml`)
 
 Runs nightly at 06:00 UTC. Checks out all four repos at their pinned
 versions, runs `verify-id-graph.js` in full mode (not `--ci`), uploads
@@ -578,7 +578,7 @@ the JSON result. Opens a GitHub issue if any check fails.
 
 ### 7.4. doctor.sh Integration
 
-`Z-ai-platform/doctor.sh` calls `verify-id-graph.js` as part of its
+`Z-ai-governance/doctor.sh` calls `verify-id-graph.js` as part of its
 diagnostic suite. If the script exits 2 (config error), doctor reports
 "ID graph checker misconfigured"; if exits 1, "ID graph has violations —
 see report".
@@ -643,7 +643,7 @@ CI runs the script against each fixture and compares.
 
 ## 9. Open Questions (to resolve before implementation)
 
-1. **Should Z-ai-platform declare its own IDs?** Currently §3.2 says
+1. **Should Z-ai-governance declare its own IDs?** Currently §3.2 says
    "platform is meta; scanned for references only". But platform has
    `install.sh`, `doctor.sh`, etc. — should those be `PROC-PLATFORM-005`?
    *Resolution (v2): yes, they're already in STD-META-001 §4.14. Platform

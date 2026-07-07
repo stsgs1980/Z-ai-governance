@@ -251,7 +251,7 @@ test_agent_can_check_git_status() {
     if git -C "$PLATFORM_DIR" status > /dev/null 2>&1; then
         log_info "git status works"
         
-        # Check if Z-ai-platform is tracked
+        # Check if Z-ai-governance is tracked
         local status_output
         status_output=$(git -C "$PLATFORM_DIR" status --short 2>&1)
         

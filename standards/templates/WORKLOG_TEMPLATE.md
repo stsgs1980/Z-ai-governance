@@ -74,7 +74,7 @@ Next steps or TODOs.
 ### What was done
 
 Fixed greedy regex for cross-platform path normalization.
-Lazy ._? matched up to first Z-ai-platform/ on Linux (two occurrences),
+Lazy ._? matched up to first Z-ai-governance/ on Linux (two occurrences),
 while greedy ._ matches up to last occurrence, giving same result on both OS.
 
 ### Result

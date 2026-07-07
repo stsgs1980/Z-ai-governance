@@ -80,7 +80,7 @@ Built with: <technologies>
 
 **Does NOT apply to:**
 - Standards, rules, skills, templates
-- Meta-repos / orchestrator repos (e.g., Z-ai-platform, Z-ai-standards)
+- Meta-repos / orchestrator repos (e.g., Z-ai-governance, Z-ai-standards)
 - Nested docs (`docs/**/*.md`)
 
 **Test:** "Does this repo ship a runnable application whose stack a reader would care about?"

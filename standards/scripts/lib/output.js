@@ -137,7 +137,7 @@ function emitJSON(results, version, effectiveDate, opts) {
     if (!filePath) return filePath;
     return String(filePath)
       .replace(/\\/g, "/")
-      .replace(/.*(Z-ai-platform|Z-ai-standards|Z-ai-guard|Z-ai-skills)\//, "");
+      .replace(/.*(Z-ai-governance|Z-ai-standards|Z-ai-guard|Z-ai-skills)\//, "");
   };
 
   // Build ids array (skip malformed and no-id declarations)
@@ -213,7 +213,7 @@ function emitJSON(results, version, effectiveDate, opts) {
       str.replace(/\(in\s+([^)]+)\)/g, (match, filePath) => {
         const normalized = filePath
           .replace(/\\/g, "/") // Windows backslashes to forward slashes
-          .replace(/.*(Z-ai-platform|Z-ai-standards|Z-ai-guard|Z-ai-skills)\//, "");
+          .replace(/.*(Z-ai-governance|Z-ai-standards|Z-ai-guard|Z-ai-skills)\//, "");
         return `(in ${normalized})`;
       });
     payload.warnings = payload.warnings.map((w) => ({

@@ -315,7 +315,7 @@ function findRepos(platformRoot, opts) {
     standards: ["Z-ai-standards", "standards"],
     guard: ["Z-ai-guard", "guard"],
     skills: ["Z-ai-skills", "skills"],
-    platform: ["Z-ai-platform", "platform"], // often == platformRoot
+    platform: ["Z-ai-governance", "platform"], // often == platformRoot
   };
 
   for (const [name, candidatesList] of Object.entries(candidates)) {

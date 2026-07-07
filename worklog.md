@@ -1,6 +1,6 @@
 # WORKLOG
 
-## Work Notes for Z-ai-platform
+## Work Notes for Z-ai-governance
 
 **Format:** Append-only. New entries go at the bottom.
 

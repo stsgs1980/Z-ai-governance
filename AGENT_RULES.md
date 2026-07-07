@@ -172,7 +172,7 @@ Full tier order in ARCH-002 file.
 ## §6. Superpowers Policy (External Plugin)
 
 Superpowers is an **external plugin** (adapted from Zcode) — not part of
-Z-ai-platform. It may or may not be installed in a given sandbox.
+Z-ai-governance. It may or may not be installed in a given sandbox.
 
 **Detection**: look for `.superpowers-zai/` directory or `sp-*` skills
 in the sandbox skills folder.
@@ -280,7 +280,7 @@ This file targets the Z-ai-governance flat repository. All directories
 no submodules.
 
 ```
-  Repository:   Z-ai-governance (flat copy of Z-ai-platform)
+  Repository:   Z-ai-governance (flat copy of Z-ai-governance)
   Version:      v1.3.0  (2026-07-07)
   Structure:    standards/, guard/, skills/ — regular directories
   Node:         >=20.12.0 (local), v24.x (sandbox)

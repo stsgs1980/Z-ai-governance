@@ -125,7 +125,7 @@ function compareSnapshot(currentJSON, baselinePath, currentVersion) {
     str.replace(/\(in\s+([^)]+)\)/g, (match, filePath) => {
       const normalized = filePath
         .replace(/\\/g, "/") // Windows backslashes to forward slashes
-        .replace(/.*(Z-ai-platform|Z-ai-standards|Z-ai-guard|Z-ai-skills)\//, "");
+        .replace(/.*(Z-ai-governance|Z-ai-standards|Z-ai-guard|Z-ai-skills)\//, "");
       return `(in ${normalized})`;
     });
   const normWarn = (w) => {

@@ -1,6 +1,6 @@
 # Z-ai-governance
 
-Unified governance layer for the Z-ai ecosystem. Flat copy of Z-ai-platform
+Unified governance layer for the Z-ai ecosystem. Flat copy of Z-ai-governance
 with deduplicated enforcement: guard rules, normative standards, and 14
 skills in a single repository. No submodules.
 

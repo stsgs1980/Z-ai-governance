@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Changed
 
-- **Repository structure**: flat copy of Z-ai-platform -- no submodules
+- **Repository structure**: flat copy of Z-ai-governance -- no submodules
   (guard/, standards/, skills/ are regular directories)
 - **Governance unification**: 14 duplicate implementations removed
   (6 emoji, 4 line-count, 4 worklog) without loss of functionality

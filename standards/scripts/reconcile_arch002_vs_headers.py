@@ -16,7 +16,7 @@ Output: table of (standard, declared_prereqs_in_ARCH-002, Related_in_header, dif
 import re
 from pathlib import Path
 
-STANDARDS_DIR = Path("/home/z/my-project/Z-ai-platform/standards/standards")
+STANDARDS_DIR = Path("/home/z/my-project/Z-ai-governance/standards/standards")
 
 # View A: ARCH-002 §1 install order — manually transcribed from the
 # table we read earlier. Each entry: (position, ID, declared prereqs)

@@ -734,7 +734,7 @@ hard error G05 starting v2.0.0.
 | YAML frontmatter and blockquote agree (for ZAI- skills with `id`)   | `verify-standards.js` (V14)          | per-repo | **SOFT**   |
 | `name` matches folder name (ZAI skills)                             | `verify-standards.js` (V11b)         | per-repo | **HARD**   |
 
-### 10.2. Cross-Repo Checks (in Z-ai-platform CI)
+### 10.2. Cross-Repo Checks (in Z-ai-governance CI)
 
 | Check                                                          | Tool                            | Layer      | Strictness                         |
 | -------------------------------------------------------------- | ------------------------------- | ---------- | ---------------------------------- |

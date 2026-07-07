@@ -88,7 +88,7 @@ const W13_WHITELIST = new Set([
   "line-count-check.sh",
   "scripts/setup-git.sh",
   // Cross-repo MIGRATIONS.md — each repo MAY have one but not required
-  "Z-ai-platform/MIGRATIONS.md",
+  "Z-ai-governance/MIGRATIONS.md",
   "Z-ai-guard/MIGRATIONS.md",
   "Z-ai-skills/MIGRATIONS.md",
   // Skills tree paths referenced for documentation but not required to exist
@@ -101,12 +101,12 @@ const W13_WHITELIST = new Set([
   // Pre-restructure filename still referenced in historical context
   "Z-ai-standards/standards/SKILL_ID_SYSTEM_STANDARD.md",
   "Z-ai-standards/known-issues.md",
-  // RULE-ARCH-016 lives in Z-ai-guard/rules/, not Z-ai-platform/
-  "Z-ai-platform/RULE-ARCH-016.md",
+  // RULE-ARCH-016 lives in Z-ai-guard/rules/, not Z-ai-governance/
+  "Z-ai-governance/RULE-ARCH-016.md",
   // skill-creator.md is a planning reference, not yet shipped
-  "Z-ai-platform/skill-creator.md",
+  "Z-ai-governance/skill-creator.md",
   // v1.1.2 additions: planned/historical refs surfaced by ARCH-001 §5A cascade section
-  "Z-ai-platform/doctor.sh", // planned diagnostics script
+  "Z-ai-governance/doctor.sh", // planned diagnostics script
   "Z-ai-guard/rules/RULE-ENV-008.md", // planned rule for bootstrap enforcement
   "guard/rules/RULE-ENV-008.md", // same, relative form
   "RULE-ENV-008.md", // bare form, see ARCH-001 §8 recovery procedures
@@ -142,8 +142,8 @@ const W13_WHITELIST = new Set([
   "react-dev/references/hooks.md",
   "mermaid-diagrams/references/advanced-features.md",
   "mermaid-diagrams/references/erd-diagrams.md",
-  // Planned scripts (Z-ai-platform install-hooks.sh)
-  "Z-ai-platform/install-hooks.sh",
+  // Planned scripts (Z-ai-governance install-hooks.sh)
+  "Z-ai-governance/install-hooks.sh",
 ]);
 
 // ----------------------------------------------------------------------------
@@ -203,8 +203,8 @@ const VALID_DOMAINS = new Set([
 // Build the candidates list for resolving a refPath against multiple roots.
 // v1.1.6 (O-018): expanded to include skills/skills/ tree, so that
 // `commit-work/CONTRACT.md` and similar path-like refs resolve correctly.
-// Also fixed: submodules are mounted inside Z-ai-platform/ (skills/ at
-// Z-ai-platform/skills/, guard/ at Z-ai-platform/guard/), NOT as siblings
+// Also fixed: submodules are mounted inside Z-ai-governance/ (skills/ at
+// Z-ai-governance/skills/, guard/ at Z-ai-governance/guard/), NOT as siblings
 // at ../Z-ai-skills/ or ../Z-ai-guard/. The original candidates list used
 // ../Z-ai-skills/ which never resolved. The fix adds the correct paths.
 // ----------------------------------------------------------------------------
@@ -226,18 +226,18 @@ function buildCandidates(refPath, standardsTreeRoot, filePath, platformRoot) {
     path.join(path.dirname(filePath), refPath),
 
     // Cross-repo resolution (v1.1.1) — original paths, kept for backward compat
-    path.join(platformRoot, refPath), // Z-ai-platform/<refpath>
-    path.join(platformRoot, refPath.replace(/^Z-ai-platform\//, "")), // strip prefix
+    path.join(platformRoot, refPath), // Z-ai-governance/<refpath>
+    path.join(platformRoot, refPath.replace(/^Z-ai-governance\//, "")), // strip prefix
     path.join(platformRoot, refPath.replace(/^Z-ai-standards\//, "standards/")),
     path.join(platformRoot, refPath.replace(/^Z-ai-guard\//, "../Z-ai-guard/")),
     path.join(platformRoot, refPath.replace(/^Z-ai-skills\//, "../Z-ai-skills/")),
 
     // v1.1.6 (O-018): correct submodule paths. Submodules are mounted
-    // INSIDE Z-ai-platform/, not as siblings. .gitmodules shows:
-    //   [submodule "skills"]  path = skills   -> Z-ai-platform/skills/
-    //   [submodule "guard"]   path = guard    -> Z-ai-platform/guard/
-    //   [submodule "standards"] path = standards -> Z-ai-platform/standards/
-    // So Z-ai-skills/<x> resolves to Z-ai-platform/skills/<x>, not ../Z-ai-skills/<x>.
+    // INSIDE Z-ai-governance/, not as siblings. .gitmodules shows:
+    //   [submodule "skills"]  path = skills   -> Z-ai-governance/skills/
+    //   [submodule "guard"]   path = guard    -> Z-ai-governance/guard/
+    //   [submodule "standards"] path = standards -> Z-ai-governance/standards/
+    // So Z-ai-skills/<x> resolves to Z-ai-governance/skills/<x>, not ../Z-ai-skills/<x>.
     path.join(platformRoot, "skills", refPath.replace(/^Z-ai-skills\//, "")),
     path.join(platformRoot, "skills", "skills", refPath.replace(/^Z-ai-skills\/skills\//, "")),
     path.join(platformRoot, "guard", refPath.replace(/^Z-ai-guard\//, "")),
@@ -269,7 +269,7 @@ function buildCandidates(refPath, standardsTreeRoot, filePath, platformRoot) {
 function phase10_healthWarnings(repos, warnFn) {
   if (!repos.standards) return;
   const standardsTreeRoot = repos.standards;
-  const platformRoot = path.dirname(standardsTreeRoot); // Z-ai-platform/
+  const platformRoot = path.dirname(standardsTreeRoot); // Z-ai-governance/
 
   // Collect all .md files under standards/ tree (covers standards/standards/*.md,
   // standards/docs/**/*.md, standards/templates/*.md)

@@ -75,9 +75,9 @@ verbatim (no renumbering) to keep all existing references stable.
 | PROC-UPDATE-002           | Z-ai-guard/update.sh                   | 2.1     | [C]   | ACTIVE (planned) — file not yet created                                                                  |
 | PROC-COCHANGE-003         | Z-ai-guard/scripts/co-change-check.sh  | 1.0     | [C]   | ACTIVE — file created 2026-06-22 (implements RULE-DOC-010)                                               |
 | PROC-LINECOUNT-004        | Z-ai-guard/scripts/line-count-check.sh | 1.0     | [C]   | ACTIVE — file created 2026-06-22 (implements RULE-MONOLITH-012, delegates to TOOL-VERIFY-002/004)        |
-| PROC-PLATFORM-INSTALL-005 | Z-ai-platform/install.sh               | 1.0     | [C]   | RETIRED 2026-06-19 (superseded by `bootstrap.sh` — single entry point covers install + update + restore) |
-| PROC-PLATFORM-UPDATE-006  | Z-ai-platform/update.sh                | 1.0     | [C]   | RETIRED 2026-06-19 (superseded by `bootstrap.sh`)                                                        |
-| PROC-PLATFORM-DOCTOR-007  | Z-ai-platform/doctor.sh                | 1.0     | [C]   | RETIRED 2026-06-19 (superseded by `status.sh` — diagnostic-only entry point)                             |
+| PROC-PLATFORM-INSTALL-005 | Z-ai-governance/install.sh               | 1.0     | [C]   | RETIRED 2026-06-19 (superseded by `bootstrap.sh` — single entry point covers install + update + restore) |
+| PROC-PLATFORM-UPDATE-006  | Z-ai-governance/update.sh                | 1.0     | [C]   | RETIRED 2026-06-19 (superseded by `bootstrap.sh`)                                                        |
+| PROC-PLATFORM-DOCTOR-007  | Z-ai-governance/doctor.sh                | 1.0     | [C]   | RETIRED 2026-06-19 (superseded by `status.sh` — diagnostic-only entry point)                             |
 
 > **Phantom-ID fix (META v2.0.2, 2026-06-19):** Rows previously marked
 > `ACTIVE` for PROC-SETUP-001, PROC-UPDATE-002, PROC-COCHANGE-003,
@@ -94,8 +94,8 @@ verbatim (no renumbering) to keep all existing references stable.
 > **PROC-PLATFORM-005/006/007 retirement (META v2.0.2, 2026-06-19):**
 > Three platform-side procedures were planned in v2.0.0 but never
 > implemented. The functions they would have provided are covered by
-> `Z-ai-platform/bootstrap.sh` (install + update + restore in one entry
-> point) and `Z-ai-platform/status.sh` (diagnostic). The three IDs are
+> `Z-ai-governance/bootstrap.sh` (install + update + restore in one entry
+> point) and `Z-ai-governance/status.sh` (diagnostic). The three IDs are
 > RETIRED with supersession notes; they will not be re-used (per §9.2
 > no-reassignment rule).
 

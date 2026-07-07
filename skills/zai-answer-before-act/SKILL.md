@@ -64,7 +64,7 @@ action    +---------------------------+
 | "Почему X?" | "Почему тест упал?" | ANSWER (use Read/Grep, not Write) |
 | "Когда X?" | "Когда будет готов?" | ANSWER |
 | "Зачем X?" | "Зачем нужен worklog?" | ANSWER |
-| "What is X?" | "What is Z-ai-platform?" | ANSWER |
+| "What is X?" | "What is Z-ai-governance?" | ANSWER |
 | "How does X work?" | "How does verify-id-graph work?" | ANSWER |
 | "Why X?" | "Why did CI fail?" | ANSWER |
 | "Show me X" | "Show me the worklog" | ANSWER (use Read, not Edit) |

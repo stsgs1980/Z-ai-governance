@@ -39,7 +39,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-PLATFORM = Path("/home/z/my-project/Z-ai-platform")
+PLATFORM = Path("/home/z/my-project/Z-ai-governance")
 RULES_INDEX = PLATFORM / "guard/rules/INDEX.md"
 ID_REGISTRY = PLATFORM / "standards/standards/META-001-id-registry.md"
 OUTPUT = PLATFORM / "guard/registry.json"
@@ -151,7 +151,7 @@ def parse_id_registry() -> tuple:
         pid, path, ver, lvl, status_raw = m.groups()
         # Translate Z-ai-guard/path → guard/path (relative to platform root)
         rel_path = (
-            path.strip().replace("Z-ai-guard/", "guard/").replace("Z-ai-platform/", "")
+            path.strip().replace("Z-ai-guard/", "guard/").replace("Z-ai-governance/", "")
         )
         procs.append(
             {

@@ -17,7 +17,7 @@ Z-ai-governance/       (flat repo — guard, standards, skills in one repo)
 --- .husky/             (git hooks: pre-commit, commit-msg, pre-push)
 ```
 
-The repository is a flat copy of Z-ai-platform. All directories are
+The repository is a flat copy of Z-ai-governance. All directories are
 regular directories -- there are no submodules.
 
 The ID graph (G01-G15) enforces that changes in one layer do not silently
