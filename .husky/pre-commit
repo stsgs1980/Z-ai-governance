@@ -28,8 +28,9 @@
 #      - verify-id-graph.js   -- cross-repo ID-graph invariants (G01-G15, HARD)
 #      - verify-skills.js     -- skill-side format invariants (S01-S09, HARD)
 #
-#   3. guard/ (PROC-LINECOUNT-004, SOFT)
-#      - per-category file-size caps (RULE-MONOLITH-012)
+#   3. anti-monolith (PROC-LINECOUNT-004, HARD)
+#      - verify-source-line-count.js (TOOL-VERIFY-007): source<=250, test<=400
+#      - line-count-check.sh: .md caps (SOFT, advisory — .md HARD already in Group 2)
 #
 #   4. lint-staged (eslint + prettier on staged files)
 #
@@ -213,7 +214,28 @@ else
   fi
 fi
 
-# --- Group 3: guard line-count (PROC-LINECOUNT-004, SOFT) -------------------
+# --- Group 3: anti-monolith line-count (PROC-LINECOUNT-004) ----------------
+# Source code and test file caps are HARD (blocks commit).
+# .md caps are already enforced HARD in Group 2 via verify-standards.js V11
+# and verify-skills.js S10a/b/c. The line-count-check.sh here is advisory only.
+
+VERIFY_SRC_LINECOUNT="scripts/verify-source-line-count.cjs"
+if command -v node >/dev/null 2>&1 && [ -f "$VERIFY_SRC_LINECOUNT" ]; then
+  echo "[pre-commit] verify-source-line-count.js (RULE-MONOLITH-012: source<=250, test<=400)"
+  if ! node "$VERIFY_SRC_LINECOUNT" --root="$REPO_ROOT" >/tmp/zai-precommit-srclinecount.log 2>&1; then
+    echo "[pre-commit] FAIL: verify-source-line-count.js — source file exceeds hard cap."
+    echo "[pre-commit] ---- output ----"
+    sed 's/^/  /' /tmp/zai-precommit-srclinecount.log
+    echo "[pre-commit] ---- end output ----"
+    echo "[pre-commit] RULE-MONOLITH-012 §3: STOP, split the file, then re-commit."
+    echo "[pre-commit] To bypass (NOT recommended): git commit --no-verify"
+    exit 1
+  fi
+  echo "[pre-commit] OK: verify-source-line-count.js PASS"
+  rm -f /tmp/zai-precommit-srclinecount.log
+fi
+
+# Advisory .md line-count (SOFT — .md HARD already in Group 2)
 LINECOUNT="guard/scripts/line-count-check.sh"
 if [ -f "$LINECOUNT" ]; then
   if ! bash "$LINECOUNT" >/tmp/zai-precommit-linecount.log 2>&1; then

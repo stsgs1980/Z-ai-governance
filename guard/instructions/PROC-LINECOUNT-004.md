@@ -1,21 +1,21 @@
 ---
 id: PROC-LINECOUNT-004
 title: Line count check (anti-monolith enforcement)
-version: 1.0
+version: 1.1
 level: [C]
 status: ACTIVE
 implements: RULE-MONOLITH-012
-calls: [TOOL-VERIFY-002, TOOL-VERIFY-004]
+calls: [TOOL-VERIFY-002, TOOL-VERIFY-004, TOOL-VERIFY-005, TOOL-VERIFY-007]
 owning-standard: STD-META-001 v2.0.4
-last-updated: 2026-06-22
+last-updated: 2026-07-07
 ---
 
 # PROC-LINECOUNT-004: Line count check (anti-monolith enforcement)
 
 > ID: PROC-LINECOUNT-004
-> Version: 1.0
+> Version: 1.1
 > Level: **[C] Critical**
-> Last Updated: 2026-06-22
+> Last Updated: 2026-07-07
 > Related: RULE-MONOLITH-012 (anti-monolith — this procedure implements it), STD-META-001 (ID system, §4.18 canonical matrix)
 
 > **Status:** ACTIVE. File `guard/scripts/line-count-check.sh` exists.
@@ -24,71 +24,65 @@ last-updated: 2026-06-22
 
 ## When this procedure fires
 
-Pre-commit hook. Runs `verify-standards.js` (V11 cap) and `verify-skills.js`
-(S10a/b/c caps) to enforce the §4.18.1 file-size matrix.
+Pre-commit hook (HARD for source code, SOFT for .md). Three verifiers run:
 
-Typical trigger:
-```bash
-bash guard/scripts/line-count-check.sh           # soft warn (exit 0)
-bash guard/scripts/line-count-check.sh --hard    # hard fail (exit 1)
-```
+1. **TOOL-VERIFY-007** `verify-source-line-count.cjs` — source code and test caps
+   (HARD, blocks commit)
+2. **TOOL-VERIFY-002** `verify-standards.js` — V11 .md cap (HARD, already in
+   Group 2 of pre-commit)
+3. **TOOL-VERIFY-005** `verify-skills.js` — S10a/b/c skill file caps (HARD,
+   already in Group 2 of pre-commit)
 
-## What it does
+## What it checks
 
-1. Run `verify-standards.js` — checks V11 (all .md in standards/ + docs/
-   + templates/ <= 1000 lines)
-2. Run `verify-skills.js --strict` — checks:
-   - S10a: SKILL.md <= 800 lines
-   - S10b: CONTRACT.md <= 500 lines
-   - S10c: README.md <= 400 lines
-3. Aggregate results:
-   - 0 offenders -> PASS (exit 0)
-   - offenders + `--hard` -> FAIL (exit 1)
-   - offenders + no `--hard` -> WARN (exit 0)
+| Verifier | Category | Hard cap | Soft cap | Pre-commit |
+|---|---|---|---|---|
+| verify-source-line-count.cjs | Source (.ts/.tsx/.js/.jsx/.py/.sh/.css) | 250 | 150 | HARD |
+| verify-source-line-count.cjs | Tests (.test.*/.spec.*) | 400 | 250 | HARD |
+| verify-standards.js V11 | standards/ + docs/sandbox/ + templates/ .md | 1000 | - | HARD (Group 2) |
+| verify-skills.js S10a | skills/*/SKILL.md | 800 | - | HARD (Group 2) |
+| verify-skills.js S10b | skills/*/CONTRACT.md | 500 | - | HARD (Group 2) |
+| verify-skills.js S10c | skills/*/README.md | 400 | - | HARD (Group 2) |
+| Config (.json/.yml/.toml/.ini) | exempt | - | - | - |
 
-## Why delegation (not direct matrix parsing)
+### Exclusions (source code only)
 
-RULE-MONOLITH-012 v1.3 (2026-06-19) explicitly says:
-
-> "the procedure MUST read the canonical matrix from META-001 §4.18,
->  NOT from this rule's mirror."
-
-The verifiers already parse §4.18 — duplicating the matrix in this
-script would recreate the layering violation that v1.3 fixed. So this
-procedure is a thin orchestrator over the existing verifiers.
-
-When TOOL-VERIFY-001 (verify-docs) is built, this script can call it
-for the broader §4.18.1 matrix (source code 250, tests 400, etc.).
-For now, the four caps above cover 100% of files in the platform tree.
+- `node_modules/`, `.next/`, `dist/`, `build/`, `.cache/`, `.turbo/`, `.vercel/`
+- `src/components/ui/` (shadcn/ui — third-party, not our code)
+- `Z-ai-governance/` (historical artifact exclusion)
+- `.git/`, `coverage/`
 
 ## Inputs
 
-- `--hard` (optional): exit 1 on any offender instead of warning
-- `--help` / `-h`: print usage
+- `--soft` (verify-source-line-count.cjs): warn-only, exit 0 even on hard violations
+- `--json` (verify-source-line-count.cjs): JSON output for CI
+- `--root=<path>` (verify-source-line-count.cjs): override repository root
+- `--hard` (line-count-check.sh): hard fail on any offender
 
 ## Outputs
 
-- Stdout: per-verifier pass/fail + summary
+- Stdout: per-category pass/fail + summary
 - Exit 0: PASS or SOFT-WARN
-- Exit 1: FAIL (--hard mode, files exceed cap)
-- Exit 2: usage error
+- Exit 1: FAIL (hard cap exceeded in hard mode)
 
 ## Calls
 
-- **TOOL-VERIFY-002** (`verify-standards.js`) — V11 cap enforcement
-- **TOOL-VERIFY-004** (`verify-id-graph.js`) — not size-related but
-  paired for runtime consistency (this might be removed in a future
-  version if it proves unnecessary)
+- **TOOL-VERIFY-007** (`verify-source-line-count.cjs`) — source + test file caps (v1.1)
+- **TOOL-VERIFY-002** (`verify-standards.js`) — V11 .md cap enforcement
+- **TOOL-VERIFY-005** (`verify-skills.js`) — S10a/b/c skill file caps
+- **TOOL-VERIFY-004** (`verify-id-graph.js`) — structural companion (not size-related)
 
-## Integration with platform hooks
-
-The platform's `bootstrap.sh` script can install this procedure as a
-git pre-commit hook:
+## Integration with pre-commit hook
 
 ```bash
-# .git/hooks/pre-commit (auto-generated by bootstrap.sh)
-#!/usr/bin/env bash
-exec bash "$(git rev-parse --show-toplevel)/guard/scripts/line-count-check.sh" --hard
+# .husky/pre-commit Group 3 (HARD)
+VERIFY_SRC_LINECOUNT="scripts/verify-source-line-count.cjs"
+if command -v node >/dev/null 2>&1 && [ -f "$VERIFY_SRC_LINECOUNT" ]; then
+  if ! node "$VERIFY_SRC_LINECOUNT" --root="$REPO_ROOT"; then
+    echo "FAIL: source file exceeds hard cap. Split before commit."
+    exit 1
+  fi
+fi
 ```
 
 ## Relationship to other procedures
@@ -98,19 +92,9 @@ exec bash "$(git rev-parse --show-toplevel)/guard/scripts/line-count-check.sh" -
 | PROC-SETUP-001 | Sets up the guard workspace this procedure runs in |
 | PROC-COCHANGE-003 | Companion pre-commit check (docs sync, not file size) |
 
-## Limitations (known)
-
-1. **Only covers .md files.** Source code (.ts/.py/.sh) file-size caps
-   from §4.18.1 (250 hard / 150 soft) are NOT enforced until
-   TOOL-VERIFY-001 (verify-docs) is built.
-2. **No exempt-list parsing.** STD-META-001 §4.18.4 lists ~44 exempt
-   files. The verifiers handle this internally; this script trusts them.
-3. **No soft-cap warning.** Currently only hard-cap violations are
-   reported. A future version should distinguish soft (warn) vs hard
-   (fail) within the same run.
-
 ## Change history
 
 | Version | Date | Change |
 |---|---|---|
-| 1.0 | 2026-06-22 | Initial implementation. `guard/scripts/line-count-check.sh` created. Delegates to verify-standards.js V11 + verify-skills.js S10a/b/c. |
+| 1.0 | 2026-06-22 | Initial implementation. Delegated to verify-standards.js V11 + verify-skills.js S10a/b/c. |
+| 1.1 | 2026-07-07 | Added TOOL-VERIFY-007 (verify-source-line-count.cjs): source code 250-line and test 400-line HARD caps. Pre-commit Group 3 upgraded from SOFT to HARD for source files. Closes the gap where .ts/.py/.sh files were completely unverified. |

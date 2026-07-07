@@ -1,7 +1,7 @@
 ---
 id: RULE-MONOLITH-012
 title: Anti-monolith (file size by category)
-version: 1.3
+version: 1.4
 level: [C]
 status: ACTIVE
 source: Z-ai-governance v1.3.0 (RULE-MONOLITH-012), revised 2026-06-19 (canonical promoted to META-001)
@@ -101,14 +101,17 @@ loader only needs the trigger surface and core procedure.
 
 ## 5. Enforcement
 
-- **Today (v1.3):** soft warnings via `scripts/audit_md_files.py`. Run
-  manually or wire as a non-blocking pre-commit hook. No CI hard-fail.
-- **Future (PROC-LINECOUNT-004, deferred):** bash pre-commit hook (~80
-  lines) that reads the §4.18.1 matrix and enforces it. Soft warn by
-  default, `--hard` flag for CI. Not yet created -- see guard/README.md
-  "Known inconsistencies" §3 for the deferral rationale. When created,
-  the procedure MUST read the canonical matrix from META-001 §4.18,
-  NOT from this rule's mirror.
+- **Source code / tests (v1.4):** HARD via `scripts/verify-source-line-count.cjs`
+  (TOOL-VERIFY-007). Blocks pre-commit. Runs in CI. Covers .ts/.tsx/.js/.jsx/
+  .py/.sh/.css (hard 250 / soft 150) and .test.*/.spec.* (hard 400 / soft 250).
+  Excludes node_modules, .next, src/components/ui/, config files, build
+  artifacts.
+- **Markdown files (v1.3):** HARD via `verify-standards.js` V11 (1000-line cap)
+  and `verify-skills.js` S10a/b/c (800/500/400 caps). Both block pre-commit
+  and CI.
+- **Orchestration:** `guard/scripts/line-count-check.sh` (PROC-LINECOUNT-004)
+  runs all three verifiers and aggregates results. Supports `--hard` (CI) and
+  default (soft warn) modes.
 
 ## 6. Relationship to other rules / standards
 
@@ -126,3 +129,4 @@ loader only needs the trigger surface and core procedure.
 | 1.1     | 2026-06-17 | Verifier header `Related:` cleanup.                                                                                                                                                                                                                                                                                                                             |
 | 1.2     | 2026-06-19 | Truthfulness fix: blanket 250 -> per-category matrix + full exempt list (44 files, 18 579 lines). Parser-bound files get their own ceiling, not the blanket. PROC-LINECOUNT-004 deferred.                                                                                                                                                                       |
 | 1.3     | 2026-06-19 | Layering fix: canonical matrix + exempt list promoted to STD-META-001 §4.18 (L1). This rule retains a compact mirror for enforcement context but defers to §4.18 for source of truth. STD-SKILL-001 §8.2/§10.1/§13 updated to reference §4.18 instead of this rule. Net delta: ~70 lines removed from this rule, ~80 lines added to META-001. No graph changes. |
+| 1.4     | 2026-07-07 | Enforcement gap closed: TOOL-VERIFY-007 (verify-source-line-count.cjs) now enforces source code (250 hard) and test (400 hard) caps in pre-commit (HARD) and CI. PROC-LINECOUNT-004 v1.1 updated. Section 5 rewritten from "deferred" to active enforcement. |

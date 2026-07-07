@@ -3,7 +3,8 @@
 # PROC-LINECOUNT-004 — Anti-monolith file-size enforcement
 # Implements: RULE-MONOLITH-012 (anti-monolith, file size by category)
 # Calls:      TOOL-VERIFY-002 (verify-standards.js, V11 1000-line cap)
-#             TOOL-VERIFY-004 (verify-id-graph.js — not size but always paired)
+#             TOOL-VERIFY-005 (verify-skills.js, S10a/b/c caps)
+#             TOOL-VERIFY-007 (verify-source-line-count.cjs, source/test caps)
 # Matrix source: STD-META-001 §4.18.1 (canonical, NOT this file)
 #
 # Usage:
@@ -17,19 +18,21 @@
 #   2  usage error
 #
 # What this checks (delegates to existing verifiers — no matrix duplication):
-#   - verify-standards.js V11:   standards/ + docs/sandbox/ + templates/  <= 1000 lines
-#   - verify-skills.js   S10a:   skills/skills/*/SKILL.md                 <=  800 lines
-#   - verify-skills.js   S10b:   skills/skills/*/CONTRACT.md              <=  500 lines
-#   - verify-skills.js   S10c:   skills/skills/*/README.md                <=  400 lines
+#   - verify-source-line-count.cjs  SRC-CAP:  .ts/.tsx/.js/.jsx/.py/.sh/.css   <= 250 lines
+#   - verify-source-line-count.cjs  TEST-CAP: .test.*/.spec.*                   <= 400 lines
+#   - verify-standards.js V11:     standards/ + docs/sandbox/ + templates/   <= 1000 lines
+#   - verify-skills.js   S10a:     skills/skills/*/SKILL.md                   <=  800 lines
+#   - verify-skills.js   S10b:     skills/skills/*/CONTRACT.md                <=  500 lines
+#   - verify-skills.js   S10c:     skills/skills/*/README.md                  <=  400 lines
+#
+# Exclusions (source code only):
+#   node_modules/, .next/, src/components/ui/ (shadcn), .json/.yml/.toml/.ini,
+#   Z-ai-governance/, dist/, build/, .cache/
 #
 # Why delegation: RULE-MONOLITH-012 v1.3 explicitly says "the procedure MUST
 # read the canonical matrix from META-001 §4.18, NOT from this rule's mirror."
 # The verifiers already parse §4.18 — duplicating the matrix here would
 # recreate the layering violation that v1.3 fixed.
-#
-# Future: when TOOL-VERIFY-001 (verify-docs) is built, this script can also
-# call it for the broader §4.18.1 matrix (source code 250, tests 400, etc.).
-# For now, the four caps above cover 100% of files in the platform tree.
 
 set -euo pipefail
 
@@ -56,7 +59,40 @@ emit_warn() { echo "  [WARN] $1"; WARN_COUNT=$((WARN_COUNT + 1)); }
 # ─── Run verifiers ──────────────────────────────────────────────────────
 echo "=== PROC-LINECOUNT-004: anti-monolith file-size check ==="
 echo "Mode: $([ $HARD_MODE -eq 1 ] && echo 'HARD (will fail on offenders)' || echo 'SOFT (warning-only)')"
-echo "Matrix source: STD-META-001 §4.18.1 (via verify-standards.js + verify-skills.js)"
+echo "Matrix source: STD-META-001 §4.18.1 (via verify-source-line-count.cjs + verify-standards.js + verify-skills.js)"
+echo ""
+
+# 0. verify-source-line-count.cjs (TOOL-VERIFY-007 — source + test file caps)
+VERIFY_SRC="$PLATFORM_DIR/scripts/verify-source-line-count.cjs"
+if [ -f "$VERIFY_SRC" ]; then
+    echo "--- TOOL-VERIFY-007: verify-source-line-count.cjs (source 250 / test 400) ---"
+    SRC_FLAGS="--json"
+    if [ $HARD_MODE -eq 0 ]; then
+        SRC_FLAGS="$SRC_FLAGS --soft"
+    fi
+    SRC_OUT=$(node "$VERIFY_SRC" --root="$PLATFORM_DIR" $SRC_FLAGS 2>&1 || true)
+    SRC_FAILS=$(echo "$SRC_OUT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('failed',0))" 2>/dev/null || echo "0")
+    SRC_SCANNED=$(echo "$SRC_OUT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('filesScanned',0))" 2>/dev/null || echo "0")
+
+    if [ "$SRC_FAILS" -eq 0 ]; then
+        emit_pass "verify-source-line-count.cjs — all $SRC_SCANNED source/test files within caps (source<=250, test<=400)"
+    else
+        if [ $HARD_MODE -eq 1 ]; then
+            emit_fail "verify-source-line-count.cjs — $SRC_FAILS category(s) exceed caps"
+        else
+            emit_warn "verify-source-line-count.cjs — $SRC_FAILS category(s) exceed caps (would fail in --hard)"
+        fi
+        echo "$SRC_OUT" | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+for o in d.get('offenders', []):
+    print(f'    {o[\"path\"]}: {o[\"lines\"]} lines (cap {o[\"cap\"]}, category={o[\"category\"]})')
+" 2>/dev/null || true
+    fi
+else
+    emit_warn "verify-source-line-count.cjs not found at scripts/"
+fi
+
 echo ""
 
 # 1. verify-standards.js (V11 — 1000-line cap on standards/ + docs/ + templates/)
@@ -83,7 +119,7 @@ echo ""
 # 2. verify-skills.js (S10a/b/c — 800/500/400 caps)
 SKILLS_DIR="$PLATFORM_DIR/skills"
 if [ -f "$STANDARDS_DIR/scripts/verify-skills.js" ]; then
-    echo "--- TOOL-VERIFY-002: verify-skills.js (S10a/b/c caps) ---"
+    echo "--- TOOL-VERIFY-005: verify-skills.js (S10a/b/c caps) ---"
     SKILLS_OUT=$(cd "$STANDARDS_DIR" && node scripts/verify-skills.js --strict 2>&1 || true)
     if echo "$SKILLS_OUT" | grep -qE "HARD: 9/9 PASS.*0 FAIL"; then
         emit_pass "verify-skills.js S10a/b/c — SKILL.md <= 800, CONTRACT.md <= 500, README.md <= 400"
@@ -108,10 +144,10 @@ echo "  Warnings (soft cap):   $WARN_COUNT"
 echo ""
 
 if [ $OFFENDERS -gt 0 ] && [ $HARD_MODE -eq 1 ]; then
-    echo "RESULT: FAIL — $OFFENDERS file(s) exceed hard cap. Split before commit. (RULE-MONOLITH-012 §3)"
+    echo "RESULT: FAIL — $OFFENDERS category(s) exceed hard cap. Split before commit. (RULE-MONOLITH-012 §3)"
     exit 1
 elif [ $OFFENDERS -gt 0 ]; then
-    echo "RESULT: WARN — $OFFENDERS file(s) exceed hard cap. Re-run with --hard to enforce."
+    echo "RESULT: WARN — $OFFENDERS category(s) exceed hard cap. Re-run with --hard to enforce."
     exit 0
 else
     echo "RESULT: PASS — all files within §4.18.1 caps."

@@ -6,8 +6,8 @@
   "counts": {
     "RULE": 0,
     "PROC": 4,
-    "TOOL": 6,
-    "total": 10
+    "TOOL": 7,
+    "total": 11
   },
   "ids": [
     {
@@ -49,7 +49,7 @@
     {
       "id": "PROC-LINECOUNT-004",
       "title": "Line count check (anti-monolith enforcement)",
-      "version": "1.0",
+      "version": "1.1",
       "level": "critical",
       "status": "ACTIVE",
       "file": "guard/scripts/line-count-check.sh",
@@ -57,7 +57,9 @@
       "implements": "RULE-MONOLITH-012",
       "calls": [
         "TOOL-VERIFY-002",
-        "TOOL-VERIFY-004"
+        "TOOL-VERIFY-004",
+        "TOOL-VERIFY-005",
+        "TOOL-VERIFY-007"
       ],
       "owning_standard": "STD-META-001 v2.0.4"
     },
@@ -130,6 +132,18 @@
       "file": "standards/scripts/check-updates.sh",
       "source": "STD-META-001 §4.15",
       "implements": null,
+      "calls": [],
+      "owning_standard": "STD-META-001 v2.0.4"
+    },
+    {
+      "id": "TOOL-VERIFY-007",
+      "title": "verify-source-line-count.cjs (anti-monolith source/test file caps)",
+      "version": "1.0.0",
+      "level": "critical",
+      "status": "ACTIVE",
+      "file": "scripts/verify-source-line-count.cjs",
+      "source": "STD-META-001 §4.15",
+      "implements": "RULE-MONOLITH-012",
       "calls": [],
       "owning_standard": "STD-META-001 v2.0.4"
     }
