@@ -7,7 +7,7 @@
     "aligned_with_edges": 0,
     "hard_pass": 13,
     "hard_fail": 0,
-    "warnings": 24
+    "warnings": 19
   },
   "checks": [
     {
@@ -128,31 +128,11 @@
     },
     {
       "id": "W13",
-      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/MIGRATIONS.md\" which does not exist in standards/ tree"
-    },
-    {
-      "id": "W13",
       "detail": "ARCH-001-architecture-and-repo-layout.md: references \"guard/rules/RULE-ARCH-016.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
-      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/RULE-ARCH-016.md\" which does not exist in standards/ tree"
-    },
-    {
-      "id": "W13",
-      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/skill-creator.md\" which does not exist in standards/ tree"
-    },
-    {
-      "id": "W13",
-      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/README.md\" which does not exist in standards/ tree"
-    },
-    {
-      "id": "W13",
-      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/doctor.sh\" which does not exist in standards/ tree"
-    },
-    {
-      "id": "W13",
-      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-platform/CONTRIBUTING.md\" which does not exist in standards/ tree"
+      "detail": "ARCH-001-architecture-and-repo-layout.md: references \"Z-ai-governance/CONTRIBUTING.md\" which does not exist in standards/ tree"
     },
     {
       "id": "W13",
@@ -649,5 +629,5 @@
     }
   ],
   "aligned_with_edges": [],
-  "exported_at": "2026-07-07T17:43:32.629Z"
+  "exported_at": "2026-07-07T18:07:04.962Z"
 }
