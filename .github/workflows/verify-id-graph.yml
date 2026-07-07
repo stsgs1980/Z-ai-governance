@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - name: Checkout Z-ai-governance
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -110,7 +110,7 @@ jobs:
           echo "Skills validation passed."
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
 
@@ -264,7 +264,7 @@ jobs:
 
       - name: Cache puppeteer Chrome binary
         id: cache-chrome
-        uses: actions/cache@v5
+        uses: actions/cache@v4
         with:
           path: ~/.cache/puppeteer
           key: puppeteer-chrome-linux-mmd${{ steps.puppeteer-version.outputs.mmd_version }}-pup${{ steps.puppeteer-version.outputs.pup_version }}
@@ -347,7 +347,7 @@ jobs:
           fi
 
       - name: Upload graph artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: id-graph
           path: |
@@ -356,7 +356,7 @@ jobs:
 
       - name: Upload verifier output (on failure)
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: verifier-output
           path: |

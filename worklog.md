@@ -695,3 +695,35 @@ fi
   - Fixed standards/README.md: LICENSE dead links → MIT text / opensource.org URL
   - All verifiers green: verify-id-graph 13/13 PASS, verify-standards 15/15 PASS, 13/13 guard check-*.sh PASS
   - Commits: 465945a (docs audit), 10853ee (graph fixes + snapshot)
+
+---
+
+## 2026-07-08 (session 3) — bootstrap.sh --install + workflow fix
+
+read bootstrap.sh (455 lines, found duplicate install_governance at lines 35 and 304)
+read .github/workflows/verify-id-graph.yml (397 lines)
+read eslint-rules/unicode-policy.js, eslint.config.js (understood rule architecture)
+
+did Fix bootstrap.sh:
+  - Removed duplicate install_governance() function (lines 300-456 were dead copy)
+  - Fixed lint-staged: removed dead reference to non-existent eslint-rules/no-emoji-in-md.js
+  - Added Step 4: auto-patch eslint.config.* to include governance rules (ESM detection, import injection)
+  - Added Step 3b: copy eslint-processors/ alongside eslint-rules/
+  - Added Step 7: auto-install husky + lint-staged npm packages if missing
+  - Pre-commit hook rewritten with heredoc 'HOOK' (no variable expansion inside)
+  - Result: 7-step install (AGENT_RULES, config, eslint-rules+processors, eslint patch, hook, lint-staged, deps)
+
+did Fix verify-id-graph.yml:
+  - actions/checkout@v5 → @v4 (v5 does not exist)
+  - actions/setup-node@v5 → @v4 (v5 does not exist)
+  - actions/cache@v5 → @v4 (v5 does not exist)
+  - actions/upload-artifact@v7 → @v4 (v7 does not exist, was causing all 6 workflow runs to fail silently)
+  - actions/github-script@v7 kept (v7 is the latest valid version)
+  - Root cause: non-existent action versions caused every workflow run to fail at step resolution before any verifier ran
+
+verified:
+  - bootstrap.sh: bash -n PASS, no duplicate function, no dead references
+  - verify-id-graph.yml: Python YAML validation PASS, all action versions correct
+  - verify-id-graph.js: 13/13 hard PASS, 24 soft warnings
+  - verify-standards.js: 15/15 PASS
+  - 11/13 guard scripts PASS (check-sandbox-env, check-work-cycle: pre-existing env issues)
