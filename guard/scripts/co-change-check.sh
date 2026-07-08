@@ -117,7 +117,7 @@ fi
 if [ ${#DOC_FILES[@]} -gt 0 ]; then
     emit_pass "code change accompanied by doc change (${#DOC_FILES[@]} .md file(s))"
     if [ ${#DOC_FILES[@]} -lt ${#CODE_FILES[@]} ]; then
-        emit_warn "fewer docs (${-#DOC_FILES[@]}) than code files (${#CODE_FILES[@]}) — verify each code change has relevant doc update"
+        emit_warn "fewer docs (${#DOC_FILES[@]}) than code files (${#CODE_FILES[@]}) — verify each code change has relevant doc update"
     fi
     echo ""
     echo "RESULT: PASS"

@@ -13,6 +13,9 @@ __pycache__/
 # TypeScript incremental build info
 *.tsbuildinfo
 
+# Local tools (OS-specific binaries)
+.tools/
+
 # CI-generated graph artifacts
 docs/_graph/
 .zai/.verifier-daemon.lock

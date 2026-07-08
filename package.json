@@ -5,8 +5,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:sh": "find . -name '*.sh' -not -path '*/node_modules/*' -not -path '*/.git/*' -not -path '*/.husky/_/*' -print0 | xargs -0 .tools/shellcheck --severity=error",
+    "lint:sh:strict": "find . -name '*.sh' -not -path '*/node_modules/*' -not -path '*/.git/*' -not -path '*/.husky/_/*' -print0 | xargs -0 .tools/shellcheck",
+    "lint:json": "find . -name '*.json' -not -path '*/node_modules/*' -not -path '*/.git/*' -print0 | xargs -0 node -e \"const f=process.argv[1];try{JSON.parse(require('fs').readFileSync(f,'utf8'));process.exit(0)}catch(e){console.error(f+': '+e.message);process.exit(1)}\"",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
@@ -15,7 +18,7 @@
     "test:coverage": "vitest run --coverage",
     "check:md": "bash standards/scripts/check-md.sh",
     "check:graph": "node standards/scripts/verify-id-graph.js",
-    "validate": "npm run lint && npm run typecheck && npm run test",
+    "validate": "npm run lint && npm run lint:sh && npm run typecheck && npm run test",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -24,11 +27,13 @@
     "@typescript-eslint/parser": "^8.62.1",
     "eslint": "^9.39.4",
     "eslint-plugin-markdown": "^5.1.0",
+    "eslint-plugin-yml": "^3.6.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
     "prettier": "^3.9.4",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "yaml": "^2.9.0"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
@@ -36,6 +41,15 @@
     ],
     "*.md": [
       "eslint --plugin markdown --max-warnings=0 --no-warn-ignored"
+    ],
+    "*.{yml,yaml}": [
+      "eslint --max-warnings=0"
+    ],
+    "*.sh": [
+      ".tools/shellcheck --severity=error --exclude=.husky/_/"
+    ],
+    "*.json": [
+      "node -e \"const f=process.argv[1];try{JSON.parse(require('fs').readFileSync(f,'utf8'))}catch(e){console.error(f+': '+e.message);process.exit(1)}\""
     ]
   },
   "engines": {

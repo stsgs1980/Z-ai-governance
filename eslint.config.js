@@ -13,6 +13,7 @@
 //    filters eol-last and unicode-bom as UNSATISFIABLE_RULES.
 
 import markdown from "eslint-plugin-markdown";
+import yml from "eslint-plugin-yml";
 import tsParser from "@typescript-eslint/parser";
 import unicodePolicy from "./eslint-rules/unicode-policy.js";
 import codeBlockLanguage from "./eslint-rules/code-block-language.js";
@@ -120,6 +121,27 @@ export default [
 
       // STD-DOC-002: no irregular whitespace (NBSP, ZWSP, etc.)
       "no-irregular-whitespace": "error",
+    },
+  },
+
+  // --- YAML files (.yml, .yaml) ---
+  // GitHub Actions workflows and other YAML configs.
+  // Explicitly scoped to *.yml/*.yaml only — NOT code blocks inside .md
+  // (the markdown processor creates virtual *.md/** files that could
+  // contain YAML snippets; those are not complete YAML documents).
+  ...yml.configs["flat/recommended"].map((c) => ({
+    ...c,
+    files: ["**/*.{yml,yaml}"],
+    ignores: c.ignores
+      ? [...c.ignores, "**/*.md/**"]
+      : ["**/*.md/**"],
+  })),
+  {
+    files: ["**/*.{yml,yaml}"],
+    rules: {
+      // Allow empty mappings/sequences (common in CI configs)
+      "yml/no-empty-mapping-value": "off",
+      "yml/no-empty-sequence-entry": "off",
     },
   },
 ];
