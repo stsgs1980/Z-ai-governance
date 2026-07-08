@@ -21,3 +21,4 @@ docs/_graph/
 .zai/.verifier-daemon.lock
 .zai/.verifier-daemon.log
 .zai/.verifier-daemon.pid
+graph/
